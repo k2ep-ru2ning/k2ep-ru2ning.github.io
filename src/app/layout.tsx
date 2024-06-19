@@ -1,6 +1,7 @@
 import "./globals.css";
 import { type Metadata } from "next";
 import { type ReactNode } from "react";
+import pretendard from "./_font/pretendard";
 
 type Props = {
   children: ReactNode;
@@ -9,7 +10,7 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body className={pretendard.className}>{children}</body>
     </html>
   );
 }
