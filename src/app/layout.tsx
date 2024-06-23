@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 import pretendard from "./_font/pretendard";
 import Header from "./_component/header";
 import Footer from "./_component/footer";
+import { ThemeProvider } from "next-themes";
 
 type Props = {
   children: ReactNode;
@@ -11,13 +12,15 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body
-        className={`${pretendard.className} min-h-dvh max-w-screen-md mx-auto flex flex-col`}
+        className={`${pretendard.className} min-h-dvh max-w-screen-md mx-auto flex flex-col bg-white dark:bg-black`}
       >
-        <Header />
-        <div className="grow">{children}</div>
-        <Footer />
+        <ThemeProvider attribute="class">
+          <Header />
+          <div className="grow">{children}</div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
