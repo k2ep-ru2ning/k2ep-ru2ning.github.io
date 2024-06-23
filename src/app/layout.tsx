@@ -2,7 +2,8 @@ import "./globals.css";
 import { type Metadata } from "next";
 import { type ReactNode } from "react";
 import pretendard from "./_font/pretendard";
-import Link from "next/link";
+import Header from "./_component/header";
+import Footer from "./_component/footer";
 
 type Props = {
   children: ReactNode;
@@ -14,19 +15,9 @@ export default function RootLayout({ children }: Props) {
       <body
         className={`${pretendard.className} min-h-dvh max-w-screen-md mx-auto flex flex-col`}
       >
-        <header className="flex justify-center py-4">
-          <Link
-            href="/"
-            className="flex flex-col text-center divide-y-2 divide-green-500 p-2 hover:bg-green-50 rounded-md"
-          >
-            <h1 className="font-bold text-3xl">{"Dev-Story"}</h1>
-            <strong className="font-normal">{"k2ep-ru2ning"}</strong>
-          </Link>
-        </header>
+        <Header />
         <div className="grow">{children}</div>
-        <footer className="py-4 text-center">
-          &copy; {"2024 k2ep-ru2ning Dev-Story"}
-        </footer>
+        <Footer />
       </body>
     </html>
   );
