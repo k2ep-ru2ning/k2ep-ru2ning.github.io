@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { Moon, Sun } from "lucide-react";
 
 export default function ThemeDropdown() {
   const [isMounted, setIsMounted] = useState(false);
 
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, themes, resolvedTheme } = useTheme();
 
   // 컴포넌트가 mount 되기전에,
   // theme 상태값을 사용하면 데이터 불일치 문제가 발생.
@@ -27,10 +29,26 @@ export default function ThemeDropdown() {
   }
 
   return (
-    <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-      <option value="system">{"system"}</option>
-      <option value="light">{"light"}</option>
-      <option value="dark">{"dark"}</option>
-    </select>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
+        <button>
+          {resolvedTheme === "light" ? <Sun size={24} /> : <Moon size={24} />}
+        </button>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content>
+          <DropdownMenu.RadioGroup
+            value={theme}
+            onValueChange={(theme) => setTheme(theme)}
+          >
+            {themes.map((theme) => (
+              <DropdownMenu.RadioItem key={theme} value={theme}>
+                {theme}
+              </DropdownMenu.RadioItem>
+            ))}
+          </DropdownMenu.RadioGroup>
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 }
