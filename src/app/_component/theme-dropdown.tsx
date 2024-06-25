@@ -40,7 +40,7 @@ export default function ThemeDropdown() {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="w-20 p-1.5 border border-gray-200 dark:border-gray-700 rounded-md"
+          className="w-20 p-1.5 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-950"
           sideOffset={8}
           align="end"
         >
