@@ -2,6 +2,7 @@ import path from "path";
 import matter from "gray-matter";
 import { glob } from "glob";
 import { readFile } from "fs/promises";
+import { cwd } from "process";
 
 type PostMatter = {
   title: string;
@@ -14,7 +15,7 @@ export type Post = PostMatter & {
   content: string;
 };
 
-const POSTS_DIRECTORY_PATH = path.resolve(process.cwd(), "posts");
+const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
@@ -37,7 +38,7 @@ export async function getPosts(): Promise<Post[]> {
         ),
         description,
         title,
-        slug: postPath.slice(POSTS_DIRECTORY_PATH.length).replace(".mdx", ""),
+        slug: postPath.slice(cwd().length).replace(".mdx", ""),
       });
     }
   } catch (e) {
