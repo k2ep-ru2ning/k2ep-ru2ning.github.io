@@ -16,6 +16,8 @@ export type Post = PostMatter & {
 
 const POSTS_DIRECTORY_PATH = path.resolve(process.cwd(), "posts");
 
+const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
+
 async function getPostPaths(): Promise<string[]> {
   return glob(`${POSTS_DIRECTORY_PATH}/**/*.mdx`);
 }
@@ -30,7 +32,9 @@ export async function getPosts(): Promise<Post[]> {
       const { createdAt, description, title } = data as PostMatter;
       posts.push({
         content,
-        createdAt,
+        createdAt: new Date(
+          createdAt.getTime() - DIFF_IN_MS_BETWEEN_UTC_AND_KR,
+        ),
         description,
         title,
         slug: postPath.slice(POSTS_DIRECTORY_PATH.length).replace(".mdx", ""),
