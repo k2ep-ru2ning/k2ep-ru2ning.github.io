@@ -11,7 +11,7 @@ export default async function RecentPostList() {
     .slice(0, RECENT_POST_LIST_SIZE);
 
   return (
-    <section className="py-4 flex flex-col gap-2">
+    <section className="py-8 flex flex-col gap-2">
       <h2 className="font-bold text-2xl">{"최신 글"}</h2>
       <ul className="divide-y divide-gray-950 dark:divide-gray-50">
         {posts.map((post) => (
