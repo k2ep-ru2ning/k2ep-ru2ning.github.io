@@ -13,7 +13,9 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={`${pretendard.className} bg-gray-50 dark:bg-gray-950`}>
+      <body
+        className={`${pretendard.className} bg-gray-50 dark:bg-gray-950 text-gray-950 dark:text-gray-50`}
+      >
         <ThemeProvider attribute="class">
           <div className="px-4 max-w-screen-md mx-auto min-h-dvh flex flex-col">
             <Header />

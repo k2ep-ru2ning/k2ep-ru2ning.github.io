@@ -32,7 +32,7 @@ export default function ThemeDropdown() {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className="data-[state=open]:bg-gray-200 dark:data-[state=open]:bg-gray-700 outline-none text-gray-950 dark:text-gray-50 hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 flex justify-center items-center rounded-md"
+          className="data-[state=open]:bg-gray-200 dark:data-[state=open]:bg-gray-700 outline-none hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 flex justify-center items-center rounded-md"
           aria-label="theme switch"
         >
           {resolvedTheme === "light" ? <Sun size={24} /> : <Moon size={24} />}
@@ -52,7 +52,7 @@ export default function ThemeDropdown() {
               <DropdownMenu.RadioItem
                 key={theme}
                 value={theme}
-                className="text-gray-950 dark:text-gray-50 p-1 cursor-pointer rounded-md select-none outline-none hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="p-1 cursor-pointer rounded-md select-none outline-none hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 {theme}
               </DropdownMenu.RadioItem>
