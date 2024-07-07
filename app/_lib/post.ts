@@ -23,6 +23,20 @@ async function getPostPaths(): Promise<string[]> {
   return glob(`${POSTS_DIRECTORY_PATH}/**/*.mdx`);
 }
 
+function generateDummyPosts(): Post[] {
+  const posts: Post[] = [];
+  for (let i = 0; i < 4; i++) {
+    posts.push({
+      content: `## Dummy Post ${i + 1}`,
+      createdAt: new Date(2024, 6, i + 1),
+      description: `This is Dummy Post ${i + 1}`,
+      slug: `/posts/dummy/dummy-post-${i + 1}`,
+      title: `Dummy Post ${i + 1}`,
+    });
+  }
+  return posts;
+}
+
 export async function getPosts(): Promise<Post[]> {
   const posts: Post[] = [];
   try {
@@ -44,5 +58,6 @@ export async function getPosts(): Promise<Post[]> {
   } catch (e) {
     throw new Error("post 파일을 read, parse 하는데 문제가 발생했습니다.");
   }
-  return posts;
+  // ToDo: 추후 Dummy Data 제거
+  return [...posts, ...generateDummyPosts()];
 }
