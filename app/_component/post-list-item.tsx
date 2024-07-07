@@ -6,7 +6,7 @@ type Props = {
   post: Post;
 };
 
-export default function RecentPostListItem({
+export default function PostListItem({
   post: { title, description, createdAt, slug },
 }: Props) {
   return (

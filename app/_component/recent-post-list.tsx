@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
-import RecentPostListItem from "./recent-post-list-item";
+import PostListItem from "./post-list-item";
 import { getPosts } from "../_lib/post";
 
 const RECENT_POST_LIST_SIZE = 5;
@@ -15,7 +15,7 @@ export default async function RecentPostList() {
       <h2 className="font-bold text-2xl">{"최신 글"}</h2>
       <ul className="divide-y divide-gray-950 dark:divide-gray-50">
         {posts.map((post) => (
-          <RecentPostListItem key={post.slug} post={post} />
+          <PostListItem key={post.slug} post={post} />
         ))}
       </ul>
       <Link
