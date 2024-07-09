@@ -15,7 +15,7 @@ export default async function RecentPostList() {
       <h2 className="font-bold text-2xl">{"최신 글"}</h2>
       <ul className="divide-y divide-gray-500 dark:divide-gray-400">
         {posts.map((post) => (
-          <PostListItem key={post.slug} post={post} />
+          <PostListItem key={post.path} post={post} />
         ))}
       </ul>
       <Link

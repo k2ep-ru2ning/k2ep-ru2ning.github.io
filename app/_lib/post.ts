@@ -11,7 +11,7 @@ type PostMatter = {
 };
 
 export type Post = PostMatter & {
-  slug: string;
+  path: string;
   content: string;
 };
 
@@ -25,12 +25,12 @@ async function getPostPaths(): Promise<string[]> {
 
 function generateDummyPosts(): Post[] {
   const posts: Post[] = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3; i++) {
     posts.push({
       content: `## Dummy Post ${i + 1}`,
       createdAt: new Date(2024, 6, i + 1),
       description: `This is Dummy Post ${i + 1}`,
-      slug: `/posts/dummy/dummy-post-${i + 1}`,
+      path: `/posts/dummy/dummy-post-${i + 1}`,
       title: `Dummy Post ${i + 1}`,
     });
   }
@@ -52,7 +52,7 @@ export async function getPosts(): Promise<Post[]> {
         ),
         description,
         title,
-        slug: postPath.slice(cwd().length).replace(".mdx", ""),
+        path: postPath.slice(cwd().length).replace(".mdx", ""),
       });
     }
   } catch (e) {
@@ -60,4 +60,9 @@ export async function getPosts(): Promise<Post[]> {
   }
   // ToDo: 추후 Dummy Data 제거
   return [...posts, ...generateDummyPosts()];
+}
+
+export async function getPostByPath(path: string) {
+  const posts = await getPosts();
+  return posts.find((post) => post.path === path);
 }

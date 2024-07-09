@@ -7,12 +7,12 @@ type Props = {
 };
 
 export default function PostListItem({
-  post: { title, description, createdAt, slug },
+  post: { title, description, createdAt, path },
 }: Props) {
   return (
     <li>
       <Link
-        href={slug}
+        href={path}
         className="group hover:bg-gray-200 dark:hover:bg-gray-700 group py-4 flex flex-col md:flex-row md:gap-x-8"
       >
         <time className="shrink-0 text-sm leading-8">
