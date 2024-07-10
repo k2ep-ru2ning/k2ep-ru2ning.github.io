@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 
-export default function ThemeDropdown() {
+export default function ThemeSwitchDropdown() {
   const [isMounted, setIsMounted] = useState(false);
 
   const { theme, setTheme, themes, resolvedTheme } = useTheme();
