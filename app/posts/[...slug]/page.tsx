@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPostByPath } from "@/app/_lib/post";
+import PostArticleHeader from "./_component/post-article-header";
 
 type Props = {
   params: {
@@ -17,9 +18,8 @@ export default async function PostPage({ params: { slug } }: Props) {
   }
 
   return (
-    <article>
-      <p>{post.title}</p>
-      <p>{post.path}</p>
+    <article className="p-2">
+      <PostArticleHeader title={post.title} createdAt={post.createdAt} />
     </article>
   );
 }
