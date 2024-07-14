@@ -9,7 +9,7 @@ type Props = {
 export default function PostArticleHeader({ title, createdAt }: Props) {
   return (
     <header className="flex flex-col gap-y-2">
-      <h2 className="text-3xl font-bold">{title}</h2>
+      <h1 className="text-3xl font-bold">{title}</h1>
       <time className="flex items-center gap-x-1.5 text-sm">
         <SquarePen size={18} />
         {formatDate(createdAt)}

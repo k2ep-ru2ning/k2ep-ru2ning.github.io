@@ -2,11 +2,11 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: "selector",
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ["./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 
 export default config;
