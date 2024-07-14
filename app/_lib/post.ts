@@ -20,7 +20,7 @@ const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts");
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
 async function getPostPaths(): Promise<string[]> {
-  return glob(`${POSTS_DIRECTORY_PATH}/**/*.mdx`);
+  return glob(`${POSTS_DIRECTORY_PATH}/**/*.md`);
 }
 
 function generateDummyPosts(): Post[] {
@@ -52,7 +52,7 @@ export async function getPosts(): Promise<Post[]> {
         ),
         description,
         title,
-        path: postPath.slice(cwd().length).replace(".mdx", ""),
+        path: postPath.slice(cwd().length).replace(".md", ""),
       });
     }
   } catch (e) {
