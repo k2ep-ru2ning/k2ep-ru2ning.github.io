@@ -19,8 +19,9 @@ export default async function PostPage({ params: { slug } }: Props) {
   }
 
   return (
-    <article className="p-2 flex flex-col gap-y-8 divide-y divide-gray-500 dark:divide-gray-400">
+    <article className="p-2 flex flex-col gap-y-4">
       <PostArticleHeader title={post.title} createdAt={post.createdAt} />
+      <hr className="border border-gray-500 dark:border-gray-400" />
       <PostArticleContent contentAsMarkdown={post.content} />
     </article>
   );

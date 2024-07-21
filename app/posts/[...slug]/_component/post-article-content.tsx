@@ -23,6 +23,9 @@ export default function PostArticleContent({ contentAsMarkdown }: Props) {
               language={match[1]}
               style={darcula}
               showLineNumbers
+              customStyle={{
+                padding: "0.5em",
+              }}
             >
               {String(children).replace(/\n$/, "")}
             </SyntaxHighlighter>
