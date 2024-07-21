@@ -1,4 +1,6 @@
 import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 
 type Props = {
@@ -9,7 +11,28 @@ export default function PostArticleContent({ contentAsMarkdown }: Props) {
   const remarkPlugins = [remarkGfm];
   return (
     <ReactMarkdown
-      className="prose dark:prose-invert max-w-full"
+      className="prose dark:prose-invert prose-pre:p-0 prose-pre:bg-[#2B2B2B] max-w-full"
+      components={{
+        code(props) {
+          const { children, className, node, ref, ...rest } = props;
+          const match = /language-(\w+)/.exec(className || "");
+          return match ? (
+            <SyntaxHighlighter
+              {...rest}
+              PreTag="div"
+              language={match[1]}
+              style={darcula}
+              showLineNumbers
+            >
+              {String(children).replace(/\n$/, "")}
+            </SyntaxHighlighter>
+          ) : (
+            <code {...rest} className={className}>
+              {children}
+            </code>
+          );
+        },
+      }}
       remarkPlugins={remarkPlugins}
     >
       {contentAsMarkdown}
