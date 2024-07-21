@@ -27,7 +27,10 @@ export default function PostArticleContent({ contentAsMarkdown }: Props) {
               {String(children).replace(/\n$/, "")}
             </SyntaxHighlighter>
           ) : (
-            <code {...rest} className={className}>
+            <code
+              {...rest}
+              className={`${className} before:content-[none] after:content-[none] inline-block px-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-indigo-500`}
+            >
               {children}
             </code>
           );
