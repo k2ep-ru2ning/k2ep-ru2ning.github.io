@@ -25,10 +25,10 @@ async function getPostPaths(): Promise<string[]> {
 
 function generateDummyPosts(): Post[] {
   const posts: Post[] = [];
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 12; i++) {
     posts.push({
       content: `## Dummy Post ${i + 1}`,
-      createdAt: new Date(2024, 6, i + 1),
+      createdAt: new Date(2022, 6, i + 1),
       description: `This is Dummy Post ${i + 1}`,
       path: `/posts/dummy/dummy-post-${i + 1}`,
       title: `Dummy Post ${i + 1}`,
