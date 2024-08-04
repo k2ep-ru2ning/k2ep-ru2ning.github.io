@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPosts } from "@/app/_lib/post";
+import { getSortedPosts } from "@/app/_lib/post";
 import PostListItem from "@/app/_component/post-list-item";
 
 type Props = {
@@ -13,9 +13,7 @@ export default async function PostsPage({ params: { slug } }: Props) {
     notFound();
   }
 
-  const posts = (await getPosts()).sort(
-    (p1, p2) => p2.createdAt.getTime() - p1.createdAt.getTime(),
-  );
+  const posts = await getSortedPosts();
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">

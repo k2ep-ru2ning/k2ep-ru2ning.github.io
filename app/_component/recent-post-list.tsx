@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import PostListItem from "./post-list-item";
-import { getPosts } from "../_lib/post";
+import { getSortedPosts } from "../_lib/post";
 
 const RECENT_POST_LIST_SIZE = 5;
 
 export default async function RecentPostList() {
-  const posts = (await getPosts())
-    .sort((p1, p2) => p2.createdAt.getTime() - p1.createdAt.getTime())
-    .slice(0, RECENT_POST_LIST_SIZE);
+  const posts = (await getSortedPosts()).slice(0, RECENT_POST_LIST_SIZE);
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">

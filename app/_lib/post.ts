@@ -19,11 +19,12 @@ const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
-async function getPostPaths(): Promise<string[]> {
+async function getPostPaths() {
   return glob(`${POSTS_DIRECTORY_PATH}/**/*.md`);
 }
 
-function generateDummyPosts(): Post[] {
+// ToDo: 추후 Dummy Data 제거
+function generateDummyPosts() {
   const posts: Post[] = [];
   for (let i = 0; i < 12; i++) {
     posts.push({
@@ -37,7 +38,7 @@ function generateDummyPosts(): Post[] {
   return posts;
 }
 
-export async function getPosts(): Promise<Post[]> {
+export async function getPosts() {
   const posts: Post[] = [];
   try {
     const postPaths = await getPostPaths();
@@ -60,6 +61,12 @@ export async function getPosts(): Promise<Post[]> {
   }
   // ToDo: 추후 Dummy Data 제거
   return [...posts, ...generateDummyPosts()];
+}
+
+export async function getSortedPosts() {
+  return (await getPosts()).sort(
+    (p1, p2) => p2.createdAt.getTime() - p1.createdAt.getTime(),
+  );
 }
 
 export async function getPostByPath(path: string) {
