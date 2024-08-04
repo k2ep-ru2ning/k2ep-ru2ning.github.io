@@ -19,7 +19,7 @@ export default function RootLayout({ children }: Props) {
         <ThemeProvider attribute="class">
           <div className="px-4 max-w-screen-md mx-auto min-h-dvh flex flex-col">
             <Header />
-            <div className="grow">{children}</div>
+            <div className="px-2 grow">{children}</div>
             <Footer />
           </div>
         </ThemeProvider>

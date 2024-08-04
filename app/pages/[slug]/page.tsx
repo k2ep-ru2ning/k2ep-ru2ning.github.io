@@ -19,7 +19,7 @@ export default async function PostsPage({ params: { slug } }: Props) {
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <h2 className="font-bold text-2xl">{`페이지 ${slug}`}</h2>
+      <h2 className="font-bold text-2xl">{`Page ${slug}`}</h2>
       <ul className="divide-y divide-gray-500 dark:divide-gray-400">
         {posts.map((post) => (
           <PostListItem key={post.path} post={post} />
