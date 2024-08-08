@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getSortedPosts } from "@/app/_lib/post";
+import { getPosts, getSortedPosts } from "@/app/_lib/post";
 import PostListItem from "@/app/_component/post-list-item";
 
 type Props = {
@@ -42,4 +42,12 @@ export default async function PostsPage({ params: { slug } }: Props) {
       </ul>
     </section>
   );
+}
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  const numberOfPages = Math.ceil(posts.length / PAGE_SIZE);
+  return Array.from({ length: numberOfPages }, (_, idx) => ({
+    slug: String(idx + 1),
+  }));
 }
