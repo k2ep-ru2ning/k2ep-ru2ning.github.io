@@ -1,5 +1,6 @@
 import cn from "@/app/_lib/cn";
 import Link from "next/link";
+import NavButton from "./nav-button";
 
 type Props = {
   currentPageNumber: number;
@@ -16,18 +17,28 @@ export default function PageController({
 
   return (
     <div className="p-4 flex items-center justify-center gap-2">
+      <NavButton
+        direction="prev"
+        currentPageNumber={currentPageNumber}
+        numberOfPages={numberOfPages}
+      />
       {pageNumbers.map((pageNumber) => (
         <Link
           href={`/pages/${pageNumber}`}
           key={pageNumber}
           className={cn(
-            "border border-gray-300 dark:border-gray-600 rounded-md px-2",
+            "w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md px-2",
             pageNumber === currentPageNumber && "font-bold text-indigo-500",
           )}
         >
           {pageNumber}
         </Link>
       ))}
+      <NavButton
+        direction="next"
+        currentPageNumber={currentPageNumber}
+        numberOfPages={numberOfPages}
+      />
     </div>
   );
 }
