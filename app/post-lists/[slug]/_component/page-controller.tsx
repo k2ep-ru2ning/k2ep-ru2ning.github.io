@@ -1,6 +1,7 @@
 import cn from "@/app/_lib/cn";
 import Link from "next/link";
-import NavButton from "./nav-button";
+import PreviousButton from "./previous-button";
+import NextButton from "./next-button";
 
 type Props = {
   currentPageNumber: number;
@@ -16,30 +17,32 @@ export default function PageController({
   const pageNumbers = getPageNumbers(currentPageNumber, numberOfPages);
 
   return (
-    <div className="p-4 flex items-center justify-center gap-2">
-      <NavButton
-        direction="prev"
-        currentPageNumber={currentPageNumber}
-        numberOfPages={numberOfPages}
-      />
-      {pageNumbers.map((pageNumber) => (
-        <Link
-          href={`/post-lists/${pageNumber}`}
-          key={pageNumber}
-          className={cn(
-            "w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md px-2",
-            pageNumber === currentPageNumber && "font-bold text-indigo-500",
-          )}
-        >
-          {pageNumber}
-        </Link>
-      ))}
-      <NavButton
-        direction="next"
-        currentPageNumber={currentPageNumber}
-        numberOfPages={numberOfPages}
-      />
-    </div>
+    <nav>
+      <ul className="p-4 flex items-center justify-center gap-2">
+        <li>
+          <PreviousButton currentPageNumber={currentPageNumber} />
+        </li>
+        {pageNumbers.map((pageNumber) => (
+          <li key={pageNumber}>
+            <Link
+              href={`/post-lists/${pageNumber}`}
+              className={cn(
+                "w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md px-2",
+                pageNumber === currentPageNumber && "font-bold text-indigo-500",
+              )}
+            >
+              {pageNumber}
+            </Link>
+          </li>
+        ))}
+        <li>
+          <NextButton
+            currentPageNumber={currentPageNumber}
+            numberOfPages={numberOfPages}
+          />
+        </li>
+      </ul>
+    </nav>
   );
 }
 
