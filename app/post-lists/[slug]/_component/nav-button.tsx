@@ -21,7 +21,7 @@ export default function NavButton({
       <button
         type="button"
         onClick={() => {
-          router.push(`/pages/${currentPageNumber - 1}`);
+          router.push(`/post-lists/${currentPageNumber - 1}`);
         }}
         disabled={currentPageNumber === 1}
         className="w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md disabled:text-gray-300 dark:disabled:text-gray-700"
@@ -35,7 +35,7 @@ export default function NavButton({
     <button
       type="button"
       onClick={() => {
-        router.push(`/pages/${currentPageNumber + 1}`);
+        router.push(`/post-lists/${currentPageNumber + 1}`);
       }}
       disabled={currentPageNumber === numberOfPages}
       className="w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md disabled:text-gray-300 dark:disabled:text-gray-700"
