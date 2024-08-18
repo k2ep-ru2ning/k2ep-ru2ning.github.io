@@ -11,7 +11,7 @@ type Props = {
 
 const PAGE_SIZE = 5;
 
-export default async function PostsPage({ params: { slug } }: Props) {
+export default async function PostListPage({ params: { slug } }: Props) {
   if (!/^\d+$/.test(slug)) {
     notFound();
   }
@@ -35,7 +35,7 @@ export default async function PostsPage({ params: { slug } }: Props) {
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <h2 className="font-bold text-2xl">{`Page ${currentPageNumber}`}</h2>
+      <h2 className="font-bold text-2xl">{`전체 글 목록 ${currentPageNumber}`}</h2>
       <ul className="divide-y divide-gray-500 dark:divide-gray-400">
         {postsOfCurrentPage.map((post) => (
           <PostListItem key={post.path} post={post} />

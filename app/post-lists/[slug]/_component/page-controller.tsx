@@ -24,7 +24,7 @@ export default function PageController({
       />
       {pageNumbers.map((pageNumber) => (
         <Link
-          href={`/pages/${pageNumber}`}
+          href={`/post-lists/${pageNumber}`}
           key={pageNumber}
           className={cn(
             "w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md px-2",
