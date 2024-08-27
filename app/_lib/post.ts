@@ -8,6 +8,7 @@ type PostMatter = {
   title: string;
   description: string;
   createdAt: Date;
+  tags?: string[];
 };
 
 export type Post = PostMatter & {
@@ -45,7 +46,7 @@ export async function getPosts() {
     for (const postPath of postPaths) {
       const file = await readFile(postPath, { encoding: "utf8" });
       const { content, data } = matter(file);
-      const { createdAt, description, title } = data as PostMatter;
+      const { createdAt, description, title, tags } = data as PostMatter;
       posts.push({
         content,
         createdAt: new Date(
@@ -53,6 +54,7 @@ export async function getPosts() {
         ),
         description,
         title,
+        tags,
         path: postPath.slice(cwd().length).replace(".md", ""),
       });
     }
