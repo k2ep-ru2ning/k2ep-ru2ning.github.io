@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { Moon, Sun } from "lucide-react";
+import { Check, Moon, Sun } from "lucide-react";
 
 export default function ThemeSwitchDropdown() {
   const [isMounted, setIsMounted] = useState(false);
@@ -40,7 +40,7 @@ export default function ThemeSwitchDropdown() {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="w-20 p-1.5 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-950"
+          className="w-28 p-1.5 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-950"
           sideOffset={8}
           align="end"
         >
@@ -52,9 +52,12 @@ export default function ThemeSwitchDropdown() {
               <DropdownMenu.RadioItem
                 key={theme}
                 value={theme}
-                className="p-1 cursor-pointer rounded-md select-none outline-none hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="flex justify-between items-center p-1 cursor-pointer rounded-md select-none outline-none hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 {theme}
+                <DropdownMenu.ItemIndicator>
+                  <Check className="text-indigo-500" size={16} />
+                </DropdownMenu.ItemIndicator>
               </DropdownMenu.RadioItem>
             ))}
           </DropdownMenu.RadioGroup>
