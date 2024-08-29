@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatDate } from "../_lib/date-formatter";
 import { type Post } from "../_lib/post";
+import TagList from "./tag-list";
 
 type Props = {
   post: Post;
@@ -22,18 +23,7 @@ export default function PostListItem({
             </h3>
             <p className="truncate">{description}</p>
           </Link>
-          {tags ? (
-            <div className="flex flex-wrap gap-3 items-center">
-              {tags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="block px-2 py-1 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          ) : null}
+          <TagList tags={tags} />
         </div>
       </section>
     </li>
