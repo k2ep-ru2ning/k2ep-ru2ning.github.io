@@ -54,7 +54,7 @@ export async function getPosts() {
         ),
         description,
         title,
-        tags,
+        tags: tags?.map((tag) => tag.toLowerCase()),
         path: postPath.slice(cwd().length).replace(".md", ""),
       });
     }
