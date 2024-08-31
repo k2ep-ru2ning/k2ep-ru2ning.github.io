@@ -28,13 +28,14 @@ async function getPostPaths() {
 function generateDummyPosts() {
   const posts: Post[] = [];
   for (let i = 0; i < 12; i++) {
+    const id = String.fromCharCode("A".charCodeAt(0) + i);
     posts.push({
-      content: `## Dummy Post ${i + 1}`,
+      content: `## Dummy Post ${id}`,
       createdAt: new Date(2022, 6, i + 1),
-      description: `This is Dummy Post ${i + 1}`,
-      path: `/posts/dummy/dummy-post-${i + 1}`,
-      title: `Dummy Post ${i + 1}`,
-      tags: [`더미-태그 ${i + 1}`, "더미-태그"].sort((tag1, tag2) =>
+      description: `This is Dummy Post ${id}`,
+      path: `/posts/dummy/dummy-post-${id}`,
+      title: `Dummy Post ${id}`,
+      tags: [`더미-태그-${id}`, "더미-태그"].sort((tag1, tag2) =>
         tag1.localeCompare(tag2),
       ),
     });
@@ -79,4 +80,11 @@ export async function getSortedPosts() {
 export async function getPostByPath(path: string) {
   const posts = await getPosts();
   return posts.find((post) => post.path === path);
+}
+
+export async function getTags() {
+  const posts = await getPosts();
+  return [...new Set(posts.flatMap((post) => post.tags ?? []))].sort(
+    (tag1, tag2) => tag1.localeCompare(tag2),
+  );
 }
