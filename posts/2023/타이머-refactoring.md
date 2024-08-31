@@ -2,6 +2,10 @@
 title: 타이머 refactoring
 description: 타이머 컴포넌트 refactoring 회고
 createdAt: 2023-05-28
+tags:
+  - project-회고
+  - react
+  - refactoring
 ---
 
 ## 개요

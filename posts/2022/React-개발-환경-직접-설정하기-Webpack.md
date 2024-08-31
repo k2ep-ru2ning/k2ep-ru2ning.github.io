@@ -6,7 +6,7 @@ tags:
   - Webpack
   - bundler
   - react
-  - 개발환경 설정
+  - 개발환경-설정
 ---
 
 > Webpack에 관해 공부한 내용 정리

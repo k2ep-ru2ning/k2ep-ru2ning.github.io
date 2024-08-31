@@ -34,6 +34,9 @@ function generateDummyPosts() {
       description: `This is Dummy Post ${i + 1}`,
       path: `/posts/dummy/dummy-post-${i + 1}`,
       title: `Dummy Post ${i + 1}`,
+      tags: [`더미-태그 ${i + 1}`, "더미-태그"].sort((tag1, tag2) =>
+        tag1.localeCompare(tag2),
+      ),
     });
   }
   return posts;
@@ -54,7 +57,9 @@ export async function getPosts() {
         ),
         description,
         title,
-        tags: tags?.map((tag) => tag.toLowerCase()),
+        tags: tags
+          ?.map((tag) => tag.toLowerCase())
+          .sort((tag1, tag2) => tag1.localeCompare(tag2)),
         path: postPath.slice(cwd().length).replace(".md", ""),
       });
     }
