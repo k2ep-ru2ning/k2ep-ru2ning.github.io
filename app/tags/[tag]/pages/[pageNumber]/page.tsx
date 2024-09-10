@@ -17,6 +17,6 @@ export default function PostListInTagPage({ params }: Props) {
   const pageNumber = Number(params.pageNumber);
 
   return (
-    <p>{`태그 "${tag}", page "${pageNumber}"에 속한 글 목록을 표시할 페이지 `}</p>
+    <p>{`태그 "${tag}", page "${pageNumber}"에 속한 글 목록을 표시할 페이지`}</p>
   );
 }
