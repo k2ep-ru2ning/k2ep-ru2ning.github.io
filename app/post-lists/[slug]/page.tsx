@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getPosts, getSortedPosts } from "@/app/_lib/post";
 import PostListItem from "@/app/_component/post-list-item";
-import PageController from "./_component/page-controller";
+import PageController from "../../_component/page-controller/page-controller";
 
 type Props = {
   params: {
@@ -42,6 +42,7 @@ export default async function PostListPage({ params: { slug } }: Props) {
         ))}
       </ul>
       <PageController
+        basePath="/post-lists"
         currentPageNumber={currentPageNumber}
         numberOfPages={numberOfPages}
       />

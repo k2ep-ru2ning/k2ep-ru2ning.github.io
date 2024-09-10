@@ -88,3 +88,7 @@ export async function getTags() {
     (tag1, tag2) => tag1.localeCompare(tag2),
   );
 }
+
+export async function getSortedPostsByTag(tag: string) {
+  return (await getSortedPosts()).filter((post) => post.tags?.includes(tag));
+}

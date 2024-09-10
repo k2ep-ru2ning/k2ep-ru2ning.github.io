@@ -6,6 +6,7 @@ import NextButton from "./next-button";
 type Props = {
   currentPageNumber: number;
   numberOfPages: number;
+  basePath: string;
 };
 
 const CONTROLLER_SIZE = 5;
@@ -13,6 +14,7 @@ const CONTROLLER_SIZE = 5;
 export default function PageController({
   currentPageNumber,
   numberOfPages,
+  basePath,
 }: Props) {
   const pageNumbers = getPageNumbers(currentPageNumber, numberOfPages);
 
@@ -20,12 +22,15 @@ export default function PageController({
     <nav>
       <ul className="p-4 flex items-center justify-center gap-2">
         <li>
-          <PreviousButton currentPageNumber={currentPageNumber} />
+          <PreviousButton
+            basePath={basePath}
+            currentPageNumber={currentPageNumber}
+          />
         </li>
         {pageNumbers.map((pageNumber) => (
           <li key={pageNumber}>
             <Link
-              href={`/post-lists/${pageNumber}`}
+              href={`${basePath}/${pageNumber}`}
               className={cn(
                 "w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md px-2",
                 pageNumber === currentPageNumber && "font-bold text-indigo-500",
@@ -37,6 +42,7 @@ export default function PageController({
         ))}
         <li>
           <NextButton
+            basePath={basePath}
             currentPageNumber={currentPageNumber}
             numberOfPages={numberOfPages}
           />

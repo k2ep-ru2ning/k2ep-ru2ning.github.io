@@ -6,15 +6,16 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   currentPageNumber: number;
+  basePath: string;
 };
 
-export default function PreviousButton({ currentPageNumber }: Props) {
+export default function PreviousButton({ currentPageNumber, basePath }: Props) {
   const router = useRouter();
 
   const isDisabled = currentPageNumber === 1;
 
   const handleClick = () => {
-    router.push(`/post-lists/${currentPageNumber - 1}`);
+    router.push(`${basePath}/${currentPageNumber - 1}`);
   };
 
   return (

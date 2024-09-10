@@ -7,18 +7,20 @@ import { useRouter } from "next/navigation";
 type Props = {
   currentPageNumber: number;
   numberOfPages: number;
+  basePath: string;
 };
 
 export default function NextButton({
   currentPageNumber,
   numberOfPages,
+  basePath,
 }: Props) {
   const router = useRouter();
 
   const isDisabled = currentPageNumber === numberOfPages;
 
   const handleClick = () => {
-    router.push(`/post-lists/${currentPageNumber + 1}`);
+    router.push(`${basePath}/${currentPageNumber + 1}`);
   };
 
   return (
