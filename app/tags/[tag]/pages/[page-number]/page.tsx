@@ -6,20 +6,20 @@ import { notFound } from "next/navigation";
 type Props = {
   params: {
     tag: string;
-    pageNumber: string;
+    "page-number": string;
   };
 };
 
 const PAGE_SIZE = 5;
 
 export default async function PostListInTagPage({ params }: Props) {
-  if (!/^\d+$/.test(params.pageNumber)) {
+  if (!/^\d+$/.test(params["page-number"])) {
     notFound();
   }
 
   const tag = decodeURIComponent(params.tag);
 
-  const pageNumber = Number(params.pageNumber);
+  const pageNumber = Number(params["page-number"]);
 
   const posts = await getSortedPostsByTag(tag);
 
