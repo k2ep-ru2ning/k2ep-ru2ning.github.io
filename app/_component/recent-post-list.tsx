@@ -17,7 +17,7 @@ export default async function RecentPostList() {
         ))}
       </ul>
       <Link
-        href="/post-lists/1"
+        href="/posts/pages/1"
         className="flex items-center gap-1.5 p-1 rounded-md self-center hover:bg-gray-200 dark:hover:bg-gray-700"
       >
         {"전체 글"}
