@@ -5,20 +5,22 @@ import PageController from "../../_component/page-controller/page-controller";
 
 type Props = {
   params: {
-    slug: string;
+    "page-number": string;
   };
 };
 
 const PAGE_SIZE = 5;
 
-export default async function PostListPage({ params: { slug } }: Props) {
-  if (!/^\d+$/.test(slug)) {
+export default async function PostListPage({
+  params: { "page-number": pageNumber },
+}: Props) {
+  if (!/^\d+$/.test(pageNumber)) {
     notFound();
   }
 
   const posts = await getSortedPosts();
 
-  const currentPageNumber = Number(slug);
+  const currentPageNumber = Number(pageNumber);
 
   const numberOfPages = Math.ceil(posts.length / PAGE_SIZE);
 
@@ -54,6 +56,6 @@ export async function generateStaticParams() {
   const posts = await getPosts();
   const numberOfPages = Math.ceil(posts.length / PAGE_SIZE);
   return Array.from({ length: numberOfPages }, (_, idx) => ({
-    slug: String(idx + 1),
+    "page-number": String(idx + 1),
   }));
 }
