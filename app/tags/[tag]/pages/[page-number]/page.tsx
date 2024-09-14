@@ -1,6 +1,6 @@
 import PageController from "@/app/_component/page-controller/page-controller";
 import PostListItem from "@/app/_component/post-list-item";
-import { getSortedPostsByTag } from "@/app/_lib/post";
+import { getSortedPostsByTag, getTags } from "@/app/_lib/post";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -51,4 +51,20 @@ export default async function PostListInTagPage({ params }: Props) {
       />
     </section>
   );
+}
+
+export async function generateStaticParams() {
+  const tags = await getTags();
+  const params: Props["params"][] = [];
+  for (const tag of tags) {
+    const posts = await getSortedPostsByTag(tag);
+    const numberOfPage = Math.ceil(posts.length);
+    for (let pageNumber = 1; pageNumber <= numberOfPage; pageNumber++) {
+      params.push({
+        tag,
+        "page-number": String(pageNumber),
+      });
+    }
+  }
+  return params;
 }
