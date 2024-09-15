@@ -1,5 +1,5 @@
 import PageController from "@/app/_component/page-controller/page-controller";
-import PostListItem from "@/app/_component/post-list-item";
+import PostList from "@/app/_component/post-list/post-list";
 import { getSortedPostsByTag, getTags } from "@/app/_lib/post";
 import { notFound } from "next/navigation";
 
@@ -39,11 +39,7 @@ export default async function PostListInTagPage({ params }: Props) {
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
       <h2 className="font-bold text-2xl">{`태그 "${tag}"에 속한 글 목록 ${pageNumber}`}</h2>
-      <ul className="divide-y divide-gray-500 dark:divide-gray-400">
-        {postsOfCurrentPage.map((post) => (
-          <PostListItem key={post.path} post={post} />
-        ))}
-      </ul>
+      <PostList posts={postsOfCurrentPage} />
       <PageController
         basePath={`/tags/${tag}/pages`}
         currentPageNumber={pageNumber}

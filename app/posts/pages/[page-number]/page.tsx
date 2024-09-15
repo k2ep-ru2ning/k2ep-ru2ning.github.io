@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getPosts, getSortedPosts } from "@/app/_lib/post";
-import PostListItem from "@/app/_component/post-list-item";
 import PageController from "@/app/_component/page-controller/page-controller";
+import PostList from "@/app/_component/post-list/post-list";
 
 type Props = {
   params: {
@@ -38,11 +38,7 @@ export default async function PostListPage({
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
       <h2 className="font-bold text-2xl">{`전체 글 목록 ${currentPageNumber}`}</h2>
-      <ul className="divide-y divide-gray-500 dark:divide-gray-400">
-        {postsOfCurrentPage.map((post) => (
-          <PostListItem key={post.path} post={post} />
-        ))}
-      </ul>
+      <PostList posts={postsOfCurrentPage} />
       <PageController
         basePath="/posts/pages"
         currentPageNumber={currentPageNumber}

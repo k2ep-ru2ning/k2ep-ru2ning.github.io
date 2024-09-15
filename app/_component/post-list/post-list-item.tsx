@@ -1,7 +1,7 @@
+import { formatDate } from "@/app/_lib/date-formatter";
+import { Post } from "@/app/_lib/post";
 import Link from "next/link";
-import { formatDate } from "../_lib/date-formatter";
-import { type Post } from "../_lib/post";
-import TagList from "./tag-list";
+import TagList from "../tag-list";
 
 type Props = {
   post: Post;
