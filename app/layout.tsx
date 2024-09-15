@@ -5,6 +5,7 @@ import pretendard from "./_font/pretendard";
 import Header from "./_component/header";
 import Footer from "./_component/footer";
 import { ThemeProvider } from "next-themes";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 type Props = {
   children: ReactNode;
@@ -17,11 +18,13 @@ export default function RootLayout({ children }: Props) {
         className={`${pretendard.className} bg-gray-50 dark:bg-gray-950 text-gray-950 dark:text-gray-50`}
       >
         <ThemeProvider attribute="class">
-          <div className="px-4 max-w-screen-md mx-auto min-h-dvh flex flex-col">
-            <Header />
-            <div className="px-2 grow">{children}</div>
-            <Footer />
-          </div>
+          <Tooltip.Provider delayDuration={400} skipDelayDuration={100}>
+            <div className="px-4 max-w-screen-md mx-auto min-h-dvh flex flex-col">
+              <Header />
+              <div className="px-2 grow">{children}</div>
+              <Footer />
+            </div>
+          </Tooltip.Provider>
         </ThemeProvider>
       </body>
     </html>
