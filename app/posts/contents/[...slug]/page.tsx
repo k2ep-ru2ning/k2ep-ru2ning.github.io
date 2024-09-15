@@ -19,7 +19,7 @@ export default async function PostPage({ params: { slug } }: Props) {
   }
 
   return (
-    <article className="flex flex-col gap-y-4">
+    <article className="flex flex-col gap-y-6">
       <PostArticleHeader
         title={post.title}
         createdAt={post.createdAt}
