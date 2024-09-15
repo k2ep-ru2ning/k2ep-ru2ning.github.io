@@ -1,20 +1,20 @@
+"use client";
+
 import cn from "@/app/_lib/cn";
 import Link from "next/link";
-import { ComponentProps } from "react";
+import { usePathname } from "next/navigation";
+import { type ComponentProps } from "react";
 
 type Props = Pick<
   ComponentProps<typeof Link>,
   "href" | "className" | "children"
-> & {
-  isActive: boolean;
-};
+>;
 
-export default function IconLink({
-  href,
-  className,
-  children,
-  isActive,
-}: Props) {
+export default function IconLink({ href, className, children }: Props) {
+  const pathname = usePathname();
+
+  const isActive = pathname === href;
+
   return (
     <Link
       href={href}
