@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import { getSortedPosts } from "../_lib/post";
 import PostList from "./post-list/post-list";
+import ListHeading from "./list-heading";
 
 const RECENT_POST_LIST_SIZE = 5;
 
@@ -10,7 +11,7 @@ export default async function RecentPostList() {
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <h2 className="font-bold text-2xl">{"최신 글"}</h2>
+      <ListHeading text="최신 글" />
       <PostList posts={posts} />
       <Link
         href="/posts/pages/1"

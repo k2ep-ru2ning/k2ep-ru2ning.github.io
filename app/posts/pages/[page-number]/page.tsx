@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPosts, getSortedPosts } from "@/app/_lib/post";
 import PageController from "@/app/_component/page-controller/page-controller";
 import PostList from "@/app/_component/post-list/post-list";
+import ListHeading from "@/app/_component/list-heading";
 
 type Props = {
   params: {
@@ -37,7 +38,7 @@ export default async function PostListPage({
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <h2 className="font-bold text-2xl">{`전체 글 목록 ${currentPageNumber}`}</h2>
+      <ListHeading text={`전체 글 목록 ${currentPageNumber}`} />
       <PostList posts={postsOfCurrentPage} />
       <PageController
         basePath="/posts/pages"

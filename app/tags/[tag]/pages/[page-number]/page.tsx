@@ -1,3 +1,4 @@
+import ListHeading from "@/app/_component/list-heading";
 import PageController from "@/app/_component/page-controller/page-controller";
 import PostList from "@/app/_component/post-list/post-list";
 import { getSortedPostsByTag, getTags } from "@/app/_lib/post";
@@ -38,7 +39,7 @@ export default async function PostListInTagPage({ params }: Props) {
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <h2 className="font-bold text-2xl">{`태그 "${tag}"에 속한 글 목록 ${pageNumber}`}</h2>
+      <ListHeading text={`태그 "${tag}"에 속한 글 목록 ${pageNumber}`} />
       <PostList posts={postsOfCurrentPage} />
       <PageController
         basePath={`/tags/${tag}/pages`}
