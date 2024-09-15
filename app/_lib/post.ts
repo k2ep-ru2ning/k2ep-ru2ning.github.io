@@ -16,7 +16,7 @@ export type Post = PostMatter & {
   content: string;
 };
 
-const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts");
+const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts", "contents");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
@@ -33,7 +33,7 @@ function generateDummyPosts() {
       content: `## Dummy Post ${id}`,
       createdAt: new Date(2022, 6, i + 1),
       description: `This is Dummy Post ${id}`,
-      path: `/posts/dummy/dummy-post-${id}`,
+      path: `/posts/contents/dummy/dummy-post-${id}`,
       title: `Dummy Post ${id}`,
       tags: [`더미-태그-${id}`, "더미-태그"].sort((tag1, tag2) =>
         tag1.localeCompare(tag2),

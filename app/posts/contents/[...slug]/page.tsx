@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default async function PostPage({ params: { slug } }: Props) {
-  const path = `/posts/${slug.map(decodeURIComponent).join("/")}`;
+  const path = `/posts/contents/${slug.map(decodeURIComponent).join("/")}`;
 
   const post = await getPostByPath(path);
 
@@ -34,6 +34,6 @@ export default async function PostPage({ params: { slug } }: Props) {
 export async function generateStaticParams() {
   const posts = await getPosts();
   return posts.map(({ path }) => ({
-    slug: path.replace("/posts/", "").split("/"),
+    slug: path.replace("/posts/contents/", "").split("/"),
   }));
 }
