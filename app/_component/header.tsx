@@ -1,5 +1,5 @@
-import LogoLink from "./logo-link";
-import TagsLink from "./tags-link";
+import LogoLink from "./links/logo-link";
+import TagsIconLink from "./links/tags icon-link";
 import ThemeSwitchDropdown from "./theme-switch-dropdown";
 
 export default function Header() {
@@ -8,7 +8,7 @@ export default function Header() {
       <LogoLink />
       <div className="flex gap-3">
         <ThemeSwitchDropdown />
-        <TagsLink />
+        <TagsIconLink />
       </div>
     </header>
   );
