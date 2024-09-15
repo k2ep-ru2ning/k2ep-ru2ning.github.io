@@ -23,7 +23,7 @@ export default function PostListItem({
             </h3>
             <p className="truncate">{description}</p>
           </Link>
-          <TagList tags={tags} />
+          {tags ? <TagList tags={tags} /> : null}
         </div>
       </section>
     </li>

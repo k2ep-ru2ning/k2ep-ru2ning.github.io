@@ -1,11 +1,11 @@
 import Link from "next/link";
 
 type Props = {
-  tags?: string[];
+  tags: string[];
 };
 
 export default function TagList({ tags }: Props) {
-  if (!tags || tags.length === 0) return null;
+  if (tags.length === 0) return null;
 
   return (
     <div className="flex flex-wrap gap-3 items-center">
