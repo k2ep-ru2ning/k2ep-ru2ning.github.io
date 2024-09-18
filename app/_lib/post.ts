@@ -1,8 +1,8 @@
-import path from "path";
+import path from "node:path";
 import matter from "gray-matter";
 import { glob } from "glob";
-import { readFile } from "fs/promises";
-import { cwd } from "process";
+import { readFile } from "node:fs/promises";
+import { cwd } from "node:process";
 
 type PostMatter = {
   title: string;
@@ -16,12 +16,14 @@ export type Post = PostMatter & {
   content: string;
 };
 
+const POST_FILE_EXTENSION = ".mdx";
+
 const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts", "contents");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
 async function getPostPaths() {
-  return glob(`${POSTS_DIRECTORY_PATH}/**/*.md`);
+  return glob(`${POSTS_DIRECTORY_PATH}/**/*${POST_FILE_EXTENSION}`);
 }
 
 // ToDo: 추후 Dummy Data 제거
@@ -61,7 +63,7 @@ export async function getPosts() {
         tags: tags
           ?.map((tag) => tag.toLowerCase())
           .sort((tag1, tag2) => tag1.localeCompare(tag2)),
-        path: postPath.slice(cwd().length).replace(".md", ""),
+        path: postPath.slice(cwd().length).replace(POST_FILE_EXTENSION, ""),
       });
     }
   } catch (e) {
