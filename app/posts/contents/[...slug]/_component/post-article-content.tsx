@@ -1,6 +1,6 @@
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import cn from "@/app/_lib/cn";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { HTMLAttributes } from "react";
 import remarkGfm from "remark-gfm";
 
 type Props = {
@@ -9,39 +9,35 @@ type Props = {
 
 export default function PostArticleContent({ contentAsMarkdown }: Props) {
   const remarkPlugins = [remarkGfm];
+
+  const Code = ({ children, ...props }: HTMLAttributes<HTMLElement>) => {
+    const match = /language-(\w+)/.exec(props.className ?? "");
+    if (match) {
+      return <code {...props}>{children}</code>;
+    } else {
+      return (
+        <code
+          {...props}
+          className={cn(
+            props.className,
+            "before:content-[none] after:content-[none] inline-block px-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-indigo-500",
+          )}
+        >
+          {children}
+        </code>
+      );
+    }
+  };
+
   return (
-    <ReactMarkdown
-      className="prose dark:prose-invert prose-pre:p-0 prose-pre:bg-[#2B2B2B] max-w-full"
-      components={{
-        code(props) {
-          const { children, className, node, ref, ...rest } = props;
-          const match = /language-(\w+)/.exec(className || "");
-          return match ? (
-            <SyntaxHighlighter
-              {...rest}
-              PreTag="div"
-              language={match[1]}
-              style={darcula}
-              showLineNumbers
-              customStyle={{
-                padding: "0.5em",
-              }}
-            >
-              {String(children).replace(/\n$/, "")}
-            </SyntaxHighlighter>
-          ) : (
-            <code
-              {...rest}
-              className={`${className} before:content-[none] after:content-[none] inline-block px-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-indigo-500`}
-            >
-              {children}
-            </code>
-          );
-        },
-      }}
-      remarkPlugins={remarkPlugins}
-    >
-      {contentAsMarkdown}
-    </ReactMarkdown>
+    <div className="prose dark:prose-invert max-w-full">
+      <MDXRemote
+        source={contentAsMarkdown}
+        options={{ mdxOptions: { remarkPlugins } }}
+        components={{
+          code: Code,
+        }}
+      />
+    </div>
   );
 }
