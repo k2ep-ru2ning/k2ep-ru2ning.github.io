@@ -32,7 +32,7 @@ export default function PostArticleContent({ contentAsMarkdown }: Props) {
           ) : (
             <code
               {...rest}
-              className={`${className} before:content-[none] after:content-[none] inline-block px-1.5 rounded-md bg-gray-100 dark:bg-gray-800 text-indigo-500`}
+              className={`${className} before:content-[none] after:content-[none] inline-block px-1.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-indigo-500`}
             >
               {children}
             </code>

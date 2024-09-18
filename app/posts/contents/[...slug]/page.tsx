@@ -25,7 +25,7 @@ export default async function PostPage({ params: { slug } }: Props) {
         createdAt={post.createdAt}
         tags={post.tags}
       />
-      <hr className="border border-gray-500 dark:border-gray-400" />
+      <hr className="border border-zinc-500 dark:border-zinc-400" />
       <PostArticleContent contentAsMarkdown={post.content} />
     </article>
   );

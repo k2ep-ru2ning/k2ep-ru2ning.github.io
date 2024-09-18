@@ -32,7 +32,7 @@ export default function PageController({
             <Link
               href={`${basePath}/${pageNumber}`}
               className={cn(
-                "w-7 h-7 flex justify-center items-center border border-gray-300 dark:border-gray-700 rounded-md px-2",
+                "w-7 h-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md px-2",
                 pageNumber === currentPageNumber && "font-bold text-indigo-500",
               )}
             >

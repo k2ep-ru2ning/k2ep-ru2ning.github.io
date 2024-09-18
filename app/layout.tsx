@@ -15,7 +15,7 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko" suppressHydrationWarning>
       <body
-        className={`${pretendard.className} bg-gray-50 dark:bg-gray-950 text-gray-950 dark:text-gray-50`}
+        className={`${pretendard.className} bg-zinc-50 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50`}
       >
         <ThemeProvider attribute="class">
           <Tooltip.Provider delayDuration={400} skipDelayDuration={100}>

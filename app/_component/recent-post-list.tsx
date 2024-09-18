@@ -15,7 +15,7 @@ export default async function RecentPostList() {
       <PostList posts={posts} />
       <Link
         href="/posts/pages/1"
-        className="flex items-center gap-1.5 p-1 rounded-md self-center hover:bg-gray-200 dark:hover:bg-gray-700"
+        className="flex items-center gap-1.5 p-1 rounded-md self-center hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
         {"전체 글"}
         <MoveRight size={20} />

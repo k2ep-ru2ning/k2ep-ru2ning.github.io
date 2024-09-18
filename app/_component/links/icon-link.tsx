@@ -27,7 +27,7 @@ export default function IconLink({
         <Link
           href={href}
           className={cn(
-            "hover:bg-gray-200 dark:hover:bg-gray-700 w-8 h-8 flex justify-center items-center rounded-md",
+            "hover:bg-zinc-200 dark:hover:bg-zinc-700 w-8 h-8 flex justify-center items-center rounded-md",
             isActive && "text-indigo-500",
             className,
           )}
@@ -39,10 +39,10 @@ export default function IconLink({
         <Tooltip.Content
           side="bottom"
           sideOffset={8}
-          className="text-sm bg-gray-200 dark:bg-gray-700 py-1 px-2 rounded-md"
+          className="text-sm bg-zinc-200 dark:bg-zinc-700 py-1 px-2 rounded-md"
         >
           {tooltipText}
-          <Tooltip.Arrow className="fill-gray-200 dark:fill-gray-700" />
+          <Tooltip.Arrow className="fill-zinc-200 dark:fill-zinc-700" />
         </Tooltip.Content>
       </Tooltip.Portal>
     </Tooltip.Root>
