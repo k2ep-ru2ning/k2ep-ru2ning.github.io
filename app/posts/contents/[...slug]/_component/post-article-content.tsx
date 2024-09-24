@@ -9,12 +9,12 @@ type Props = {
 };
 
 const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
-  theme: "tokyo-night",
+  theme: "one-dark-pro",
 };
 
 export default function PostArticleContent({ contentAsMarkdown }: Props) {
   return (
-    <div className="prose prose-zinc dark:prose-invert max-w-full">
+    <div className="prose prose-zinc dark:prose-invert prose-sm sm:prose-base max-w-full">
       <MDXRemote
         source={contentAsMarkdown}
         options={{
