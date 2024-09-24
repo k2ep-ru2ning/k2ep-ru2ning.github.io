@@ -7,5 +7,5 @@ export function formatDate(target: Date) {
   const date =
     target.getDate() < 10 ? "0" + target.getDate() : target.getDate();
 
-  return [year, month, date].join("-");
+  return [year, month, date].join(".");
 }

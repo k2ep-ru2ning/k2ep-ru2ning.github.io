@@ -3,5 +3,5 @@ type Props = {
 };
 
 export default function ListHeading({ text }: Props) {
-  return <h2 className="font-bold text-2xl">{text}</h2>;
+  return <h2 className="font-bold text-xl sm:text-2xl">{text}</h2>;
 }

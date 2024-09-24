@@ -29,7 +29,7 @@ async function getPostPaths() {
 // ToDo: 추후 Dummy Data 제거
 function generateDummyPosts() {
   const posts: Post[] = [];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 27; i++) {
     const id = String.fromCharCode("A".charCodeAt(0) + i);
     posts.push({
       content: `## Dummy Post ${id}`,
