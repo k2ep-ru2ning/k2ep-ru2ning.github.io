@@ -14,7 +14,7 @@ const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
 
 export default function PostArticleContent({ contentAsMarkdown }: Props) {
   return (
-    <div className="prose dark:prose-invert max-w-full">
+    <div className="prose prose-zinc dark:prose-invert max-w-full">
       <MDXRemote
         source={contentAsMarkdown}
         options={{
