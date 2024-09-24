@@ -2,6 +2,9 @@
 const config = {
   darkMode: "selector",
   content: ["./app/**/*.{js,ts,jsx,tsx}"],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       typography: (theme) => ({
