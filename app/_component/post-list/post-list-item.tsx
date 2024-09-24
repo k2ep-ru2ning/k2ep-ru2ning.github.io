@@ -18,7 +18,7 @@ export default function PostListItem({
         </time>
         <div className="flex flex-col overflow-hidden gap-3 md:grow">
           <Link href={path} className="group flex flex-col gap-3">
-            <h3 className="group-hover:underline decoration-indigo-500 underline-offset-6 leading-8 font-bold text-xl truncate">
+            <h3 className="group-hover:underline decoration-wavy decoration-indigo-500 underline-offset-6 leading-8 font-bold text-xl truncate">
               {title}
             </h3>
             <p className="truncate">{description}</p>
