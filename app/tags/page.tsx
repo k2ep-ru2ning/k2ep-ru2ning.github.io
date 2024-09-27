@@ -1,6 +1,7 @@
 import { getTags } from "../_lib/post";
 import TagList from "../_component/tag-list";
 import ListHeading from "../_component/list-heading";
+import { Metadata } from "next";
 
 export default async function TagsPage() {
   const tags = await getTags();
@@ -12,3 +13,8 @@ export default async function TagsPage() {
     </section>
   );
 }
+
+export const metadata: Metadata = {
+  title: "태그 목록",
+  description: "태그 목록 페이지",
+};

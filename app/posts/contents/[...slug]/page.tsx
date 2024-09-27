@@ -1,18 +1,19 @@
 import { notFound } from "next/navigation";
-import { getPostByPath, getPosts } from "@/app/_lib/post";
+import { getPostByPath, getPosts, type Post } from "@/app/_lib/post";
 import PostArticleHeader from "./_component/post-article-header";
 import PostArticleContent from "./_component/post-article-content";
+import { type Metadata } from "next";
+
+type Slug = string[];
 
 type Props = {
   params: {
-    slug: string[];
+    slug: Slug;
   };
 };
 
 export default async function PostPage({ params: { slug } }: Props) {
-  const path = `/posts/contents/${slug.map(decodeURIComponent).join("/")}`;
-
-  const post = await getPostByPath(path);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -36,4 +37,25 @@ export async function generateStaticParams() {
   return posts.map(({ path }) => ({
     slug: path.replace("/posts/contents/", "").split("/"),
   }));
+}
+
+export async function generateMetadata({
+  params: { slug },
+}: Props): Promise<Metadata> {
+  const post = await getPostBySlug(slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+  };
+}
+
+async function getPostBySlug(slug: Slug) {
+  const path = `/posts/contents/${slug.map(decodeURIComponent).join("/")}`;
+
+  return getPostByPath(path);
 }

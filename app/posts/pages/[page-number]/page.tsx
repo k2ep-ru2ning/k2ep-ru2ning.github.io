@@ -3,6 +3,7 @@ import { getPosts, getSortedPosts } from "@/app/_lib/post";
 import PageController from "@/app/_component/page-controller/page-controller";
 import PostList from "@/app/_component/post-list/post-list";
 import ListHeading from "@/app/_component/list-heading";
+import { type Metadata } from "next";
 
 type Props = {
   params: {
@@ -55,4 +56,27 @@ export async function generateStaticParams() {
   return Array.from({ length: numberOfPages }, (_, idx) => ({
     "page-number": String(idx + 1),
   }));
+}
+
+export async function generateMetadata({
+  params: { "page-number": pageNumberParam },
+}: Props): Promise<Metadata> {
+  if (!/^\d+$/.test(pageNumberParam)) {
+    notFound();
+  }
+
+  const posts = await getSortedPosts();
+
+  const pageNumber = Number(pageNumberParam);
+
+  const numberOfPages = Math.ceil(posts.length / PAGE_SIZE);
+
+  if (pageNumber < 1 || pageNumber > numberOfPages) {
+    notFound();
+  }
+
+  return {
+    title: `전체 글 목록 ${pageNumber}`,
+    description: `전체 글 목록: ${pageNumber} 페이지`,
+  };
 }

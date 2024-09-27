@@ -2,6 +2,7 @@ import ListHeading from "@/app/_component/list-heading";
 import PageController from "@/app/_component/page-controller/page-controller";
 import PostList from "@/app/_component/post-list/post-list";
 import { getSortedPostsByTag, getTags } from "@/app/_lib/post";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -64,4 +65,29 @@ export async function generateStaticParams() {
     }
   }
   return params;
+}
+
+export async function generateMetadata({
+  params: { tag: tagParam, "page-number": pageNumberParam },
+}: Props): Promise<Metadata> {
+  if (!/^\d+$/.test(pageNumberParam)) {
+    notFound();
+  }
+
+  const tag = decodeURIComponent(tagParam);
+
+  const pageNumber = Number(pageNumberParam);
+
+  const posts = await getSortedPostsByTag(tag);
+
+  const numberOfPages = Math.ceil(posts.length / PAGE_SIZE);
+
+  if (pageNumber < 1 || pageNumber > numberOfPages) {
+    notFound();
+  }
+
+  return {
+    title: `${tag} 태그, ${pageNumber} 페이지`,
+    description: `태그 "${tag}"에 속한 글 목록 ${pageNumber}`,
+  };
 }
