@@ -1,8 +1,8 @@
 "use client";
 
-import { ChevronLeft } from "lucide-react";
 import PageNavButton from "./page-nav-button";
 import { useRouter } from "next/navigation";
+import { ChevronLeftIcon } from "@heroicons/react/16/solid";
 
 type Props = {
   currentPageNumber: number;
@@ -25,7 +25,7 @@ export default function PreviousButton({ currentPageNumber, basePath }: Props) {
       disabled={isDisabled}
       aria-label="move to previous page"
     >
-      <ChevronLeft size={16} />
+      <ChevronLeftIcon className="size-4" />
     </PageNavButton>
   );
 }

@@ -27,7 +27,7 @@ export default function IconLink({
         <Link
           href={href}
           className={cn(
-            "hover:bg-zinc-200 dark:hover:bg-zinc-700 w-8 h-8 flex justify-center items-center rounded-md",
+            "hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex justify-center items-center rounded-md",
             isActive && "text-indigo-500",
             className,
           )}

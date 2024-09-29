@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { Check, Moon, Sun } from "lucide-react";
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+import { CheckIcon } from "@heroicons/react/16/solid";
 
 export default function ThemeSwitchDropdown() {
   const [isMounted, setIsMounted] = useState(false);
@@ -35,7 +36,11 @@ export default function ThemeSwitchDropdown() {
           className="data-[state=open]:bg-zinc-200 dark:data-[state=open]:bg-zinc-700 outline-none hover:bg-zinc-200 dark:hover:bg-zinc-700 w-8 h-8 flex justify-center items-center rounded-md"
           aria-label="theme switch"
         >
-          {resolvedTheme === "light" ? <Sun size={24} /> : <Moon size={24} />}
+          {resolvedTheme === "light" ? (
+            <SunIcon className="size-6" />
+          ) : (
+            <MoonIcon className="size-6" />
+          )}
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
@@ -56,7 +61,7 @@ export default function ThemeSwitchDropdown() {
               >
                 {theme}
                 <DropdownMenu.ItemIndicator>
-                  <Check className="text-indigo-500" size={16} />
+                  <CheckIcon className="text-indigo-500 size-4" />
                 </DropdownMenu.ItemIndicator>
               </DropdownMenu.RadioItem>
             ))}

@@ -1,4 +1,4 @@
-import { House } from "lucide-react";
+import { HomeIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 
 export default function NotFound() {
@@ -12,7 +12,7 @@ export default function NotFound() {
         className="flex items-center gap-1.5 p-1 rounded-md self-start hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
         {"Home으로 이동"}
-        <House size={20} />
+        <HomeIcon className="size-5" />
       </Link>
     </div>
   );
