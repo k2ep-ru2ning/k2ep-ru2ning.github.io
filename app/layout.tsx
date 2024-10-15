@@ -38,8 +38,8 @@ export default function RootLayout({ children }: Props) {
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Dev-Story",
-    default: "k2ep-ru2ning's Dev-Story",
+    template: "%s | k2ep-ru2ning",
+    default: "k2ep-ru2ning",
   },
   description: "프로그래밍 관련 지식/경험을 기록/회고하는 공간",
   authors: [{ name: "k2ep-ru2ning" }],
