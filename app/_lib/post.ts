@@ -26,25 +26,6 @@ async function getPostPaths() {
   return glob(`${POSTS_DIRECTORY_PATH}/**/*${POST_FILE_EXTENSION}`);
 }
 
-// ToDo: 추후 Dummy Data 제거
-function generateDummyPosts() {
-  const posts: Post[] = [];
-  for (let i = 0; i < 27; i++) {
-    const id = String.fromCharCode("A".charCodeAt(0) + i);
-    posts.push({
-      content: `## Dummy Post ${id}`,
-      createdAt: new Date(2022, 6, i + 1),
-      description: `This is Dummy Post ${id}`,
-      path: `/posts/contents/dummy/dummy-post-${id}`,
-      title: `Dummy Post ${id}`,
-      tags: [`더미-태그-${id}`, "더미-태그"].sort((tag1, tag2) =>
-        tag1.localeCompare(tag2),
-      ),
-    });
-  }
-  return posts;
-}
-
 export async function getPosts() {
   const posts: Post[] = [];
   try {
@@ -69,8 +50,7 @@ export async function getPosts() {
   } catch (e) {
     throw new Error("post 파일을 read, parse 하는데 문제가 발생했습니다.");
   }
-  // ToDo: 추후 Dummy Data 제거
-  return [...posts, ...generateDummyPosts()];
+  return posts;
 }
 
 export async function getSortedPosts() {
