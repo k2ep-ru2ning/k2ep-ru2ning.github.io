@@ -1,5 +1,6 @@
 import IconLink from "./icon-link";
 import { ReactNode } from "react";
+import { BsGithub } from "react-icons/bs";
 import { LuFileCode, LuHome, LuTags } from "react-icons/lu";
 
 type IconLinkType = {
@@ -24,6 +25,11 @@ export default function IconLinks() {
       link: "/tags",
       icon: <LuTags className="size-6" />,
       tooltipText: "태그 목록",
+    },
+    {
+      link: "https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io",
+      icon: <BsGithub className="size-6" />,
+      tooltipText: "Github 저장소",
     },
   ];
 
