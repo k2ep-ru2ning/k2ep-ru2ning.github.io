@@ -1,10 +1,6 @@
-import {
-  DocumentTextIcon,
-  HomeIcon,
-  TagIcon,
-} from "@heroicons/react/24/outline";
 import IconLink from "./icon-link";
 import { ReactNode } from "react";
+import { LuFileCode, LuHome, LuTags } from "react-icons/lu";
 
 type IconLinkType = {
   link: string;
@@ -16,17 +12,17 @@ export default function IconLinks() {
   const links: IconLinkType[] = [
     {
       link: "/",
-      icon: <HomeIcon className="size-6" />,
+      icon: <LuHome className="size-6" />,
       tooltipText: "홈",
     },
     {
       link: "/posts/pages/1",
-      icon: <DocumentTextIcon className="size-6" />,
+      icon: <LuFileCode className="size-6" />,
       tooltipText: "글 목록",
     },
     {
       link: "/tags",
-      icon: <TagIcon className="size-6" />,
+      icon: <LuTags className="size-6" />,
       tooltipText: "태그 목록",
     },
   ];

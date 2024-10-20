@@ -1,7 +1,7 @@
 "use client";
 
-import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { LuMoon, LuSun } from "react-icons/lu";
 
 export default function ThemeSwitchButton() {
   const handleClick = () => {
@@ -20,8 +20,8 @@ export default function ThemeSwitchButton() {
           onClick={handleClick}
           className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex justify-center items-center rounded-md"
         >
-          <SunIcon className="dark:hidden size-6" />
-          <MoonIcon className="hidden dark:block size-6" />
+          <LuSun className="dark:hidden size-6" />
+          <LuMoon className="hidden dark:block size-6" />
         </button>
       </Tooltip.Trigger>
       <Tooltip.Portal>

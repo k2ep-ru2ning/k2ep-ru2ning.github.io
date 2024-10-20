@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRightIcon } from "@heroicons/react/16/solid";
+import { LuChevronRight } from "react-icons/lu";
 import PageNavButton from "./page-nav-button";
 import { useRouter } from "next/navigation";
 
@@ -30,7 +30,7 @@ export default function NextButton({
       disabled={isDisabled}
       aria-label="move to next page"
     >
-      <ChevronRightIcon className="size-4" />
+      <LuChevronRight className="size-4" />
     </PageNavButton>
   );
 }
