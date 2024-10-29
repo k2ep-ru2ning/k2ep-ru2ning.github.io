@@ -1,26 +1,15 @@
-"use client";
-
 import cn from "@/app/_lib/cn";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ReactNode, type ComponentProps } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
-type Props = Pick<ComponentProps<typeof Link>, "href" | "className"> & {
+type Props = Pick<ComponentProps<typeof Link>, "href"> & {
   icon: ReactNode;
   tooltipText: string;
+  isActive: boolean;
 };
 
-export default function IconLink({
-  href,
-  className,
-  icon,
-  tooltipText,
-}: Props) {
-  const pathname = usePathname();
-
-  const isActive = pathname === href;
-
+export default function IconLink({ href, icon, tooltipText, isActive }: Props) {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger asChild>
@@ -29,7 +18,6 @@ export default function IconLink({
           className={cn(
             "hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex justify-center items-center rounded-md",
             isActive && "text-indigo-500",
-            className,
           )}
         >
           {icon}
