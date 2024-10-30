@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPostByPath, getPosts, type Post } from "@/app/_lib/post";
+import { getPostByAbsoluteUrl, getPosts } from "@/app/_lib/post";
 import PostArticleHeader from "./_component/post-article-header";
 import PostArticleContent from "./_component/post-article-content";
 import { type Metadata } from "next";
@@ -34,8 +34,8 @@ export default async function PostPage({ params: { slug } }: Props) {
 
 export async function generateStaticParams() {
   const posts = await getPosts();
-  return posts.map(({ path }) => ({
-    slug: path.replace("/posts/contents/", "").split("/"),
+  return posts.map(({ absoluteUrl }) => ({
+    slug: absoluteUrl.replace("/posts/contents/", "").split("/"),
   }));
 }
 
@@ -55,7 +55,6 @@ export async function generateMetadata({
 }
 
 async function getPostBySlug(slug: Slug) {
-  const path = `/posts/contents/${slug.map(decodeURIComponent).join("/")}`;
-
-  return getPostByPath(path);
+  const url = `/posts/contents/${slug.map(decodeURIComponent).join("/")}`;
+  return getPostByAbsoluteUrl(url);
 }

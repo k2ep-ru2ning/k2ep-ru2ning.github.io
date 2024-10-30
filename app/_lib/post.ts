@@ -12,26 +12,30 @@ type PostMatter = {
 };
 
 export type Post = PostMatter & {
-  path: string;
+  absoluteUrl: string;
   content: string;
 };
 
 const POST_FILE_EXTENSION = ".mdx";
 
-const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts", "contents");
+const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
-async function getPostPaths() {
+function convertPostAbsolutePathToAbsoluteUrl(path: string) {
+  return `/posts/contents/${path.slice(`${cwd()}/posts/`.length).replace(POST_FILE_EXTENSION, "")}`;
+}
+
+async function getPostAbsolutePaths() {
   return glob(`${POSTS_DIRECTORY_PATH}/**/*${POST_FILE_EXTENSION}`);
 }
 
 export async function getPosts() {
   const posts: Post[] = [];
   try {
-    const postPaths = await getPostPaths();
-    for (const postPath of postPaths) {
-      const file = await readFile(postPath, { encoding: "utf8" });
+    const postAbsolutePaths = await getPostAbsolutePaths();
+    for (const postAbsolutePath of postAbsolutePaths) {
+      const file = await readFile(postAbsolutePath, { encoding: "utf8" });
       const { content, data } = matter(file);
       const { createdAt, description, title, tags } = data as PostMatter;
       posts.push({
@@ -44,7 +48,7 @@ export async function getPosts() {
         tags: tags
           ?.map((tag) => tag.toLowerCase())
           .sort((tag1, tag2) => tag1.localeCompare(tag2)),
-        path: postPath.slice(cwd().length).replace(POST_FILE_EXTENSION, ""),
+        absoluteUrl: convertPostAbsolutePathToAbsoluteUrl(postAbsolutePath),
       });
     }
   } catch (e) {
@@ -59,9 +63,9 @@ export async function getSortedPosts() {
   );
 }
 
-export async function getPostByPath(path: string) {
+export async function getPostByAbsoluteUrl(url: string) {
   const posts = await getPosts();
-  return posts.find((post) => post.path === path);
+  return posts.find((post) => post.absoluteUrl === url);
 }
 
 export async function getTags() {

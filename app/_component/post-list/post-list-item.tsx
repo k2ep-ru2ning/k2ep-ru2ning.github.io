@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function PostListItem({
-  post: { title, description, createdAt, path, tags },
+  post: { title, description, createdAt, absoluteUrl, tags },
 }: Props) {
   return (
     <li>
@@ -17,7 +17,7 @@ export default function PostListItem({
           {formatDate(createdAt)}
         </time>
         <div className="flex flex-col overflow-hidden gap-3 md:grow">
-          <Link href={path} className="group flex flex-col gap-3">
+          <Link href={absoluteUrl} className="group flex flex-col gap-3">
             <h3 className="group-hover:underline decoration-wavy decoration-indigo-500 underline-offset-6 leading-8 font-bold text-lg sm:text-xl truncate">
               {title}
             </h3>
