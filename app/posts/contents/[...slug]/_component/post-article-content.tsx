@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import rehypePrettyCode, {
   Options as RehypePrettyCodeOptions,
 } from "rehype-pretty-code";
+import RoundedImage from "./rounded-image";
 
 type Props = {
   contentAsMarkdown: string;
@@ -17,6 +18,7 @@ export default function PostArticleContent({ contentAsMarkdown }: Props) {
     <div className="prose prose-zinc dark:prose-invert prose-sm sm:prose-base prose-code:text-sm sm:prose-code:text-base max-w-full">
       <MDXRemote
         source={contentAsMarkdown}
+        components={{ img: RoundedImage as any }}
         options={{
           mdxOptions: {
             remarkPlugins: [remarkGfm],
