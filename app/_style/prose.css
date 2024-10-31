@@ -1,0 +1,7 @@
+.prose code:not([data-language]) {
+  @apply inline-block bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden;
+}
+
+.dark .prose code:not([data-language]) {
+  @apply bg-zinc-800;
+}
