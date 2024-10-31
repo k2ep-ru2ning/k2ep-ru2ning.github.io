@@ -9,6 +9,7 @@ const config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-pretendard)"],
+        mono: ["var(--font-jetbrains-mono)"],
       },
     },
   },

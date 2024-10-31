@@ -2,6 +2,7 @@ import "./_style/globals.css";
 import { type Metadata } from "next";
 import { type ReactNode } from "react";
 import pretendard from "./_font/pretendard";
+import jetbrainsMono from "./_font/jetbrains-mono";
 import Header from "./_component/header";
 import Footer from "./_component/footer";
 import initializeThemeFromLocal from "./_util/initialize-theme-from-local";
@@ -12,7 +13,11 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="ko" className={pretendard.variable} suppressHydrationWarning>
+    <html
+      lang="ko"
+      className={`${pretendard.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
