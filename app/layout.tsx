@@ -12,7 +12,7 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" className={pretendard.variable} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -21,7 +21,9 @@ export default function RootLayout({ children }: Props) {
         />
       </head>
       <body
-        className={`${pretendard.className} bg-zinc-50 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50`}
+        className={
+          "font-sans bg-zinc-50 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50"
+        }
       >
         <div className="px-4 max-w-screen-md mx-auto min-h-dvh flex flex-col">
           <Header />

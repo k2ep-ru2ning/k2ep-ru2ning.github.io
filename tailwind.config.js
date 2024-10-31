@@ -5,6 +5,13 @@ const config = {
   future: {
     hoverOnlyWhenSupported: true,
   },
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-pretendard)"],
+      },
+    },
+  },
   plugins: [require("@tailwindcss/typography")],
 };
 
