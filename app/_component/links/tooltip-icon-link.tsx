@@ -9,7 +9,12 @@ type Props = Pick<ComponentProps<typeof Link>, "href"> & {
   isActive: boolean;
 };
 
-export default function IconLink({ href, icon, tooltipText, isActive }: Props) {
+export default function TooltipIconLink({
+  href,
+  icon,
+  tooltipText,
+  isActive,
+}: Props) {
   return (
     <Tooltip.Root>
       <Tooltip.Trigger asChild>

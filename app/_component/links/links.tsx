@@ -1,22 +1,21 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import IconLink from "./icon-link";
+import TooltipIconLink from "./tooltip-icon-link";
 import { ReactNode } from "react";
-import { BsGithub } from "react-icons/bs";
 import { LuFileCode, LuHome, LuTags } from "react-icons/lu";
 
-type IconLinkType = {
+type LinkType = {
   link: string;
   icon: ReactNode;
   tooltipText: string;
   isActive: boolean;
 };
 
-export default function IconLinks() {
+export default function Links() {
   const pathname = usePathname();
 
-  const links: IconLinkType[] = [
+  const links: LinkType[] = [
     {
       link: "/",
       icon: <LuHome className="size-6" />,
@@ -35,18 +34,12 @@ export default function IconLinks() {
       tooltipText: "태그 목록",
       isActive: pathname === "/tags",
     },
-    {
-      link: "https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io",
-      icon: <BsGithub className="size-6" />,
-      tooltipText: "Github 저장소",
-      isActive: false,
-    },
   ];
 
   return (
-    <nav className="flex gap-3">
+    <nav className="flex gap-2">
       {links.map(({ link, icon, tooltipText, isActive }, idx) => (
-        <IconLink
+        <TooltipIconLink
           key={idx}
           href={link}
           icon={icon}
