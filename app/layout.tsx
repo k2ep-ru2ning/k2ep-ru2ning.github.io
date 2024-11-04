@@ -32,7 +32,7 @@ export default function RootLayout({ children }: Props) {
       >
         <div className="px-4 max-w-screen-md mx-auto min-h-dvh flex flex-col">
           <Header />
-          <div className="px-2 grow">{children}</div>
+          <div className="px-2 py-6 grow">{children}</div>
           <Footer />
         </div>
       </body>
