@@ -10,7 +10,10 @@ type Props = {
 };
 
 const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
-  theme: "one-dark-pro",
+  theme: {
+    dark: "one-dark-pro",
+    light: "one-light",
+  },
 };
 
 export default function PostArticleContent({ contentAsMarkdown }: Props) {

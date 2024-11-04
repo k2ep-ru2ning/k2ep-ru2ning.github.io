@@ -1,11 +1,54 @@
-.prose code {
-  @apply font-mono;
+.prose {
+  /* code 태그 font-family mono style로 설정 */
+  code {
+    @apply font-mono;
+  }
+
+  /* inline code block 스타일링 */
+  code:not([data-language]) {
+    @apply inline-block bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden;
+  }
+
+  /* rehype-pretty-code를 사용하면 figure -> pre -> code 순으로 태그를 감싼다. */
+  /* rehype-pretty-code의 figure 스타일링 */
+  figure[data-rehype-pretty-code-figure] {
+    @apply border border-zinc-300 rounded-md overflow-hidden;
+  }
+
+  /* rehype-pretty-code의 pre 스타일링 */
+  pre {
+    background-color: var(--shiki-light-bg);
+    @apply overflow-x-auto py-4;
+  }
+
+  /* rehype-pretty-code의 code 스타일링: light 모드의 경우 */
+  code[data-theme*=" "],
+  code[data-theme*=" "] span {
+    color: var(--shiki-light);
+    background-color: var(--shiki-light-bg);
+  }
 }
 
-.prose code:not([data-language]) {
-  @apply inline-block bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden;
-}
+.dark .prose {
+  /* inline code block 스타일링: dark 모드 */
+  code:not([data-language]) {
+    @apply bg-zinc-800;
+  }
 
-.dark .prose code:not([data-language]) {
-  @apply bg-zinc-800;
+  /* rehype-pretty-code의 figure 스타일링: dark 모드 */
+  figure[data-rehype-pretty-code-figure] {
+    @apply border-none;
+  }
+
+  /* rehype-pretty-code의 pre 스타일링: dark 모드 */
+  pre {
+    background-color: var(--shiki-dark-bg);
+  }
+
+  /* rehype-pretty-code의 code 스타일링: dark 모드의 경우 */
+  code[data-theme*=" "],
+  code[data-theme*=" "] span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+  }
 }
