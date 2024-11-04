@@ -4,7 +4,7 @@ import LogoLink from "./links/logo-link";
 import ThemeSwitchButton from "./theme-switch-button";
 import ExternalLinks from "./links/external-links";
 import VerticalSeparator from "./separator/vertical-separator";
-import HorizontalSeparator from "./horizontal-separator";
+import HorizontalSeparator from "./separator/horizontal-separator";
 
 export default function Header() {
   return (

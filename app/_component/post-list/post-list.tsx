@@ -1,6 +1,6 @@
 import { Post } from "@/app/_lib/post";
 import PostListItem from "./post-list-item";
-import HorizontalSeparator from "../horizontal-separator";
+import HorizontalSeparator from "../separator/horizontal-separator";
 import { Fragment } from "react";
 
 type Props = {

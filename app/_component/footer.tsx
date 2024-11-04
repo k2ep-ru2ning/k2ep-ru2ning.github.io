@@ -1,4 +1,4 @@
-import HorizontalSeparator from "./horizontal-separator";
+import HorizontalSeparator from "./separator/horizontal-separator";
 
 export default function Footer() {
   return (
