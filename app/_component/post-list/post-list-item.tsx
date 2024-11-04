@@ -18,10 +18,12 @@ export default function PostListItem({
         </time>
         <div className="flex flex-col overflow-hidden gap-3 md:grow">
           <Link href={absoluteUrl} className="group flex flex-col gap-3">
-            <h3 className="group-hover:underline decoration-wavy decoration-indigo-500 underline-offset-6 leading-8 font-bold text-lg sm:text-xl truncate">
+            <h3 className="transition group-hover:text-indigo-500 leading-8 font-bold text-lg sm:text-xl truncate">
               {title}
             </h3>
-            <p className="truncate text-sm sm:text-base">{description}</p>
+            <p className="truncate text-sm sm:text-base transition group-hover:text-indigo-500">
+              {description}
+            </p>
           </Link>
           {tags ? <TagList tags={tags} /> : null}
         </div>
