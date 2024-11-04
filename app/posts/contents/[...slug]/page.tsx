@@ -3,6 +3,7 @@ import { getPostByAbsoluteUrl, getPosts } from "@/app/_lib/post";
 import PostArticleHeader from "./_component/post-article-header";
 import PostArticleContent from "./_component/post-article-content";
 import { type Metadata } from "next";
+import HorizontalSeparator from "@/app/_component/horizontal-separator";
 
 type Slug = string[];
 
@@ -26,7 +27,7 @@ export default async function PostPage({ params: { slug } }: Props) {
         createdAt={post.createdAt}
         tags={post.tags}
       />
-      <hr className="border border-zinc-500 dark:border-zinc-400" />
+      <HorizontalSeparator />
       <PostArticleContent contentAsMarkdown={post.content} />
     </article>
   );
