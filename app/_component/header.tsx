@@ -3,7 +3,7 @@ import Links from "./links/links";
 import LogoLink from "./links/logo-link";
 import ThemeSwitchButton from "./theme-switch-button";
 import ExternalLinks from "./links/external-links";
-import VerticalSeparator from "./vertical-separator";
+import VerticalSeparator from "./separator/vertical-separator";
 
 export default function Header() {
   return (
