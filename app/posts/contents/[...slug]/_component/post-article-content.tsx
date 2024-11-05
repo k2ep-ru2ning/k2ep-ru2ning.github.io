@@ -1,5 +1,6 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import rehypePrettyCode, {
   Options as RehypePrettyCodeOptions,
 } from "rehype-pretty-code";
@@ -24,7 +25,7 @@ export default function PostArticleContent({ contentAsMarkdown }: Props) {
         components={{ img: RoundedImage as any }}
         options={{
           mdxOptions: {
-            remarkPlugins: [remarkGfm],
+            remarkPlugins: [remarkGfm, remarkBreaks],
             rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]],
           },
         }}
