@@ -45,7 +45,7 @@ tags:
 
 - 구현 코드
 
-  ```ts
+  ```ts showLineNumbers
   type OnTick = (countInSecond: number) => void;
   type OnFinish = () => void;
   type Status = "idle" | "scheduled" | "running";
@@ -204,7 +204,7 @@ React의 state와 외부 객체(시스템) CountdownTimer를 동기화하려면,
 
 - 구현 코드
 
-  ```tsx
+  ```tsx showLineNumbers
   import { useEffect, useRef } from "react";
   import { ButtonGroup, IconButton, VStack } from "@chakra-ui/react";
   import { IoPlaySharp, IoRefreshSharp, IoStopSharp } from "react-icons/io5";
@@ -381,7 +381,7 @@ React의 state와 외부 객체(시스템) CountdownTimer를 동기화하려면,
 
 ### 개선 전 코드 일부
 
-```tsx
+```tsx showLineNumbers
 const handleClickStartButton = (): void => {
   if (!canStartTimer) return;
 
@@ -428,7 +428,7 @@ handler, useEffect에 전달되는 함수에 끝날 시각 혹은 남은 시간�
 
 ### 개선 후 코드 일부
 
-```tsx
+```tsx showLineNumbers
 const handleClickStartButton = (): void => {
   if (status !== "ready") return;
 
