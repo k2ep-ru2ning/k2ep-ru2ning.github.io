@@ -52,6 +52,7 @@ export async function getPosts() {
       });
     }
   } catch (e) {
+    console.error(e);
     throw new Error("post 파일을 read, parse 하는데 문제가 발생했습니다.");
   }
   return posts;

@@ -22,6 +22,7 @@ export default function PostArticleContent({ contentAsMarkdown }: Props) {
     <div className="prose prose-zinc dark:prose-invert prose-sm sm:prose-base prose-code:text-sm sm:prose-code:text-base max-w-full">
       <MDXRemote
         source={contentAsMarkdown}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         components={{ img: RoundedImage as any }}
         options={{
           mdxOptions: {
