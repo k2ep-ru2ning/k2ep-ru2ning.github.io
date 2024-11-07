@@ -44,7 +44,7 @@ export default function MobileMenu() {
               k2ep-ru2ning
             </Dialog.Title>
             <VisuallyHidden.Root asChild>
-              <Dialog.Description className="mb-5 mt-2.5 text-[15px] leading-normal text-mauve11">
+              <Dialog.Description>
                 메뉴 (내부 링크, 외부 링크, 테마 변경 등)
               </Dialog.Description>
             </VisuallyHidden.Root>
