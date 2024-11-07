@@ -14,8 +14,10 @@
     "build:deploy": "pnpm run build && pnpm run deploy"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
+    "@radix-ui/react-visually-hidden": "^1.1.0",
     "clsx": "^2.1.1",
     "glob": "^11.0.0",
     "gray-matter": "^4.0.3",
