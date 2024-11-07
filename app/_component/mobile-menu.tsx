@@ -20,7 +20,7 @@ import cn from "../_lib/cn";
 import { BsGithub } from "react-icons/bs";
 import { toggleTheme } from "../_util/theme";
 
-export default function MenuDialog() {
+export default function MobileMenu() {
   const [open, setOpen] = useState(false);
 
   const pathname = usePathname();
@@ -32,7 +32,7 @@ export default function MenuDialog() {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <button className=" hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex justify-center items-center rounded-md">
+        <button className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex sm:hidden justify-center items-center rounded-md">
           <LuAlignJustify className="size-6" />
         </button>
       </Dialog.Trigger>
