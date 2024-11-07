@@ -2,14 +2,11 @@
 
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { LuMoon, LuSun } from "react-icons/lu";
+import { toggleTheme } from "../_util/theme";
 
 export default function ThemeSwitchButton() {
   const handleClick = () => {
-    document.documentElement.classList.toggle("dark");
-    const nextTheme = document.documentElement.classList.contains("dark")
-      ? "dark"
-      : "light";
-    localStorage.setItem("theme", nextTheme);
+    toggleTheme();
   };
 
   return (

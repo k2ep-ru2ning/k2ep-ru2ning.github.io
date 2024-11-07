@@ -1,4 +1,4 @@
-export default function initializeThemeFromLocal() {
+export function initializeThemeFromLocal() {
   const themeFromLocalStorage = localStorage.getItem("theme");
 
   const themeFromSystem = window.matchMedia("(prefers-color-scheme: dark)")
@@ -13,4 +13,12 @@ export default function initializeThemeFromLocal() {
   } else {
     document.documentElement.classList.remove("dark");
   }
+}
+
+export function toggleTheme() {
+  document.documentElement.classList.toggle("dark");
+  const nextTheme = document.documentElement.classList.contains("dark")
+    ? "dark"
+    : "light";
+  localStorage.setItem("theme", nextTheme);
 }

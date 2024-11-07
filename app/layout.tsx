@@ -5,7 +5,7 @@ import pretendard from "./_font/pretendard";
 import jetbrainsMono from "./_font/jetbrains-mono";
 import Header from "./_component/header";
 import Footer from "./_component/footer";
-import initializeThemeFromLocal from "./_util/initialize-theme-from-local";
+import { initializeThemeFromLocal } from "./_util/theme";
 
 type Props = {
   children: ReactNode;
