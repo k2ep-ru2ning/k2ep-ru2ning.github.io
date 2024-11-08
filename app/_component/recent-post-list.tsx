@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getSortedPosts } from "../_lib/post";
-import PostList from "./post-list/post-list";
+import PostList from "./post-list";
 import ListHeading from "./list-heading";
 import { LuArrowRight } from "react-icons/lu";
 
