@@ -1,6 +1,5 @@
 import LogoLink from "./logo-link";
-import MobileMenu from "./mobile-menu";
-import DesktopMenu from "./desktop-menu";
+import Menu from "./menu";
 
 export default function Header() {
   return (
@@ -8,8 +7,7 @@ export default function Header() {
       <div className="shrink-0">
         <LogoLink />
       </div>
-      <MobileMenu />
-      <DesktopMenu />
+      <Menu />
     </header>
   );
 }

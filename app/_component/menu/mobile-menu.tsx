@@ -13,21 +13,30 @@ import {
   LuTags,
   LuX,
 } from "react-icons/lu";
-import HorizontalSeparator from "./separator/horizontal-separator";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import cn from "../_lib/cn";
 import { BsGithub } from "react-icons/bs";
-import { toggleTheme } from "../_util/theme";
+import HorizontalSeparator from "../separator/horizontal-separator";
+import { toggleTheme } from "@/app/_util/theme";
+import cn from "@/app/_lib/cn";
+import useMediaQuery from "@/app/_hooks/use-media-query";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
 
   const pathname = usePathname();
 
+  const isMobile = useMediaQuery("(max-width: 640px)");
+
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setOpen(false);
+    }
+  }, [isMobile]);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
