@@ -1,6 +1,6 @@
 "use client";
 
-import { toggleTheme } from "@/app/_util/theme";
+import { toggleTheme } from "@/_util/theme";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { LuMoon, LuSun } from "react-icons/lu";
 

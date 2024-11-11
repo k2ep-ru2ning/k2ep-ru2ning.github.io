@@ -17,9 +17,9 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { BsGithub } from "react-icons/bs";
 import HorizontalSeparator from "../separator/horizontal-separator";
-import { toggleTheme } from "@/app/_util/theme";
-import cn from "@/app/_lib/cn";
-import useMediaQuery from "@/app/_hooks/use-media-query";
+import { toggleTheme } from "@/_util/theme";
+import cn from "@/_lib/cn";
+import useMediaQuery from "@/_hooks/use-media-query";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);

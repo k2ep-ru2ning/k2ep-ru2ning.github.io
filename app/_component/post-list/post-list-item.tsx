@@ -1,5 +1,5 @@
-import { formatDate } from "@/app/_lib/date-formatter";
-import { Post } from "@/app/_lib/post";
+import { formatDate } from "@/_lib/date-formatter";
+import { Post } from "@/_lib/post";
 import Link from "next/link";
 import TagList from "../tag-list";
 

@@ -1,6 +1,6 @@
-import { formatDate } from "@/app/_lib/date-formatter";
-import { Post } from "@/app/_lib/post";
-import TagList from "@/app/_component/tag-list";
+import { formatDate } from "@/_lib/date-formatter";
+import { Post } from "@/_lib/post";
+import TagList from "@/_component/tag-list";
 import { LuPenSquare } from "react-icons/lu";
 
 type Props = Pick<Post, "title" | "createdAt" | "tags">;

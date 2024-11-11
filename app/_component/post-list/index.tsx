@@ -1,4 +1,4 @@
-import { Post } from "@/app/_lib/post";
+import { Post } from "@/_lib/post";
 import PostListItem from "./post-list-item";
 import HorizontalSeparator from "../separator/horizontal-separator";
 import { Fragment } from "react";

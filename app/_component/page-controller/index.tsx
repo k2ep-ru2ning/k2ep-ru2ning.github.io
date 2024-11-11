@@ -1,4 +1,4 @@
-import cn from "@/app/_lib/cn";
+import cn from "@/_lib/cn";
 import Link from "next/link";
 import PreviousButton from "./previous-button";
 import NextButton from "./next-button";
