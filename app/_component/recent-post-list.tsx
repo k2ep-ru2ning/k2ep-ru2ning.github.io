@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getSortedPosts } from "../_lib/post";
-import PostList from "./post-list";
-import ListHeading from "./list-heading";
 import { LuArrowRight } from "react-icons/lu";
+import ListHeading from "./list-heading";
+import PostList from "./post-list";
+import { getSortedPosts } from "../_lib/post";
 
 const RECENT_POST_LIST_SIZE = 5;
 

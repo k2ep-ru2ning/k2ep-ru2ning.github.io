@@ -1,8 +1,8 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
-import Links from "./links";
-import VerticalSeparator from "../../separator/vertical-separator";
 import ExternalLinks from "./external-links";
+import Links from "./links";
 import ThemeSwitchButton from "./theme-switch-button";
+import VerticalSeparator from "../../separator/vertical-separator";
 
 export default function DesktopMenu() {
   return (

@@ -1,8 +1,8 @@
 "use client";
 
-import { toggleTheme } from "@/_util/theme";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { LuMoon, LuSun } from "react-icons/lu";
+import { toggleTheme } from "@/_util/theme";
 
 export default function ThemeSwitchButton() {
   const handleClick = () => {

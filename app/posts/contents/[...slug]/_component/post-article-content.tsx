@@ -1,11 +1,12 @@
-import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
-import rehypePrettyCode, {
-  Options as RehypePrettyCodeOptions,
-} from "rehype-pretty-code";
-import RoundedImage from "./rounded-image";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
+import {
+  rehypePrettyCode,
+  type Options as RehypePrettyCodeOptions,
+} from "rehype-pretty-code";
+import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
+import RoundedImage from "./rounded-image";
 
 type Props = {
   contentAsMarkdown: string;

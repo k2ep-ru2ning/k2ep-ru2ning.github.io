@@ -1,8 +1,8 @@
-import path from "node:path";
-import matter from "gray-matter";
-import { glob } from "glob";
 import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { cwd } from "node:process";
+import { glob } from "glob";
+import matter from "gray-matter";
 
 type PostMatter = {
   title: string;

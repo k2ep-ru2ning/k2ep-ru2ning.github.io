@@ -1,5 +1,38 @@
 {
-  "extends": ["plugin:@typescript-eslint/recommended", "next", "prettier"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"]
+  "plugins": ["@typescript-eslint", "import"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "next",
+    "prettier"
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": true,
+      "node": true
+    }
+  },
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin", // 내장 모듈
+          "external", // 외부 라이브러리
+          "internal", // 내부 모듈
+          "sibling", // 형제 모듈
+          "parent", // 부모 모듈
+          "index",
+          "object",
+          "type"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
 }

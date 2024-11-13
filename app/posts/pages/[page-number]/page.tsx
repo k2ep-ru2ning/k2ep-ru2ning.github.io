@@ -1,9 +1,9 @@
+import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPosts, getSortedPosts } from "@/_lib/post";
+import ListHeading from "@/_component/list-heading";
 import PageController from "@/_component/page-controller";
 import PostList from "@/_component/post-list";
-import ListHeading from "@/_component/list-heading";
-import { type Metadata } from "next";
+import { getPosts, getSortedPosts } from "@/_lib/post";
 
 type Props = {
   params: {

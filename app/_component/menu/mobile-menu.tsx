@@ -3,6 +3,9 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { BsGithub } from "react-icons/bs";
 import {
   LuAlignJustify,
   LuExternalLink,
@@ -13,13 +16,10 @@ import {
   LuTags,
   LuX,
 } from "react-icons/lu";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { BsGithub } from "react-icons/bs";
-import HorizontalSeparator from "../separator/horizontal-separator";
-import { toggleTheme } from "@/_util/theme";
-import cn from "@/_lib/cn";
 import useMediaQuery from "@/_hooks/use-media-query";
+import cn from "@/_lib/cn";
+import { toggleTheme } from "@/_util/theme";
+import HorizontalSeparator from "../separator/horizontal-separator";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);

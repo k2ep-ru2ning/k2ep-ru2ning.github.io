@@ -1,7 +1,7 @@
-import cn from "@/_lib/cn";
 import Link from "next/link";
-import PreviousButton from "./previous-button";
+import cn from "@/_lib/cn";
 import NextButton from "./next-button";
+import PreviousButton from "./previous-button";
 
 type Props = {
   currentPageNumber: number;

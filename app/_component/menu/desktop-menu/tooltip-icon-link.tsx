@@ -1,7 +1,7 @@
-import cn from "@/_lib/cn";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import Link from "next/link";
 import { ReactNode, type ComponentProps } from "react";
-import * as Tooltip from "@radix-ui/react-tooltip";
+import cn from "@/_lib/cn";
 
 type Props = Pick<ComponentProps<typeof Link>, "href"> & {
   icon: ReactNode;

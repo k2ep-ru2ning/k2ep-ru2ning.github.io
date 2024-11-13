@@ -1,9 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import TooltipIconLink from "./tooltip-icon-link";
 import { ReactNode } from "react";
 import { LuFileCode, LuHome, LuTags } from "react-icons/lu";
+import TooltipIconLink from "./tooltip-icon-link";
 
 type LinkType = {
   link: string;

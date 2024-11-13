@@ -1,10 +1,10 @@
 import "./_style/globals.css";
 import { type Metadata } from "next";
 import { type ReactNode } from "react";
-import pretendard from "./_font/pretendard";
-import jetbrainsMono from "./_font/jetbrains-mono";
-import Header from "./_component/header";
 import Footer from "./_component/footer";
+import Header from "./_component/header";
+import jetbrainsMono from "./_font/jetbrains-mono";
+import pretendard from "./_font/pretendard";
 import { initializeThemeFromLocal } from "./_util/theme";
 
 type Props = {

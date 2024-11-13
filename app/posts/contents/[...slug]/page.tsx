@@ -1,9 +1,9 @@
-import { notFound } from "next/navigation";
-import { getPostByAbsoluteUrl, getPosts } from "@/_lib/post";
-import PostArticleHeader from "./_component/post-article-header";
-import PostArticleContent from "./_component/post-article-content";
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 import HorizontalSeparator from "@/_component/separator/horizontal-separator";
+import { getPostByAbsoluteUrl, getPosts } from "@/_lib/post";
+import PostArticleContent from "./_component/post-article-content";
+import PostArticleHeader from "./_component/post-article-header";
 
 type Slug = string[];
 

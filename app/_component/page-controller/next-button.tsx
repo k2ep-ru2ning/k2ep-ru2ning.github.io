@@ -1,8 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { LuChevronRight } from "react-icons/lu";
 import PageNavButton from "./page-nav-button";
-import { useRouter } from "next/navigation";
 
 type Props = {
   currentPageNumber: number;
