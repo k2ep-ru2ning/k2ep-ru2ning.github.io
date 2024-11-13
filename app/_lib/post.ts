@@ -1,7 +1,6 @@
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
-import { glob } from "glob";
 import matter from "gray-matter";
 
 type PostMatter = {
@@ -27,7 +26,19 @@ function convertPostAbsolutePathToAbsoluteUrl(path: string) {
 }
 
 async function getPostAbsolutePaths() {
-  return glob(`${POSTS_DIRECTORY_PATH}/**/*${POST_FILE_EXTENSION}`);
+  // POSTS_DIRECTORY_PATH 경로의 디렉토리의 내용을 모두 읽어들인다.
+  // 내부의 디렉터리, 파일 모두 읽어 들인다. (재귀적으로)
+  const dirContents = await readdir(POSTS_DIRECTORY_PATH, { recursive: true });
+
+  // 읽어들인 디렉터리, 파일 중, .mdx 확장자의 파일만 filtering 한다.
+  const postRelativePaths = dirContents.filter(
+    (content) => path.extname(content) === POST_FILE_EXTENSION,
+  );
+
+  // 절대 경로로 변환한다.
+  return postRelativePaths.map(
+    (relativePath) => `${POSTS_DIRECTORY_PATH}/${relativePath}`,
+  );
 }
 
 export async function getPosts() {

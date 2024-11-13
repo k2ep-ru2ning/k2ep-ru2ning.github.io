@@ -21,7 +21,6 @@
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "clsx": "^2.1.1",
     "esbuild": "^0.24.0",
-    "glob": "^11.0.0",
     "gray-matter": "^4.0.3",
     "mdx-bundler": "^10.0.3",
     "next": "^14.2.17",
