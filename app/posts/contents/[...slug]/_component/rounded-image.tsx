@@ -4,15 +4,17 @@ import { type ComponentProps } from "react";
 export default function RoundedImage({
   src,
   alt,
+  width,
+  height,
 }: ComponentProps<typeof Image>) {
   return (
     <Image
       src={src}
       alt={alt}
-      width={600}
-      height={380}
+      width={width}
+      height={height}
       priority
-      className="rounded-md w-full"
+      className="rounded-md mx-auto"
     />
   );
 }

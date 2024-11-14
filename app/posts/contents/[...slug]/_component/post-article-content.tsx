@@ -40,10 +40,7 @@ export default async function PostArticleContent({ contentAsMarkdown }: Props) {
 
   return (
     <div className="prose prose-zinc dark:prose-invert prose-sm sm:prose-base prose-code:text-sm sm:prose-code:text-base max-w-full">
-      <MDXComponent
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        components={{ img: RoundedImage as any }}
-      />
+      <MDXComponent components={{ Image: RoundedImage }} />
     </div>
   );
 }
