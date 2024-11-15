@@ -23,11 +23,9 @@ webpack이 제공하는 개발 서버를 사용하면 매번 직접 빌드하고
 
 ### 설정
 
-webpack 설정 파일에 devServer 설정하면 된다.
-
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 module.exports = {
-  ...
+  // ...
   devServer: {
     port: 3000, // 개발 서버가 실행될 port.
     historyApiFallback: true,
@@ -50,7 +48,7 @@ SPA(Single Page Application) 개발하면서 라우팅 기능을 사용하는 �
 
 주로 npm script로 등록해 사용한다.
 
-```json showLineNumbers
+```json title="package.json" showLineNumbers
 {
   "scripts": {
     "dev": "webpack serve"

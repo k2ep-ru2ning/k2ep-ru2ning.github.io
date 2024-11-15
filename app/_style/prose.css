@@ -9,19 +9,26 @@
     @apply inline-block bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden;
   }
 
-  /* rehype-pretty-code를 사용하면 figure -> pre -> code 순으로 태그를 감싼다. */
-  /* rehype-pretty-code의 figure 스타일링 */
-  figure[data-rehype-pretty-code-figure] {
-    @apply border border-zinc-300 rounded-md overflow-hidden;
-  }
-
   /* rehype-pretty-code의 pre 스타일링 */
   pre {
     background-color: var(--shiki-light-bg);
-    @apply overflow-x-auto py-4;
+    @apply p-0 border border-zinc-300 rounded-md overflow-hidden;
+  }
+
+  /* rehype-pretty-code의 코드 블럭 제목 스타일링 */
+  figcaption[data-rehype-pretty-code-title] {
+    @apply inline-block m-0 p-2 border border-b-0 border-zinc-300 rounded-md rounded-b-none;
+  }
+
+  /* 코드 블럭 제목을 사용한 경우, rehype-pretty-code의 pre 스타일링 */
+  figcaption[data-rehype-pretty-code-title] + pre {
+    @apply rounded-t-none;
   }
 
   /* rehype-pretty-code의 code 스타일링: light 모드의 경우 */
+  code[data-theme*=" "] {
+    @apply overflow-x-auto px-4 py-2;
+  }
   code[data-theme*=" "],
   code[data-theme*=" "] span {
     color: var(--shiki-light);
@@ -55,14 +62,15 @@
     @apply bg-zinc-800;
   }
 
-  /* rehype-pretty-code의 figure 스타일링: dark 모드 */
-  figure[data-rehype-pretty-code-figure] {
-    @apply border-none;
-  }
-
   /* rehype-pretty-code의 pre 스타일링: dark 모드 */
   pre {
+    @apply border-zinc-700;
     background-color: var(--shiki-dark-bg);
+  }
+
+  /* rehype-pretty-code의 코드 블럭 제목 스타일링: dark 모드 */
+  figcaption[data-rehype-pretty-code-title] {
+    @apply border-zinc-700;
   }
 
   /* rehype-pretty-code의 code 스타일링: dark 모드의 경우 */

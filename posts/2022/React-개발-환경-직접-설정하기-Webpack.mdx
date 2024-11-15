@@ -1,11 +1,11 @@
 ---
 title: "React 개발 환경 직접 설정하기: Webpack"
-description: Webpack에 대해 공부한 내용 정리
+description: "Webpack에 대해 공부한 내용 정리"
 createdAt: 2022-09-26 14:00:00
 tags:
-  - Webpack
-  - react
-  - 개발환경-설정
+  - "Webpack"
+  - "react"
+  - "개발환경-설정"
 ---
 
 ## 번들러(Bundler)
@@ -37,7 +37,7 @@ Webpack을 사용해 번들링 하기 위해서는 webpack 명령어를 실행�
 
 ### mode 설정
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 // Webpack은 node 환경에서 실행된다.
 // process.env.NODE_ENV를 통해 NODE_ENV 라는 환경 변수를 참조할 수 있다.
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -55,7 +55,7 @@ module.exports = {
 
 ### entry 설정
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 module.exports = {
   entry: {
     // key - value 형태로 지정한다.
@@ -72,7 +72,7 @@ React를 사용할 때는 App 컴포넌트를 root container에 렌더링하는 
 
 ### output 설정
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 module.exports = {
   output: {
     // 번들링 된 결과물이 저장될 위치
@@ -103,7 +103,7 @@ loader를 통해 js 뿐만 아니라 css, image, font 등도 모듈로 인식하
 
 Webpack은 기본적으로 모든 파일을 모듈로 생각한다.
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 module.exports = {
   module: {
     rules: [
@@ -140,7 +140,7 @@ loader가 다양한 형태의 파일을 유효한 모듈로 변환하는 데 사
 
 환경 변수 주입, 번들 최적화, 번들 난독화 등을 할 수 있다.
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {

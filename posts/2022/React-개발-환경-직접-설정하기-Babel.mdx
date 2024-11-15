@@ -69,7 +69,7 @@ Babel을 별도로 실행해서 사용하기보다 Webpack에 통합해서 사�
 
 Webpack의 loader 중 babel-loader를 이용하면, Webpack을 통해 Babel을 사용할 수 있다.
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 module.exports = {
   module: {
     rules: [
@@ -78,7 +78,8 @@ module.exports = {
         test: /\.jsx?$/,
         use: ["babel-loader"],
         /* 
-          변환이 필요 없는 파일(node_modules 디렉터리의 파일들)에 Babel이 적용되는 것을 막아서 babel-loader가 느려지지 않게 한다.
+          변환이 필요 없는 파일(node_modules 디렉터리의 파일들)에
+          Babel이 적용되는 것을 막아서 babel-loader가 느려지지 않게 한다.
         */
         exclude: /node_modules/,
       },
@@ -95,7 +96,7 @@ babel-loader의 options으로 Babel 설정을 할 수 있다.
 
 #### preset-env 설정하기
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 module.exports = {
   module: {
     rules: [
@@ -151,7 +152,7 @@ preset-env의 **target 옵션**을 추가하거나, **browserslist 설정**으�
 
 #### preset-react 설정하기
 
-```js showLineNumbers
+```js title="webpack.config.js" showLineNumbers
 module.exports = {
   module: {
     rules: [

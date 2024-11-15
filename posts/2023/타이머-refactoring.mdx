@@ -53,9 +53,7 @@ setInterval 함수를 직접 사용하는 대신, (setInterval을 내부적으�
   height={480}
 />
 
-구현 코드
-
-```ts showLineNumbers
+```ts title="countdown-timer.ts" showLineNumbers
 type OnTick = (countInSecond: number) => void;
 type OnFinish = () => void;
 type Status = "idle" | "scheduled" | "running";
@@ -212,7 +210,7 @@ export default class CountdownTimer {
 
 React의 state와 외부 객체(시스템) CountdownTimer를 동기화하려면, useEffect를 사용하면 된다.
 
-```tsx showLineNumbers
+```tsx title="selected-to-do-progress-timer.tsx" showLineNumbers
 import { useEffect, useRef } from "react";
 import { ButtonGroup, IconButton, VStack } from "@chakra-ui/react";
 import { IoPlaySharp, IoRefreshSharp, IoStopSharp } from "react-icons/io5";
