@@ -77,6 +77,6 @@ export async function generateMetadata({
 
   return {
     title: `전체 글 목록 ${pageNumber}`,
-    description: `전체 글 목록: ${pageNumber} 페이지`,
+    description: `전체 글 목록 페이지입니다.`,
   };
 }

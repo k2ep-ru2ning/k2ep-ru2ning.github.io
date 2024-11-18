@@ -16,5 +16,5 @@ export default async function TagsPage() {
 
 export const metadata: Metadata = {
   title: "태그 목록",
-  description: "태그 목록 페이지",
+  description: "태그 목록 페이지입니다.",
 };

@@ -87,7 +87,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${tag} 태그, ${pageNumber} 페이지`,
-    description: `태그 "${tag}"에 속한 글 목록 ${pageNumber}`,
+    title: `${tag} 태그`,
+    description: `태그 "${tag}"에 속한 글 목록입니다.`,
   };
 }
