@@ -12,7 +12,7 @@ export default function TagList({ tags }: Props) {
       {tags.map((tag, index) => (
         <Link
           key={index}
-          href={`/tags/${tag}/pages/1`}
+          href={`/tags/${tag}`}
           className="text-sm sm:text-base block px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700"
         >
           {tag}
