@@ -14,8 +14,8 @@ type Props = {
 
 const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
   theme: {
-    dark: "github-dark-default",
-    light: "github-light-default",
+    dark: "vitesse-dark",
+    light: "vitesse-light",
   },
 };
 
