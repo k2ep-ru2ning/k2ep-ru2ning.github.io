@@ -64,7 +64,7 @@ npm을 통해 third-party plugin을 설치하고, plugin에 정의된 rule, conf
 
 **설정 파일에 plugin을 추가하는 것은 eslint의 동작에 아무런 영향을 미치지 않는다.**
 
-```json showLineNumbers
+```json title=".eslintrc.json"
 {
   "plugins": ["react", "react-hooks"]
 }
@@ -78,7 +78,7 @@ plugin을 추가할 때, `eslint-plugin-` prefix는 생략할 수 있다.
 
 **plugin에 의해 정의된 rule, config를 사용해야 eslint가 동작한다.**
 
-```json showLineNumbers
+```json title=".eslintrc.json"
 {
   "plugins": ["react", "react-hooks"],
   "rules": {
@@ -104,7 +104,7 @@ plugin을 추가하고, plugin에 정의된 rule을 하나씩 추가하는 것�
 
 설정 파일의 `extends`에 `plugin`이 제공하는 `config`를 명시하면 된다.
 
-```json showLineNumbers
+```json title=".eslintrc.json"
 {
   "extends": ["plugin:react/recommended"]
 }
@@ -126,7 +126,7 @@ plugin을 추가하고, plugin에 정의된 rule을 하나씩 추가하는 것�
 
 `"extends"`를 이용해 이미 정의된 config를 사용할 수 있다.
 
-```json showLineNumbers
+```json title=".eslintrc.json"
 {
   "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"]
 }
