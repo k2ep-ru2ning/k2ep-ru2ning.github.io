@@ -1,82 +1,80 @@
-.prose {
-  /* code 태그 font-family mono style로 설정 */
-  code {
-    @apply font-mono;
-  }
-
-  /* inline code block 스타일링 */
-  code:not([data-language]) {
-    @apply inline-block bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden;
-  }
-
-  /* rehype-pretty-code의 pre 스타일링 */
-  pre {
-    background-color: var(--shiki-light-bg);
-    @apply p-0 border border-zinc-300 rounded-md overflow-hidden;
-  }
-
-  /* rehype-pretty-code의 코드 블럭 제목 스타일링 */
-  figcaption[data-rehype-pretty-code-title] {
-    @apply inline-block m-0 p-2 border border-b-0 border-zinc-300 rounded-md rounded-b-none;
-  }
-
-  /* 코드 블럭 제목을 사용한 경우, rehype-pretty-code의 pre 스타일링 */
-  figcaption[data-rehype-pretty-code-title] + pre {
-    @apply rounded-t-none;
-  }
-
-  /* rehype-pretty-code의 code 스타일링: light 모드의 경우 */
-  code[data-theme*=" "] {
-    @apply overflow-x-auto px-4 py-2;
-  }
-  code[data-theme*=" "],
-  code[data-theme*=" "] span {
-    color: var(--shiki-light);
-    background-color: var(--shiki-light-bg);
-  }
-
-  /* line number를 표시하기 위한 스타일링 */
-  code[data-line-numbers] {
-    counter-reset: line;
-  }
-  code[data-line-numbers] > [data-line]::before {
-    counter-increment: line;
-    content: counter(line);
-
-    @apply inline-block w-3 mr-4 text-right;
-  }
-  code[data-line-numbers-max-digits="2"] > [data-line]::before {
-    @apply w-5;
-  }
-  code[data-line-numbers-max-digits="3"] > [data-line]::before {
-    @apply w-7;
-  }
-  code[data-line-numbers-max-digits="4"] > [data-line]::before {
-    @apply w-9;
-  }
+/* code 태그 font-family mono style로 설정 */
+.prose code {
+  @apply font-mono;
 }
 
-.dark .prose {
-  /* inline code block 스타일링: dark 모드 */
-  code:not([data-language]) {
-    @apply bg-zinc-800;
-  }
+/* inline code block 스타일링 */
+.prose code:not([data-language]) {
+  @apply inline-block bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden;
+}
 
-  /* rehype-pretty-code의 pre 스타일링: dark 모드 */
-  pre {
-    @apply border-zinc-700;
-    background-color: var(--shiki-dark-bg);
-  }
+/* rehype-pretty-code의 pre 스타일링 */
+.prose pre {
+  background-color: var(--shiki-light-bg);
+  @apply p-0 border border-zinc-300 rounded-md overflow-hidden;
+}
 
-  /* rehype-pretty-code의 코드 블럭 제목 스타일링: dark 모드 */
-  figcaption[data-rehype-pretty-code-title] {
-    @apply border-zinc-700;
-  }
+/* rehype-pretty-code의 코드 블럭 제목 스타일링 */
+.prose figcaption[data-rehype-pretty-code-title] {
+  @apply inline-block m-0 p-2 border border-b-0 border-zinc-300 rounded-md rounded-b-none;
+}
 
-  /* rehype-pretty-code의 code 스타일링: dark 모드의 경우 */
-  code[data-theme*=" "],
-  code[data-theme*=" "] span {
-    color: var(--shiki-dark);
-    background-color: var(--shiki-dark-bg);
-  }
+/* 코드 블럭 제목을 사용한 경우, rehype-pretty-code의 pre 스타일링 */
+.prose figcaption[data-rehype-pretty-code-title] + pre {
+  @apply rounded-t-none;
+}
+
+/* rehype-pretty-code의 code 스타일링: light 모드의 경우 */
+.prose code[data-theme*=" "] {
+  @apply overflow-x-auto px-4 py-2;
+}
+.prose code[data-theme*=" "],
+.prose code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+/* line number를 표시하기 위한 스타일링 */
+.prose code[data-line-numbers] {
+  counter-reset: line;
+}
+.prose code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+
+  @apply inline-block w-3 mr-4 text-right;
+}
+.prose code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  @apply w-5;
+}
+.prose code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  @apply w-7;
+}
+.prose code[data-line-numbers-max-digits="4"] > [data-line]::before {
+  @apply w-9;
+}
+
+/* dark mode style */
+
+/* inline code block 스타일링: dark 모드 */
+.dark .prose code:not([data-language]) {
+  @apply bg-zinc-800;
+}
+
+/* rehype-pretty-code의 pre 스타일링: dark 모드 */
+.dark .prose pre {
+  @apply border-zinc-700;
+  background-color: var(--shiki-dark-bg);
+}
+
+/* rehype-pretty-code의 코드 블럭 제목 스타일링: dark 모드 */
+.dark .prose figcaption[data-rehype-pretty-code-title] {
+  @apply border-zinc-700;
+}
+
+/* rehype-pretty-code의 code 스타일링: dark 모드의 경우 */
+.dark .prose code[data-theme*=" "],
+.dark .prose code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
 }
