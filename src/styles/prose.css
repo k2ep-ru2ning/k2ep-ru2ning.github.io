@@ -5,7 +5,7 @@
 
 /* inline code block 스타일링 */
 .prose code:not([data-language]) {
-  @apply inline-block bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden;
+  @apply inline bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden break-all;
 }
 
 /* rehype-pretty-code의 pre 스타일링 */
@@ -26,12 +26,21 @@
 
 /* rehype-pretty-code의 code 스타일링: light 모드의 경우 */
 .prose code[data-theme*=" "] {
-  @apply overflow-x-auto px-4 py-2;
+  @apply overflow-x-auto py-2;
 }
 .prose code[data-theme*=" "],
 .prose code[data-theme*=" "] span {
   color: var(--shiki-light);
   background-color: var(--shiki-light-bg);
+}
+
+.prose code[data-theme*=" "] span[data-line] {
+  @apply px-4;
+}
+
+.prose code[data-theme*=" "] span[data-highlighted-line],
+.prose code[data-theme*=" "] span[data-highlighted-line] span {
+  @apply bg-indigo-50;
 }
 
 /* line number를 표시하기 위한 스타일링 */
@@ -77,4 +86,9 @@
 .dark .prose code[data-theme*=" "] span {
   color: var(--shiki-dark);
   background-color: var(--shiki-dark-bg);
+}
+
+.dark .prose code[data-theme*=" "] span[data-highlighted-line],
+.dark .prose code[data-theme*=" "] span[data-highlighted-line] span {
+  @apply bg-indigo-950;
 }
