@@ -89,7 +89,7 @@ export default function MobileMenu() {
                   <Link
                     href={link}
                     className={cn(
-                      "flex gap-2 justify-end items-center p-2 hover:font-bold",
+                      "flex gap-2 justify-end items-center p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md",
                       isActive && "text-indigo-500",
                     )}
                   >
@@ -105,7 +105,7 @@ export default function MobileMenu() {
                   href="https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex gap-2 items-center justify-end p-2 hover:font-bold"
+                  className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
                 >
                   <BsGithub className="size-5" />
                   Github 저장소
@@ -117,7 +117,7 @@ export default function MobileMenu() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="flex gap-2 items-center justify-end p-2 hover:font-bold"
+              className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
             >
               <LuSun className="dark:hidden size-5" />
               <LuMoon className="hidden dark:block size-5" />
