@@ -30,10 +30,16 @@ export default function RootLayout({ children }: Props) {
           "font-sans bg-zinc-50 dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50"
         }
       >
-        <div className="px-4 max-w-screen-md mx-auto min-h-dvh flex flex-col">
-          <Header />
-          <main className="px-2 py-6 grow">{children}</main>
-          <Footer />
+        <div className="px-4 min-h-dvh flex flex-col">
+          <div className="sticky top-0 bg-zinc-50 dark:bg-zinc-950 max-w-screen-lg w-full mx-auto">
+            <Header />
+          </div>
+          <main className="px-2 py-6 grow max-w-screen-lg w-full mx-auto">
+            {children}
+          </main>
+          <div className="max-w-screen-lg w-full mx-auto">
+            <Footer />
+          </div>
         </div>
       </body>
     </html>
