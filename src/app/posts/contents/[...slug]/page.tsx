@@ -1,9 +1,12 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import PostArticleContent from "@/components/post-article/post-article-content";
-import PostArticleHeader from "@/components/post-article/post-article-header";
+import { LuPenSquare } from "react-icons/lu";
+import RoundedImage from "@/components/mdx/rounded-image";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
+import TagList from "@/components/tag-list";
 import { getPostByAbsoluteUrl, getPosts } from "@/service/post";
+import { formatDate } from "@/utils/date-formatter";
+import { generateComponentFromMDXString } from "@/utils/mdx";
 
 type Slug = string[];
 
@@ -20,15 +23,22 @@ export default async function PostPage({ params: { slug } }: Props) {
     notFound();
   }
 
+  const MDXComponent = await generateComponentFromMDXString(post.content);
+
   return (
     <article className="flex flex-col gap-y-6">
-      <PostArticleHeader
-        title={post.title}
-        createdAt={post.createdAt}
-        tags={post.tags}
-      />
+      <header className="flex flex-col gap-y-4 sm:gap-y-6">
+        <h1 className="text-2xl sm:text-3xl font-bold">{post.title}</h1>
+        {post.tags ? <TagList tags={post.tags} /> : null}
+        <time className="flex items-center gap-x-1.5 text-sm">
+          <LuPenSquare className="size-4" />
+          {formatDate(post.createdAt)}
+        </time>
+      </header>
       <HorizontalSeparator />
-      <PostArticleContent contentAsMarkdown={post.content} />
+      <div className="prose prose-zinc dark:prose-invert prose-sm sm:prose-base prose-code:text-sm sm:prose-code:text-base max-w-full">
+        <MDXComponent components={{ Image: RoundedImage }} />
+      </div>
     </article>
   );
 }
