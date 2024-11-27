@@ -37,18 +37,18 @@ export default async function PostPage({ params: { slug } }: Props) {
         </time>
       </header>
       <HorizontalSeparator />
-      <div className="flex gap-5">
-        <div className="prose prose-zinc dark:prose-invert prose-sm sm:prose-base prose-code:text-sm sm:prose-code:text-base max-w-full">
+      <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
+        <div className="max-w-full prose prose-zinc dark:prose-invert prose-sm sm:prose-base prose-code:text-sm sm:prose-code:text-base">
           <MDXComponent components={{ Image: RoundedImage }} />
         </div>
         {/* 
           아래 div에 sticky를 주면 안된다. 
-          이 div는 부모 flex 컨테이너 height를 다 차지하고 있어서,
+          이 div는 부모 요소 height를 다 차지하고 있어서,
           가장 가까운 scroll box인 뷰포트에서 스크롤이 일어나도
           sticky하게 움직일 공간이 없다. 
           그래서 PostArticleTOC를 감싸는 div를 만들고 sticky를 준다.
         */}
-        <div className="shrink-0">
+        <div className="pl-5 hidden lg:block">
           <div className="sticky top-20">
             <PostArticleTOC />
           </div>
