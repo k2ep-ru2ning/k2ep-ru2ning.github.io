@@ -13,7 +13,7 @@ export default function PostArticleStickyTOCSidebar({ headings }: Props) {
       <h2 className="text-xl shrink-0">목차</h2>
       <HorizontalSeparator />
       <nav className="flex-grow overflow-auto">
-        <ul className="flex flex-col gap-1.5">
+        <ul className="flex flex-col gap-1">
           {headings.map((item) => (
             <PostArticleTOCItem key={item.id} item={item} />
           ))}
