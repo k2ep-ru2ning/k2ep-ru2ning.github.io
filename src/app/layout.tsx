@@ -15,7 +15,7 @@ export default function RootLayout({ children }: Props) {
   return (
     <html
       lang="ko"
-      className={`${pretendard.variable} ${jetbrainsMono.variable}`}
+      className={`${pretendard.variable} ${jetbrainsMono.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <head>
