@@ -31,13 +31,13 @@ export default function RootLayout({ children }: Props) {
         }
       >
         <div className="px-4 min-h-dvh flex flex-col">
-          <div className="sticky top-0 bg-zinc-50 dark:bg-zinc-950 max-w-screen-lg w-full mx-auto">
+          <div className="sticky top-0 bg-zinc-50 dark:bg-zinc-950 max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
             <Header />
           </div>
-          <main className="px-2 py-6 grow max-w-screen-lg w-full mx-auto">
+          <main className="px-2 py-6 grow max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
             {children}
           </main>
-          <div className="max-w-screen-lg w-full mx-auto">
+          <div className="max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
             <Footer />
           </div>
         </div>
