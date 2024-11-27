@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import { type ReactNode } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
+import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import jetbrainsMono from "@/fonts/jetbrains-mono";
 import pretendard from "@/fonts/pretendard";
 import { initializeThemeFromLocal } from "@/utils/theme";
@@ -31,13 +32,15 @@ export default function RootLayout({ children }: Props) {
         }
       >
         <div className="px-4 min-h-dvh flex flex-col">
-          <div className="sticky top-0 bg-zinc-50 dark:bg-zinc-950 max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
+          {/* TOC 보다 z-index 높이기 위해 z-index 설정 */}
+          <div className="z-10 sticky top-0 bg-zinc-50 dark:bg-zinc-950 max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
             <Header />
           </div>
           <main className="px-2 py-6 grow max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
             {children}
           </main>
           <div className="max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
+            <HorizontalSeparator />
             <Footer />
           </div>
         </div>
