@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { LuFileCode, LuHome, LuTags } from "react-icons/lu";
-import TooltipIconLink from "./tooltip-icon-link";
+import cn from "@/utils/cn";
+import Tooltip from "../../tooltip";
 
 type LinkType = {
   link: string;
@@ -12,7 +14,7 @@ type LinkType = {
   isActive: boolean;
 };
 
-export default function Links() {
+export default function InternalLinks() {
   const pathname = usePathname();
 
   const links: LinkType[] = [
@@ -39,12 +41,17 @@ export default function Links() {
   return (
     <nav className="flex gap-2">
       {links.map(({ link, icon, tooltipText, isActive }, idx) => (
-        <TooltipIconLink
+        <Tooltip
           key={idx}
-          href={link}
-          icon={icon}
-          tooltipText={tooltipText}
-          isActive={isActive}
+          text={tooltipText}
+          trigger={
+            <Link
+              href={link}
+              className={cn("size-8", isActive && "text-indigo-500")}
+            >
+              {icon}
+            </Link>
+          }
         />
       ))}
     </nav>

@@ -1,9 +1,17 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import PostArticleContent from "@/components/post-article/post-article-content";
-import PostArticleHeader from "@/components/post-article/post-article-header";
+import { LuPenSquare } from "react-icons/lu";
+import PostArticleHeading from "@/components/mdx/heading";
+import RoundedImage from "@/components/mdx/rounded-image";
+import PostArticleStickyTOCSidebar from "@/components/post-article-toc/post-article-sticky-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
+import TagList from "@/components/tag-list";
 import { getPostByAbsoluteUrl, getPosts } from "@/service/post";
+import { formatDate } from "@/utils/date-formatter";
+import {
+  extractHeadingsFromMDXString,
+  generateComponentFromMDXString,
+} from "@/utils/mdx";
 
 type Slug = string[];
 
@@ -20,15 +28,55 @@ export default async function PostPage({ params: { slug } }: Props) {
     notFound();
   }
 
+  const MDXComponent = await generateComponentFromMDXString(post.content);
+
+  const headingsOfPost = await extractHeadingsFromMDXString(post.content);
+
   return (
     <article className="flex flex-col gap-y-6">
-      <PostArticleHeader
-        title={post.title}
-        createdAt={post.createdAt}
-        tags={post.tags}
-      />
+      <header className="flex flex-col gap-y-4 sm:gap-y-6">
+        <h1 className="text-2xl sm:text-3xl font-bold">{post.title}</h1>
+        {post.tags ? <TagList tags={post.tags} /> : null}
+        <time className="flex items-center gap-x-1.5 text-sm">
+          <LuPenSquare className="size-4" />
+          {formatDate(post.createdAt)}
+        </time>
+      </header>
       <HorizontalSeparator />
-      <PostArticleContent contentAsMarkdown={post.content} />
+      <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
+        <div className="max-w-full prose prose-zinc dark:prose-invert prose-sm sm:prose-base">
+          <MDXComponent
+            components={{
+              Image: RoundedImage,
+              h2: ({ children, id }) => (
+                <PostArticleHeading as="h2" id={id}>
+                  {children}
+                </PostArticleHeading>
+              ),
+              h3: ({ children, id }) => (
+                <PostArticleHeading as="h3" id={id}>
+                  {children}
+                </PostArticleHeading>
+              ),
+              h4: ({ children, id }) => (
+                <PostArticleHeading as="h4" id={id}>
+                  {children}
+                </PostArticleHeading>
+              ),
+            }}
+          />
+        </div>
+        {/* 
+          아래 div에 sticky를 주면 안된다. 
+          이 div는 부모 요소 height를 다 차지하고 있어서,
+          가장 가까운 scroll box인 뷰포트에서 스크롤이 일어나도
+          sticky하게 움직일 공간이 없다. 
+          그래서 TOC 컴포넌트에 sticky를 준다.
+        */}
+        <div className="pl-5 hidden lg:block">
+          <PostArticleStickyTOCSidebar headings={headingsOfPost} />
+        </div>
+      </div>
     </article>
   );
 }

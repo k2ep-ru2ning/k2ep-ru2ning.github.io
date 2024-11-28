@@ -1,11 +1,13 @@
+/*** code block style ***/
+
 /* code 태그 font-family mono style로 설정 */
 .prose code {
-  @apply font-mono;
+  @apply font-mono text-sm sm:text-base;
 }
 
 /* inline code block 스타일링 */
 .prose code:not([data-language]) {
-  @apply inline bg-zinc-100 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden break-all;
+  @apply inline bg-zinc-100 border border-zinc-300 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden break-all;
 }
 
 /* rehype-pretty-code의 pre 스타일링 */
@@ -67,7 +69,7 @@
 
 /* inline code block 스타일링: dark 모드 */
 .dark .prose code:not([data-language]) {
-  @apply bg-zinc-800;
+  @apply bg-zinc-800 border-zinc-700;
 }
 
 /* rehype-pretty-code의 pre 스타일링: dark 모드 */
@@ -92,3 +94,5 @@
 .dark .prose code[data-theme*=" "] span[data-highlighted-line] span {
   @apply bg-indigo-950;
 }
+
+/* ================================================================== */
