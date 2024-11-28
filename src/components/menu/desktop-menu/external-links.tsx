@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 import { BsGithub } from "react-icons/bs";
-import ExternalTooltipIconLink from "./external-tooltip-icon-link";
+import Tooltip from "../../tooltip";
 
 type LinkType = {
   link: string;
@@ -20,11 +20,19 @@ export default function ExternalLinks() {
   return (
     <div className="flex gap-2">
       {links.map(({ link, icon, tooltipText }, idx) => (
-        <ExternalTooltipIconLink
+        <Tooltip
           key={idx}
-          href={link}
-          icon={icon}
-          tooltipText={tooltipText}
+          text={tooltipText}
+          trigger={
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="size-8"
+            >
+              {icon}
+            </a>
+          }
         />
       ))}
     </div>
