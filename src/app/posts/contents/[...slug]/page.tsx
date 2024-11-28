@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LuPenSquare } from "react-icons/lu";
+import PostArticleHeading from "@/components/mdx/heading";
 import RoundedImage from "@/components/mdx/rounded-image";
 import PostArticleStickyTOCSidebar from "@/components/post-article-toc/post-article-sticky-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
@@ -44,7 +45,26 @@ export default async function PostPage({ params: { slug } }: Props) {
       <HorizontalSeparator />
       <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
         <div className="max-w-full prose prose-zinc dark:prose-invert prose-sm sm:prose-base">
-          <MDXComponent components={{ Image: RoundedImage }} />
+          <MDXComponent
+            components={{
+              Image: RoundedImage,
+              h2: ({ children, id }) => (
+                <PostArticleHeading as="h2" id={id}>
+                  {children}
+                </PostArticleHeading>
+              ),
+              h3: ({ children, id }) => (
+                <PostArticleHeading as="h3" id={id}>
+                  {children}
+                </PostArticleHeading>
+              ),
+              h4: ({ children, id }) => (
+                <PostArticleHeading as="h4" id={id}>
+                  {children}
+                </PostArticleHeading>
+              ),
+            }}
+          />
         </div>
         {/* 
           아래 div에 sticky를 주면 안된다. 
