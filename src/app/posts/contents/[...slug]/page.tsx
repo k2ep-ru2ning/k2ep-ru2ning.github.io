@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LuPenSquare } from "react-icons/lu";
-import PostArticleHeading from "@/components/mdx/heading";
+import PostArticleHeading from "@/components/mdx/post-article-heading";
 import RoundedImage from "@/components/mdx/rounded-image";
 import PostArticleStickyTOCSidebar from "@/components/post-article-toc/post-article-sticky-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
