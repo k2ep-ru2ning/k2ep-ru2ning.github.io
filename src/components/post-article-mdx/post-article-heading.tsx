@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { createElement, type PropsWithChildren } from "react";
 import { LuLink } from "react-icons/lu";
+import { type HeadingType } from "@/utils/mdx";
 
 type Props = {
   id?: string;
-  as: "h2" | "h3" | "h4";
+  as: HeadingType;
 };
 
 export default function PostArticleHeading({
@@ -13,7 +14,7 @@ export default function PostArticleHeading({
   children,
 }: PropsWithChildren<Props>) {
   return createElement(
-    as, // h2, h3, h4에 반복되는 속성이 많아 코드 반복을 줄이기 위해, JSX 대신 createElement 함수를 사용
+    as, // h2, h3에 반복되는 속성이 많아 코드 반복을 줄이기 위해, JSX 대신 createElement 함수를 사용
     { id, className: "scroll-mt-20" },
     <Link href={`#${id}`} className="inline-block group no-underline">
       {children}

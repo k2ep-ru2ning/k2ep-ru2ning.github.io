@@ -58,11 +58,6 @@ export default async function PostPage({ params: { slug } }: Props) {
                   {children}
                 </PostArticleHeading>
               ),
-              h4: ({ children, id }) => (
-                <PostArticleHeading as="h4" id={id}>
-                  {children}
-                </PostArticleHeading>
-              ),
             }}
           />
         </div>

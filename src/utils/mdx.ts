@@ -16,7 +16,7 @@ import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 
-type HeadingType = "h2" | "h3" | "h4";
+export type HeadingType = "h2" | "h3";
 
 export type Heading = {
   type: HeadingType;
@@ -62,11 +62,9 @@ function convertDepthToHeadingType(depth: number): HeadingType {
       return "h2";
     case 3:
       return "h3";
-    case 4:
-      return "h4";
     default: {
       throw new Error(
-        "mdx의 제목의 depth는 2, 3, 4만 가능합니다. (h2, h3, h4만 허용합니다.)",
+        "mdx의 제목의 depth는 2, 3만 가능합니다. (h2, h3만 허용합니다.)",
       );
     }
   }
