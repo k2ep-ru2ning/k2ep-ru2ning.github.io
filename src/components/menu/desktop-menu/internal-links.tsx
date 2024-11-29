@@ -43,7 +43,7 @@ export default function InternalLinks() {
       {links.map(({ link, icon, tooltipText, isActive }, idx) => (
         <Tooltip
           key={idx}
-          text={tooltipText}
+          content={tooltipText}
           trigger={
             <Link
               href={link}

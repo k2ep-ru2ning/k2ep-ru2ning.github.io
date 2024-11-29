@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { BsGithub } from "react-icons/bs";
+import { LuExternalLink } from "react-icons/lu";
 import Tooltip from "../../tooltip";
 
 type LinkType = {
@@ -22,7 +23,12 @@ export default function ExternalLinks() {
       {links.map(({ link, icon, tooltipText }, idx) => (
         <Tooltip
           key={idx}
-          text={tooltipText}
+          content={
+            <div className="flex gap-1 items-center">
+              {tooltipText}
+              <LuExternalLink className="size-4" />
+            </div>
+          }
           trigger={
             <a
               href={link}

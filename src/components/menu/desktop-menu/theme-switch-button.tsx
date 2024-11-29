@@ -17,7 +17,7 @@ export default function ThemeSwitchButton() {
           <LuMoon className="hidden dark:block size-6" />
         </button>
       }
-      text="테마 변경"
+      content="테마 변경"
     />
   );
 }

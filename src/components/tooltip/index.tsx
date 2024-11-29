@@ -3,10 +3,10 @@ import { type ReactNode } from "react";
 
 type Props = {
   trigger: ReactNode;
-  text: string;
+  content: ReactNode;
 };
 
-export default function Tooltip({ trigger, text }: Props) {
+export default function Tooltip({ trigger, content }: Props) {
   return (
     <TooltipPrimitive.Root>
       <TooltipPrimitive.Trigger
@@ -21,7 +21,7 @@ export default function Tooltip({ trigger, text }: Props) {
           sideOffset={8}
           className="z-10 text-sm bg-zinc-200 dark:bg-zinc-700 py-1 px-2 rounded-md"
         >
-          {text}
+          {content}
           <TooltipPrimitive.Arrow className="fill-zinc-200 dark:fill-zinc-700" />
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>
