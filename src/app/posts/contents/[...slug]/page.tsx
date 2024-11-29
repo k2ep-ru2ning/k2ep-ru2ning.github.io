@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LuPenSquare } from "react-icons/lu";
-import PostArticleHeading from "@/components/mdx/post-article-heading";
-import PostArticleImage from "@/components/mdx/post-article-image";
+import PostArticleHeading from "@/components/post-article-mdx/post-article-heading";
+import PostArticleImage from "@/components/post-article-mdx/post-article-image";
 import PostArticleStickyTOCSidebar from "@/components/post-article-toc/post-article-sticky-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import TagList from "@/components/tag-list";
