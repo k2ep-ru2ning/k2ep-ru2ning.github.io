@@ -11,7 +11,7 @@ export default async function RecentPostList() {
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <ListHeading text="최신 글" />
+      <ListHeading>최신 글</ListHeading>
       <PostList posts={posts} />
       <Link
         href="/posts/pages/1"

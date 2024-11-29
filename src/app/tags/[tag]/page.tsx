@@ -21,7 +21,13 @@ export default async function PostListInTagPage({ params }: Props) {
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <ListHeading text={`태그 "${tag}"에 속한 글 목록`} />
+      <ListHeading>
+        &quot;
+        <strong className="underline decoration-wavy decoration-indigo-500">
+          {tag}
+        </strong>
+        &quot; 태그에 속한 글 목록
+      </ListHeading>
       <PostList posts={posts} />
     </section>
   );
@@ -45,6 +51,6 @@ export async function generateMetadata({
 
   return {
     title: `${tag} 태그`,
-    description: `태그 "${tag}"에 속한 글 목록입니다.`,
+    description: `"${tag}" 태그에 속한 글 목록입니다.`,
   };
 }

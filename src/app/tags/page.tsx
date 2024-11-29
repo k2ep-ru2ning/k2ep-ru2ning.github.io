@@ -8,7 +8,7 @@ export default async function TagsPage() {
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-6">
-      <ListHeading text="태그 목록" />
+      <ListHeading>태그 목록</ListHeading>
       <TagList tags={tags} />
     </section>
   );

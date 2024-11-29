@@ -39,7 +39,7 @@ export default async function PostListPage({
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <ListHeading text={`전체 글 목록 ${currentPageNumber}`} />
+      <ListHeading>{`전체 글 목록 ${currentPageNumber}`}</ListHeading>
       <PostList posts={postsOfCurrentPage} />
       <PageController
         basePath="/posts/pages"
