@@ -2,13 +2,16 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
 import matter from "gray-matter";
+import { z } from "zod";
 
-type PostMatter = {
-  title: string;
-  description: string;
-  createdAt: Date;
-  tags?: string[];
-};
+const postMatterSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  createdAt: z.date(),
+  tags: z.string().array().nullable().optional(),
+});
+
+type PostMatter = z.infer<typeof postMatterSchema>;
 
 export type Post = PostMatter & {
   absoluteUrl: string;
@@ -48,7 +51,8 @@ export async function getPosts() {
     for (const postAbsolutePath of postAbsolutePaths) {
       const file = await readFile(postAbsolutePath, { encoding: "utf8" });
       const { content, data } = matter(file);
-      const { createdAt, description, title, tags } = data as PostMatter;
+      const { createdAt, description, title, tags } =
+        postMatterSchema.parse(data);
       posts.push({
         content,
         createdAt: new Date(
@@ -63,8 +67,9 @@ export async function getPosts() {
       });
     }
   } catch (e) {
-    console.error(e);
-    throw new Error("post 파일을 read, parse 하는데 문제가 발생했습니다.");
+    throw new Error("post 파일을 read, parse 하는데 문제가 발생했습니다.", {
+      cause: e,
+    });
   }
   return posts;
 }
