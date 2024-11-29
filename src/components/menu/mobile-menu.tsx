@@ -75,13 +75,13 @@ export default function MobileMenu() {
                 {
                   link: "/posts/pages/1",
                   icon: <LuFileCode className="size-5" />,
-                  label: "글 목록",
+                  label: "글",
                   isActive: pathname.startsWith("/posts/pages"),
                 },
                 {
                   link: "/tags",
                   icon: <LuTags className="size-5" />,
-                  label: "태그 목록",
+                  label: "태그",
                   isActive: pathname === "/tags",
                 },
               ].map(({ link, icon, label, isActive }) => (

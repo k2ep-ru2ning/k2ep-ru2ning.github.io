@@ -39,7 +39,7 @@ export default async function PostListPage({
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-2">
-      <ListHeading>{`전체 글 목록 ${currentPageNumber}`}</ListHeading>
+      <ListHeading>{`글 목록 ${currentPageNumber}`}</ListHeading>
       <PostList posts={postsOfCurrentPage} />
       <PageController
         basePath="/posts/pages"
@@ -76,7 +76,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `전체 글 목록 ${pageNumber}`,
+    title: `글 목록 ${pageNumber}`,
     description: `전체 글 목록 페이지입니다.`,
   };
 }

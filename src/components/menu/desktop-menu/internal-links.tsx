@@ -27,13 +27,13 @@ export default function InternalLinks() {
     {
       link: "/posts/pages/1",
       icon: <LuFileCode className="size-6" />,
-      tooltipText: "글 목록",
+      tooltipText: "글",
       isActive: pathname.startsWith("/posts/pages"),
     },
     {
       link: "/tags",
       icon: <LuTags className="size-6" />,
-      tooltipText: "태그 목록",
+      tooltipText: "태그",
       isActive: pathname === "/tags",
     },
   ];
