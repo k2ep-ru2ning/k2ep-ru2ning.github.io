@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 import ListHeading from "@/components/list-heading";
 import TagList from "@/components/tag-list";
-import { getTags } from "@/service/post";
+import { getUsedTags } from "@/service/post";
 
 export default async function TagsPage() {
-  const tags = await getTags();
+  const tags = await getUsedTags();
 
   return (
     <section className="py-3 md:py-4 flex flex-col gap-6">

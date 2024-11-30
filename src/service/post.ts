@@ -4,11 +4,24 @@ import { cwd } from "node:process";
 import matter from "gray-matter";
 import { z } from "zod";
 
+const VALID_TAGS = [
+  "회고",
+  "개발 환경 설정",
+  "React",
+  "Babel",
+  "Webpack",
+  "Vite",
+] as const;
+
+export const tagSchema = z.enum(VALID_TAGS);
+
+export type Tag = z.infer<typeof tagSchema>;
+
 const postMatterSchema = z.object({
   title: z.string(),
   description: z.string(),
   createdAt: z.date(),
-  tags: z.string().array().nullable().optional(),
+  tags: tagSchema.array().nullable().optional(),
 });
 
 type PostMatter = z.infer<typeof postMatterSchema>;
@@ -60,9 +73,7 @@ export async function getPosts() {
         ),
         description,
         title,
-        tags: tags
-          ?.map((tag) => tag.toLowerCase())
-          .sort((tag1, tag2) => tag1.localeCompare(tag2)),
+        tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
         absoluteUrl: convertPostAbsolutePathToAbsoluteUrl(postAbsolutePath),
       });
     }
@@ -71,11 +82,7 @@ export async function getPosts() {
       cause: e,
     });
   }
-  return posts;
-}
-
-export async function getSortedPosts() {
-  return (await getPosts()).sort(
+  return posts.sort(
     (p1, p2) => p2.createdAt.getTime() - p1.createdAt.getTime(),
   );
 }
@@ -85,13 +92,14 @@ export async function getPostByAbsoluteUrl(url: string) {
   return posts.find((post) => post.absoluteUrl === url);
 }
 
-export async function getTags() {
+// valid tag들이 아닌, valid tag들 중 실제로 post에서 사용 중인 tag들을 조회
+export async function getUsedTags() {
   const posts = await getPosts();
   return [...new Set(posts.flatMap((post) => post.tags ?? []))].sort(
     (tag1, tag2) => tag1.localeCompare(tag2),
   );
 }
 
-export async function getSortedPostsByTag(tag: string) {
-  return (await getSortedPosts()).filter((post) => post.tags?.includes(tag));
+export async function getPostsByTag(tag: Tag) {
+  return (await getPosts()).filter((post) => post.tags?.includes(tag));
 }
