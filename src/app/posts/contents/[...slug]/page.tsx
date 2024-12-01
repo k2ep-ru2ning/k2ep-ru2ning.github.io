@@ -47,7 +47,8 @@ export default async function PostPage({ params: { slug } }: Props) {
         <div className="max-w-full prose prose-zinc dark:prose-invert prose-sm sm:prose-base">
           <MDXComponent
             components={{
-              Image: PostArticleImage,
+              img: ({ src, alt = "" }) =>
+                src ? <PostArticleImage src={src} alt={alt} /> : null,
               h2: ({ children, id }) => (
                 <PostArticleHeading as="h2" id={id}>
                   {children}

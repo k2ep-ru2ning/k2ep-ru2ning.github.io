@@ -17,12 +17,7 @@ tags:
 
 그런데, **빌드 시간이 1분 넘게 걸렸기 때문에, 코드를 변경하고 변경사항을 눈으로 확인하는 데 너무 오래 걸렸다.**
 
-<Image
-  alt="rollup build 속도"
-  src="/images/posts/2024/lib-configuration-based-on-vite/rollup-build-time.png"
-  width={420}
-  height={120}
-/>
+![rollup build 속도](/images/posts/2024/lib-configuration-based-on-vite/rollup-build-time.png)
 
 기존에 사용하던 Rollup 버전이 너무 오래 되었고(기존 버전: `2`, 24.06.12 기준 최신 버전: `4`), Rollup 설정 파일도 2년에 퇴사 하신분의 commit을 끝으로 관리되지 않았다.
 
@@ -283,12 +278,7 @@ import { SomeType } from "../../../../types";
 
 ## 결과
 
-<Image
-  alt="vite build 속도"
-  src="/images/posts/2024/lib-configuration-based-on-vite/vite-build-time.png"
-  width={430}
-  height={170}
-/>
+![vite build 속도](/images/posts/2024/lib-configuration-based-on-vite/vite-build-time.png)
 
 기존에 **1분이 넘던 빌드시간을 10초대로 줄였다.** 팀에서 `yarn link`를 활용해 개발하고 있었는데, 코드를 변경할 때마다 발생하는 빌드에 걸리는 시간이 줄어들어 **팀 개발 생산성이 증가했다**. 팀원들도 속도가 빨라져서 많이 좋아했다.
 

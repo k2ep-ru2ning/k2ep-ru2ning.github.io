@@ -142,12 +142,7 @@ const VisuallyHiddenSpan = styled(Base.withComponent("span"))`
 
 잘 동작할 것 같았지만 아래 그림처럼 잘 동작하지 않았다.
 
-<Image
-  alt="첫 번째 시도"
-  src="/images/posts/2024/auto-resize-input/auto-resize-input-try-1.gif"
-  width={500}
-  height={160}
-/>
+![첫 번째 시도](/images/posts/2024/auto-resize-input/auto-resize-input-try-1.gif)
 
 value 값의 변화에 한 단계 늦게 반응했다. handleChange가 호출된 시점에서 `e.target.value`는 사용자의 마지막 입력값을 의미하지만, value prop은 바로 직전 입력값을 의미한다. 따라서 이 시점에서 `visuallyHiddenSpanRef.current.getBoundingClientRect().width`를 참조해도 직전 입력값의 width일 뿐이다. 그래서 한 단계 늦게 width를 늘려서 앞부분이 잘려서 표시된다.
 
@@ -256,12 +251,7 @@ value prop이 변경되어 re-rendering이 발생한 경우 effect 함수 내에
 
 한단계 늦게 width가 반응하는 문제가 해결되었다.
 
-<Image
-  alt="두 번째 시도"
-  src="/images/posts/2024/auto-resize-input/auto-resize-input-try-2.gif"
-  width={500}
-  height={160}
-/>
+![두 번째 시도](/images/posts/2024/auto-resize-input/auto-resize-input-try-2.gif)
 
 하지만 빠르게 입력했을 때, 입력값이 깜빡이는(덜덜거리는) 문제가 발생했다.
 
@@ -374,12 +364,7 @@ useEffect를 사용했을 때는 effect 함수 내부의 `setWidthInPx` 함수 �
 
 React 공식문서에도, 깜빡거리는 문제가 발생하거나 브라우저가 paint하기 전에 effect 함수가 반드시 완료되어야 하는 경우는 useEffect 대신 useLayoutEffect를 사용하면 된다고 설명한다.
 
-<Image
-  alt="세 번째 시도"
-  src="/images/posts/2024/auto-resize-input/auto-resize-input-try-3.gif"
-  width={500}
-  height={160}
-/>
+![세 번째 시도](/images/posts/2024/auto-resize-input/auto-resize-input-try-3.gif)
 
 useEffect를 사용할 때와 달리 깜빡거림 없이 잘 동작함을 확인할 수 있다.
 
@@ -486,12 +471,7 @@ ref로 `textContent` 값을 직접 변경하므로, span 태그의 자식으로 
 
 (input 태그의 width를 의미하는) widthInPx state를 갱신하는 코드를, 입력값 변경되었을 때 호출될 change event handler 함수에 두어서 useEffect나 useLayoutEffect를 사용할 때보다 코드 파악하기 더 쉬워졌다.
 
-<Image
-  alt="최종 구현"
-  src="/images/posts/2024/auto-resize-input/auto-resize-input-final.gif"
-  width={500}
-  height={160}
-/>
+![최종 구현](/images/posts/2024/auto-resize-input/auto-resize-input-final.gif)
 
 useLayoutEffect를 사용했을 때와 마찬가지로 깜빡임 없이 잘 동작한다.
 
@@ -499,12 +479,7 @@ useLayoutEffect를 사용했을 때와 마찬가지로 깜빡임 없이 잘 동�
 
 만든 `AutoResizeHashtagInput` 컴포넌트를 활용해서 실무에서는 다음과 비슷한 UI를 가지는 폼을 만들었다.
 
-<Image
-  alt="활용 예시"
-  src="/images/posts/2024/auto-resize-input/auto-resize-input-example.gif"
-  width={500}
-  height={300}
-/>
+![활용 예시](/images/posts/2024/auto-resize-input/auto-resize-input-example.gif)
 
 클라이언트 코드는 다음과 같다.
 
