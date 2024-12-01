@@ -1,9 +1,9 @@
 import Link from "next/link";
+import { type PostContentHeading } from "@/service/posts";
 import cn from "@/utils/cn";
-import { type Heading } from "@/utils/mdx";
 
 type Props = {
-  item: Heading;
+  item: PostContentHeading;
 };
 
 export default function PostArticleTOCItem({ item }: Props) {

@@ -1,17 +1,14 @@
+import { getMDXComponent } from "mdx-bundler/client";
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LuPenSquare } from "react-icons/lu";
-import PostArticleHeading from "@/components/post-article-mdx/post-article-heading";
-import PostArticleImage from "@/components/post-article-mdx/post-article-image";
-import PostArticleTOCSidebar from "@/components/post-article-toc/post-article-toc-sidebar";
+import PostArticleHeading from "@/components/post-article/mdx/post-article-heading";
+import PostArticleImage from "@/components/post-article/mdx/post-article-image";
+import PostArticleTOCSidebar from "@/components/post-article/toc/post-article-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import TagList from "@/components/tag-list";
 import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
 import { formatDate } from "@/utils/date-formatter";
-import {
-  extractHeadingsFromMDXString,
-  generateComponentFromMDXString,
-} from "@/utils/mdx";
 
 type Slug = string[];
 
@@ -28,9 +25,7 @@ export default async function PostPage({ params: { slug } }: Props) {
     notFound();
   }
 
-  const MDXComponent = await generateComponentFromMDXString(post.content);
-
-  const headingsOfPost = await extractHeadingsFromMDXString(post.content);
+  const MDXComponent = getMDXComponent(post.bundledContent);
 
   return (
     <article className="flex flex-col gap-y-6">
@@ -72,7 +67,7 @@ export default async function PostPage({ params: { slug } }: Props) {
         <div className="pl-5 hidden lg:block">
           {/* header: h-16(4rem), footer: h-20(5rem), main의 상하패딩 총 3rem */}
           <div className="sticky top-20 h-full max-h-[calc(100dvh-12rem)] overflow-hidden">
-            <PostArticleTOCSidebar headings={headingsOfPost} />
+            <PostArticleTOCSidebar headings={post.headings} />
           </div>
         </div>
       </div>

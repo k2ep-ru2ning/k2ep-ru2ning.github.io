@@ -1,9 +1,9 @@
-import { type Heading } from "@/utils/mdx";
+import { type PostContentHeading } from "@/service/posts";
 import PostArticleTOCItem from "./post-article-toc-item";
-import HorizontalSeparator from "../separator/horizontal-separator";
+import HorizontalSeparator from "../../separator/horizontal-separator";
 
 type Props = {
-  headings: Heading[];
+  headings: PostContentHeading[];
 };
 
 export default function PostArticleTOCSidebar({ headings }: Props) {

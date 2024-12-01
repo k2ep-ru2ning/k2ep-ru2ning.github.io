@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { createElement, type PropsWithChildren } from "react";
 import { LuLink } from "react-icons/lu";
-import { type HeadingType } from "@/utils/mdx";
+import { type PostContentHeadingType } from "@/service/posts";
 
 type Props = {
   id?: string;
-  as: HeadingType;
+  as: PostContentHeadingType;
 };
 
 export default function PostArticleHeading({
