@@ -19,7 +19,7 @@ export default function Tooltip({ trigger, content }: Props) {
         <TooltipPrimitive.Content
           side="bottom"
           sideOffset={8}
-          className="z-10 text-sm bg-zinc-200 dark:bg-zinc-700 py-1 px-2 rounded-md"
+          className="text-sm bg-zinc-200 dark:bg-zinc-700 py-1 px-2 rounded-md"
         >
           {content}
           <TooltipPrimitive.Arrow className="fill-zinc-200 dark:fill-zinc-700" />
