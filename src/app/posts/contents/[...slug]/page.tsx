@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { LuPenSquare } from "react-icons/lu";
 import PostArticleHeading from "@/components/post-article-mdx/post-article-heading";
 import PostArticleImage from "@/components/post-article-mdx/post-article-image";
-import PostArticleStickyTOCSidebar from "@/components/post-article-toc/post-article-sticky-toc-sidebar";
+import PostArticleTOCSidebar from "@/components/post-article-toc/post-article-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import TagList from "@/components/tag-list";
 import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
@@ -66,10 +66,13 @@ export default async function PostPage({ params: { slug } }: Props) {
           이 div는 부모 요소 height를 다 차지하고 있어서,
           가장 가까운 scroll box인 뷰포트에서 스크롤이 일어나도
           sticky하게 움직일 공간이 없다. 
-          그래서 TOC 컴포넌트에 sticky를 준다.
+          그래서 TOC 컴포넌트를 감싸는 div에 sticky를 준다.
         */}
         <div className="pl-5 hidden lg:block">
-          <PostArticleStickyTOCSidebar headings={headingsOfPost} />
+          {/* header: h-16(4rem), footer: h-20(5rem), main의 상하패딩 총 3rem */}
+          <div className="sticky top-20 h-full max-h-[calc(100dvh-12rem)] overflow-hidden">
+            <PostArticleTOCSidebar headings={headingsOfPost} />
+          </div>
         </div>
       </div>
     </article>
