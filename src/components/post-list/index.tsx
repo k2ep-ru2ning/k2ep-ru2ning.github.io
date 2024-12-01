@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { type Post } from "@/service/post";
+import { type Post } from "@/service/posts";
 import PostListItem from "./post-list-item";
 import HorizontalSeparator from "../separator/horizontal-separator";
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
-import { getPosts } from "@/service/post";
+import { getPosts } from "@/service/posts";
 import ListHeading from "./list-heading";
 import PostList from "./post-list";
 

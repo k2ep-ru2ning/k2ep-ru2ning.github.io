@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { type Post } from "@/service/post";
+import { type Post } from "@/service/posts";
 import { formatDate } from "@/utils/date-formatter";
 import TagList from "../tag-list";
 

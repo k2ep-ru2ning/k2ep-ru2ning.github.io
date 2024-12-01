@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
 import PostList from "@/components/post-list";
-import { getPostsByTag, getUsedTags, tagSchema } from "@/service/post";
+import { getPostsByTag, getUsedTags, tagSchema } from "@/service/posts";
 
 type Props = {
   params: {
