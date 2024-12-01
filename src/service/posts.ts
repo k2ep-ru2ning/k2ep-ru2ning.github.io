@@ -31,14 +31,15 @@ export type Post = PostMatter & {
   content: string;
 };
 
-const POST_FILE_EXTENSION = ".mdx";
+const POST_FILE_EXTENSION = [".md", ".mdx"];
 
 const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "src", "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
-function convertPostAbsolutePathToAbsoluteUrl(path: string) {
-  return `/posts/contents/${path.slice(`${cwd()}/src/posts/`.length).replace(POST_FILE_EXTENSION, "")}`;
+function convertPostAbsolutePathToAbsoluteUrl(absolutePath: string) {
+  const ext = path.extname(absolutePath);
+  return `/posts/contents/${absolutePath.slice(`${cwd()}/src/posts/`.length).replace(ext, "")}`;
 }
 
 async function getPostAbsolutePaths() {
@@ -46,9 +47,9 @@ async function getPostAbsolutePaths() {
   // 내부의 디렉터리, 파일 모두 읽어 들인다. (재귀적으로)
   const dirContents = await readdir(POSTS_DIRECTORY_PATH, { recursive: true });
 
-  // 읽어들인 디렉터리, 파일 중, .mdx 확장자의 파일만 filtering 한다.
-  const postRelativePaths = dirContents.filter(
-    (content) => path.extname(content) === POST_FILE_EXTENSION,
+  // 읽어들인 디렉터리, 파일 중, .md, .mdx 확장자의 파일만 filtering 한다.
+  const postRelativePaths = dirContents.filter((content) =>
+    POST_FILE_EXTENSION.includes(path.extname(content)),
   );
 
   // 절대 경로로 변환한다.
