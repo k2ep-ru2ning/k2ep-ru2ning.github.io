@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
 import PostList from "@/components/post-list";
-import { getSortedPostsByTag, getTags } from "@/service/post";
+import { getPostsByTag, getUsedTags, tagSchema } from "@/service/posts";
 
 type Props = {
   params: {
@@ -11,10 +11,20 @@ type Props = {
 };
 
 export default async function PostListInTagPage({ params }: Props) {
-  const tag = decodeURIComponent(params.tag);
+  const tagParamParsingResult = tagSchema.safeParse(
+    decodeURIComponent(params.tag),
+  );
 
-  const posts = await getSortedPostsByTag(tag);
+  // valid한 태그 이름이 아닌 경우.
+  if (!tagParamParsingResult.success) {
+    notFound();
+  }
 
+  const { data: tag } = tagParamParsingResult;
+
+  const posts = await getPostsByTag(tag);
+
+  // valid tag이더라도 실제로 그 태그를 사용하는 글이 없는 경우.
   if (posts.length === 0) {
     notFound();
   }
@@ -34,17 +44,25 @@ export default async function PostListInTagPage({ params }: Props) {
 }
 
 export async function generateStaticParams() {
-  const tags = await getTags();
+  const tags = await getUsedTags();
   return tags.map((tag) => ({ tag }));
 }
 
-export async function generateMetadata({
-  params: { tag },
-}: Props): Promise<Metadata> {
-  tag = decodeURIComponent(tag);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const tagParamParsingResult = tagSchema.safeParse(
+    decodeURIComponent(params.tag),
+  );
 
-  const posts = await getSortedPostsByTag(tag);
+  // valid한 태그 이름이 아닌 경우.
+  if (!tagParamParsingResult.success) {
+    notFound();
+  }
 
+  const { data: tag } = tagParamParsingResult;
+
+  const posts = await getPostsByTag(tag);
+
+  // valid tag이더라도 실제로 그 태그를 사용하는 글이 없는 경우.
   if (posts.length === 0) {
     notFound();
   }

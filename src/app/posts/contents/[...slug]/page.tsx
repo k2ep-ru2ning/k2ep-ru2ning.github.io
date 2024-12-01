@@ -6,7 +6,7 @@ import PostArticleImage from "@/components/post-article-mdx/post-article-image";
 import PostArticleStickyTOCSidebar from "@/components/post-article-toc/post-article-sticky-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import TagList from "@/components/tag-list";
-import { getPostByAbsoluteUrl, getPosts } from "@/service/post";
+import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
 import { formatDate } from "@/utils/date-formatter";
 import {
   extractHeadingsFromMDXString,

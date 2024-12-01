@@ -2,13 +2,29 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
 import matter from "gray-matter";
+import { z } from "zod";
 
-type PostMatter = {
-  title: string;
-  description: string;
-  createdAt: Date;
-  tags?: string[];
-};
+const VALID_TAGS = [
+  "회고",
+  "개발 환경 설정",
+  "React",
+  "Babel",
+  "Webpack",
+  "Vite",
+] as const;
+
+export const tagSchema = z.enum(VALID_TAGS);
+
+export type Tag = z.infer<typeof tagSchema>;
+
+const postMatterSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  createdAt: z.date(),
+  tags: tagSchema.array().nullable().optional(),
+});
+
+type PostMatter = z.infer<typeof postMatterSchema>;
 
 export type Post = PostMatter & {
   absoluteUrl: string;
@@ -48,7 +64,8 @@ export async function getPosts() {
     for (const postAbsolutePath of postAbsolutePaths) {
       const file = await readFile(postAbsolutePath, { encoding: "utf8" });
       const { content, data } = matter(file);
-      const { createdAt, description, title, tags } = data as PostMatter;
+      const { createdAt, description, title, tags } =
+        postMatterSchema.parse(data);
       posts.push({
         content,
         createdAt: new Date(
@@ -56,21 +73,16 @@ export async function getPosts() {
         ),
         description,
         title,
-        tags: tags
-          ?.map((tag) => tag.toLowerCase())
-          .sort((tag1, tag2) => tag1.localeCompare(tag2)),
+        tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
         absoluteUrl: convertPostAbsolutePathToAbsoluteUrl(postAbsolutePath),
       });
     }
   } catch (e) {
-    console.error(e);
-    throw new Error("post 파일을 read, parse 하는데 문제가 발생했습니다.");
+    throw new Error("post 파일을 read, parse 하는데 문제가 발생했습니다.", {
+      cause: e,
+    });
   }
-  return posts;
-}
-
-export async function getSortedPosts() {
-  return (await getPosts()).sort(
+  return posts.sort(
     (p1, p2) => p2.createdAt.getTime() - p1.createdAt.getTime(),
   );
 }
@@ -80,13 +92,14 @@ export async function getPostByAbsoluteUrl(url: string) {
   return posts.find((post) => post.absoluteUrl === url);
 }
 
-export async function getTags() {
+// valid tag들이 아닌, valid tag들 중 실제로 post에서 사용 중인 tag들을 조회
+export async function getUsedTags() {
   const posts = await getPosts();
   return [...new Set(posts.flatMap((post) => post.tags ?? []))].sort(
     (tag1, tag2) => tag1.localeCompare(tag2),
   );
 }
 
-export async function getSortedPostsByTag(tag: string) {
-  return (await getSortedPosts()).filter((post) => post.tags?.includes(tag));
+export async function getPostsByTag(tag: Tag) {
+  return (await getPosts()).filter((post) => post.tags?.includes(tag));
 }

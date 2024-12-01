@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
 import PageController from "@/components/page-controller";
 import PostList from "@/components/post-list";
-import { getPosts, getSortedPosts } from "@/service/post";
+import { getPosts } from "@/service/posts";
 
 type Props = {
   params: {
@@ -20,7 +20,7 @@ export default async function PostListPage({
     notFound();
   }
 
-  const posts = await getSortedPosts();
+  const posts = await getPosts();
 
   const currentPageNumber = Number(pageNumber);
 
@@ -65,7 +65,7 @@ export async function generateMetadata({
     notFound();
   }
 
-  const posts = await getSortedPosts();
+  const posts = await getPosts();
 
   const pageNumber = Number(pageNumberParam);
 
