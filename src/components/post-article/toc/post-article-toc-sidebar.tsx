@@ -15,8 +15,8 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
   );
 
   useEffect(() => {
-    const headingElements = document.querySelectorAll(
-      "#article-content h2[id],h3[id]",
+    const headingElements = headings.map((heading) =>
+      document.querySelector(`#article-content > #${heading.id}`),
     );
 
     // 변경사항이 있을 때마다 callback 호출된다.
@@ -46,14 +46,15 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
       },
     );
 
-    headingElements.forEach((headingElement) =>
-      observer.observe(headingElement),
-    );
+    for (const headingElement of headingElements) {
+      if (!headingElement) continue;
+      observer.observe(headingElement);
+    }
 
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [headings]);
 
   return (
     <section className="max-h-full rounded-md border border-zinc-300 dark:border-zinc-700 p-3 flex flex-col gap-3">
