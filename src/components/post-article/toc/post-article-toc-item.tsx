@@ -1,24 +1,35 @@
 import Link from "next/link";
-import { type PostContentHeading } from "@/service/posts";
+import { createElement } from "react";
+import { LuChevronRight, LuCircle } from "react-icons/lu";
 import cn from "@/utils/cn";
 
 type Props = {
-  item: PostContentHeading;
+  link: string;
+  text: string;
+  depth: 2 | 3;
+  isActive: boolean;
 };
 
-export default function PostArticleTOCItem({ item }: Props) {
-  const depth = item.type === "h2" ? 2 : item.type === "h3" ? 3 : 4;
-
+export default function PostArticleTOCItem({
+  depth,
+  link,
+  text,
+  isActive,
+}: Props) {
   return (
-    <li
-      key={item.id}
-      className="hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5"
-    >
+    <li>
       <Link
-        href={`#${item.id}`}
-        className={cn("block", depth === 3 && "pl-3", depth === 4 && "pl-6")}
+        href={link}
+        className={cn(
+          "flex items-baseline gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5",
+          depth === 3 && "pl-4",
+          isActive && "text-indigo-500",
+        )}
       >
-        {item.text}
+        {createElement(isActive ? LuChevronRight : LuCircle, {
+          className: "shrink-0 size-3",
+        })}
+        {text}
       </Link>
     </li>
   );

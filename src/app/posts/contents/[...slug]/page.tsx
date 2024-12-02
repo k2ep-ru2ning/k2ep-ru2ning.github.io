@@ -39,7 +39,10 @@ export default async function PostPage({ params: { slug } }: Props) {
       </header>
       <HorizontalSeparator />
       <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
-        <div className="max-w-full prose prose-zinc dark:prose-invert prose-sm sm:prose-base">
+        <div
+          id="article-content"
+          className="max-w-full prose prose-zinc dark:prose-invert prose-sm sm:prose-base"
+        >
           <MDXComponent
             components={{
               img: ({ src, alt = "" }) =>
@@ -65,8 +68,8 @@ export default async function PostPage({ params: { slug } }: Props) {
           그래서 TOC 컴포넌트를 감싸는 div에 sticky를 준다.
         */}
         <div className="pl-5 hidden lg:block">
-          {/* header: h-16(4rem), footer: h-20(5rem), main의 상하패딩 총 3rem */}
-          <div className="sticky top-20 h-full max-h-[calc(100dvh-12rem)] overflow-hidden">
+          {/* header: 64px, footer: 80px, main의 상하패딩 총 3rem */}
+          <div className="sticky top-20 h-full max-h-[calc(100dvh-144px-3rem)] overflow-hidden">
             <PostArticleTOCSidebar headings={post.headings} />
           </div>
         </div>
