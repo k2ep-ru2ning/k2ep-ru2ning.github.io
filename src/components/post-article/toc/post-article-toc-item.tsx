@@ -28,7 +28,7 @@ export default function PostArticleTOCItem({
         <div
           className={cn(
             "p-0.5 shrink-0 text-xs text-zinc-700 dark:text-zinc-300 rounded-md border border-zinc-300 dark:border-zinc-700",
-            isActive && "text-indigo-500",
+            isActive && "text-indigo-500 dark:text-indigo-500",
           )}
         >
           {type === "h2" ? "H2" : "H3"}
