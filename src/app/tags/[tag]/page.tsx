@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
+import ListSection from "@/components/list-section";
 import PostList from "@/components/post-list";
 import { getPostsByTag, getUsedTags, tagSchema } from "@/service/posts";
 
@@ -30,7 +31,7 @@ export default async function PostListInTagPage({ params }: Props) {
   }
 
   return (
-    <section className="py-3 md:py-4 flex flex-col gap-6">
+    <ListSection>
       <ListHeading>
         &quot;
         <strong className="underline decoration-wavy decoration-indigo-500">
@@ -39,7 +40,7 @@ export default async function PostListInTagPage({ params }: Props) {
         &quot; 태그에 속한 글 목록
       </ListHeading>
       <PostList posts={posts} />
-    </section>
+    </ListSection>
   );
 }
 
