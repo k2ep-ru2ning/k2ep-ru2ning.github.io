@@ -13,17 +13,16 @@ export default function PostListItem({
   return (
     <li>
       <section className="flex flex-col md:flex-row md:gap-x-8">
-        <time className="shrink-0 text-sm leading-8">
+        <time className="text-sm leading-8 md:shrink-0">
           {formatDate(createdAt)}
         </time>
-        <div className="flex flex-col overflow-hidden gap-3 md:grow">
-          <Link href={absoluteUrl} className="group flex flex-col gap-3">
-            <h3 className="transition group-hover:text-indigo-500 leading-8 font-bold text-lg sm:text-xl truncate">
-              {title}
-            </h3>
-            <p className="truncate text-sm sm:text-base transition group-hover:text-indigo-500">
-              {description}
-            </p>
+        <div className="flex flex-col gap-3 md:grow">
+          <Link
+            href={absoluteUrl}
+            className="flex flex-col gap-3 hover:text-indigo-500 transition-colors"
+          >
+            <h3 className="leading-8 font-bold text-lg sm:text-xl">{title}</h3>
+            <p className="text-sm sm:text-base">{description}</p>
           </Link>
           {tags ? <TagList tags={tags} /> : null}
         </div>
