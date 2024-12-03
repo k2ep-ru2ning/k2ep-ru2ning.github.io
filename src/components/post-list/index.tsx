@@ -9,7 +9,7 @@ type Props = {
 
 export default function PostList({ posts }: Props) {
   return (
-    <ul>
+    <ul className="flex flex-col gap-4 sm:gap-8">
       {posts.map((post, idx) => (
         <Fragment key={post.absoluteUrl}>
           <PostListItem post={post} />

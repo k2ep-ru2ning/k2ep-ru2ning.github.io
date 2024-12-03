@@ -11,7 +11,7 @@ type Props = {
   };
 };
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 4;
 
 export default async function PostListPage({
   params: { "page-number": pageNumber },
@@ -38,7 +38,7 @@ export default async function PostListPage({
   );
 
   return (
-    <section className="py-3 md:py-4 flex flex-col gap-2">
+    <section className="py-3 md:py-4 flex flex-col gap-6">
       <ListHeading>{`글 목록 ${currentPageNumber}`}</ListHeading>
       <PostList posts={postsOfCurrentPage} />
       <PageController

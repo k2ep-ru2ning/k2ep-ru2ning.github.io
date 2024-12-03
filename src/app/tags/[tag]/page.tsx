@@ -30,7 +30,7 @@ export default async function PostListInTagPage({ params }: Props) {
   }
 
   return (
-    <section className="py-3 md:py-4 flex flex-col gap-2">
+    <section className="py-3 md:py-4 flex flex-col gap-6">
       <ListHeading>
         &quot;
         <strong className="underline decoration-wavy decoration-indigo-500">

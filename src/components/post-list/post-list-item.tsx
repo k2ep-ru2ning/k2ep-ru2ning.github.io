@@ -12,7 +12,7 @@ export default function PostListItem({
 }: Props) {
   return (
     <li>
-      <section className="py-2 sm:py-4 flex flex-col md:flex-row md:gap-x-8">
+      <section className="flex flex-col md:flex-row md:gap-x-8">
         <time className="shrink-0 text-sm leading-8">
           {formatDate(createdAt)}
         </time>

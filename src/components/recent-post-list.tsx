@@ -4,13 +4,13 @@ import { getPosts } from "@/service/posts";
 import ListHeading from "./list-heading";
 import PostList from "./post-list";
 
-const RECENT_POST_LIST_SIZE = 5;
+const RECENT_POST_LIST_SIZE = 4;
 
 export default async function RecentPostList() {
   const posts = (await getPosts()).slice(0, RECENT_POST_LIST_SIZE);
 
   return (
-    <section className="py-3 md:py-4 flex flex-col gap-2">
+    <section className="py-3 md:py-4 flex flex-col gap-6">
       <ListHeading>최신 글</ListHeading>
       <PostList posts={posts} />
       <Link
