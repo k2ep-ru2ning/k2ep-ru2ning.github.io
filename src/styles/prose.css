@@ -96,3 +96,7 @@
 }
 
 /* ================================================================== */
+/*** code block style ***/
+.prose img {
+  @apply mx-auto max-w-full rounded-md border border-zinc-300 dark:border-zinc-700;
+}

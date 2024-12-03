@@ -3,8 +3,7 @@
 import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
 import { type Post } from "@/service/posts";
-import PostArticleHeading from "./mdx/post-article-heading";
-import PostArticleImage from "./mdx/post-article-image";
+import PostArticleContentHeading from "./post-article-content-heading";
 
 type Props = {
   post: Post;
@@ -23,17 +22,15 @@ export default function PostArticleContent({ post }: Props) {
     >
       <MDXComponent
         components={{
-          img: ({ src, alt = "" }) =>
-            src ? <PostArticleImage src={src} alt={alt} /> : null,
           h2: ({ children, id }) => (
-            <PostArticleHeading as="h2" id={id}>
+            <PostArticleContentHeading as="h2" id={id}>
               {children}
-            </PostArticleHeading>
+            </PostArticleContentHeading>
           ),
           h3: ({ children, id }) => (
-            <PostArticleHeading as="h3" id={id}>
+            <PostArticleContentHeading as="h3" id={id}>
               {children}
-            </PostArticleHeading>
+            </PostArticleContentHeading>
           ),
         }}
       />
