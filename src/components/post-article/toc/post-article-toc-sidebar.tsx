@@ -15,8 +15,8 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
   );
 
   useEffect(() => {
-    const headingElements = headings.map((heading) =>
-      document.querySelector(`#article-content > #${heading.id}`),
+    const sectionElements = document.querySelectorAll(
+      "#article-content section",
     );
 
     // 변경사항이 있을 때마다 callback 호출된다.
@@ -24,7 +24,9 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          const id = entry.target.getAttribute("id");
+          const heading = entry.target.querySelector("h2,h3");
+          if (!heading) continue;
+          const id = heading.getAttribute("id");
           if (!id) continue;
           if (entry.isIntersecting) {
             setActiveHeadingIdSet((prev) => {
@@ -46,15 +48,14 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
       },
     );
 
-    for (const headingElement of headingElements) {
-      if (!headingElement) continue;
-      observer.observe(headingElement);
-    }
+    sectionElements.forEach((sectionElement) =>
+      observer.observe(sectionElement),
+    );
 
     return () => {
       observer.disconnect();
     };
-  }, [headings]);
+  }, []);
 
   return (
     <section className="max-h-full rounded-md border border-zinc-300 dark:border-zinc-700 p-3 flex flex-col gap-3">
@@ -65,7 +66,7 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
           {headings.map((item) => (
             <PostArticleTOCItem
               key={item.id}
-              depth={item.type === "h2" ? 2 : 3}
+              type={item.type}
               link={`#${item.id}`}
               text={item.text}
               isActive={activeHeadingIdSet.has(item.id)}

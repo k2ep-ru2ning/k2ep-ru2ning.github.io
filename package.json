@@ -33,6 +33,7 @@
     "remark-gfm": "^4.0.0",
     "remark-heading-id": "^1.0.1",
     "remark-parse": "^11.0.0",
+    "remark-sectionize": "^2.1.0",
     "remark-stringify": "^11.0.0",
     "shiki": "^1.17.7",
     "tailwind-merge": "^2.5.2",
