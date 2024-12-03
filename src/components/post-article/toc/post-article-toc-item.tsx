@@ -1,24 +1,39 @@
 import Link from "next/link";
-import { type PostContentHeading } from "@/service/posts";
+import { type PostContentHeadingType } from "@/service/posts";
 import cn from "@/utils/cn";
 
 type Props = {
-  item: PostContentHeading;
+  link: string;
+  text: string;
+  type: PostContentHeadingType;
+  isActive: boolean;
 };
 
-export default function PostArticleTOCItem({ item }: Props) {
-  const depth = item.type === "h2" ? 2 : item.type === "h3" ? 3 : 4;
-
+export default function PostArticleTOCItem({
+  type,
+  link,
+  text,
+  isActive,
+}: Props) {
   return (
-    <li
-      key={item.id}
-      className="hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5"
-    >
+    <li>
       <Link
-        href={`#${item.id}`}
-        className={cn("block", depth === 3 && "pl-3", depth === 4 && "pl-6")}
+        href={link}
+        className={cn(
+          "flex items-baseline gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5",
+          type === "h3" && "pl-6",
+          isActive && "text-indigo-500",
+        )}
       >
-        {item.text}
+        <div
+          className={cn(
+            "p-0.5 shrink-0 text-xs text-zinc-700 dark:text-zinc-300 rounded-md border border-zinc-300 dark:border-zinc-700",
+            isActive && "text-indigo-500",
+          )}
+        >
+          {type === "h2" ? "H2" : "H3"}
+        </div>
+        {text}
       </Link>
     </li>
   );

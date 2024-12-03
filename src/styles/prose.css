@@ -96,3 +96,17 @@
 }
 
 /* ================================================================== */
+/*** code block style ***/
+.prose img {
+  @apply mx-auto max-w-full rounded-md border border-zinc-300 dark:border-zinc-700;
+}
+
+/* ================================================================== */
+/*** section ***/
+/* 
+  remark-sectionize 플러그인에 의해 h2, h3를 감싸는 section이 생겨
+  "첫번째로 오는 section"의 "첫 번째로 오는 h2"의 margin top이 표시되는 문제 발생
+*/
+.prose > section:first-child > h2:first-child {
+  @apply mt-0;
+}

@@ -16,6 +16,7 @@ import remarkHeadingId, {
   type RemarkHeadingIdOptions,
 } from "remark-heading-id";
 import remarkParse from "remark-parse";
+import remarkSectionize from "remark-sectionize";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { z } from "zod";
@@ -153,6 +154,7 @@ export async function getPosts() {
             remarkGfm,
             remarkBreaks,
             [remarkHeadingId, remarkHeadingIdOptions],
+            remarkSectionize,
           ];
           options.rehypePlugins = [
             ...(options.rehypePlugins ?? []),
