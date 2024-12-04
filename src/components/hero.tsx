@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="text-base sm:text-lg py-6 sm:py-8 text-center">
+    <section className="text-lg sm:text-xl py-8 sm:py-10 text-center">
       <p>
         프로그래밍 관련 <strong className="text-indigo-500">지식/경험</strong>을
         <br />

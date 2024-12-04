@@ -18,7 +18,7 @@ export default function PostArticleContent({ post }: Props) {
   return (
     <div
       id="article-content"
-      className="max-w-full prose prose-zinc dark:prose-invert prose-sm sm:prose-base"
+      className="max-w-full prose prose-zinc dark:prose-invert"
     >
       <MDXComponent
         components={{
