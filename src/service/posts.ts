@@ -36,6 +36,7 @@ const VALID_TAGS = [
   "Babel",
   "Webpack",
   "Vite",
+  "Next.js",
 ] as const;
 
 export const tagSchema = z.enum(VALID_TAGS);
