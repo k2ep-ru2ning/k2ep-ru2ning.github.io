@@ -22,7 +22,9 @@ export default function PostListItem({
             className="flex flex-col gap-3 hover:text-indigo-500 transition-colors"
           >
             <h3 className="leading-8 font-bold text-lg sm:text-xl">{title}</h3>
-            <p className="text-sm sm:text-base">{description}</p>
+            {description.length > 0 ? (
+              <p className="text-sm sm:text-base">{description}</p>
+            ) : null}
           </Link>
           {tags ? <TagList tags={tags} /> : null}
         </div>

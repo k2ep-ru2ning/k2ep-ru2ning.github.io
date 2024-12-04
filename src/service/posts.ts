@@ -43,8 +43,8 @@ export const tagSchema = z.enum(VALID_TAGS);
 export type Tag = z.infer<typeof tagSchema>;
 
 const postMatterSchema = z.object({
-  title: z.string(),
-  description: z.string(),
+  title: z.string().trim().min(1),
+  description: z.string().trim(),
   createdAt: z.date(),
   tags: tagSchema.array().nullable().optional(),
 });
