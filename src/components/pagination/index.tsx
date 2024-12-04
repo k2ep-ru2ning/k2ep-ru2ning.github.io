@@ -9,9 +9,9 @@ type Props = {
   basePath: string;
 };
 
-const CONTROLLER_SIZE = 5;
+const PAGINATION_SIZE = 5;
 
-export default function PageController({
+export default function Pagination({
   currentPageNumber,
   numberOfPages,
   basePath,
@@ -32,7 +32,7 @@ export default function PageController({
             <Link
               href={`${basePath}/${pageNumber}`}
               className={cn(
-                "w-7 h-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md px-2",
+                "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md px-2",
                 pageNumber === currentPageNumber && "font-bold text-indigo-500",
               )}
             >
@@ -54,11 +54,11 @@ export default function PageController({
 
 /**
  * currentPageNumber를 가운데 위치시키면서,
- * min(numberOfPages, CONTROLLER_SIZE)개의 페이지 번호 배열을 계산하는 함수.
+ * min(numberOfPages, PAGINATION_SIZE)개의 페이지 번호 배열을 계산하는 함수.
  */
 function getPageNumbers(currentPageNumber: number, numberOfPages: number) {
   // 화면에 표시할, 페이지 번호 버튼 개수.
-  const size = Math.min(CONTROLLER_SIZE, numberOfPages);
+  const size = Math.min(PAGINATION_SIZE, numberOfPages);
 
   const halfSize = Math.floor(size / 2);
 

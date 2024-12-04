@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
-import PageController from "@/components/page-controller";
+import Pagination from "@/components/pagination";
 import PostList from "@/components/post-list";
 import { getPosts } from "@/service/posts";
 
@@ -42,7 +42,7 @@ export default async function PostListPage({
     <ListSection>
       <ListHeading>{`글 목록 ${currentPageNumber}`}</ListHeading>
       <PostList posts={postsOfCurrentPage} />
-      <PageController
+      <Pagination
         basePath="/posts/pages"
         currentPageNumber={currentPageNumber}
         numberOfPages={numberOfPages}
