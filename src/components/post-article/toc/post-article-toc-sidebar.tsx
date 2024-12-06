@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LuArrowUp } from "react-icons/lu";
 import { type PostContentHeading } from "@/service/posts";
 import PostArticleTOCItem from "./post-article-toc-item";
 import HorizontalSeparator from "../../separator/horizontal-separator";
@@ -57,9 +58,22 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
     };
   }, []);
 
+  const handleClickScrollToTopButton = () => {
+    window.scrollTo({ top: 0 });
+  };
+
   return (
     <section className="max-h-full rounded-md border border-zinc-300 dark:border-zinc-700 p-3 flex flex-col gap-3">
-      <h2 className="text-lg shrink-0">목차</h2>
+      <div className="shrink-0 flex justify-between items-center">
+        <h2 className="text-lg">목차</h2>
+        <button
+          type="button"
+          onClick={handleClickScrollToTopButton}
+          className="rounded-md border border-zinc-300 dark:border-zinc-700 p-1 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+        >
+          <LuArrowUp className="size-5" />
+        </button>
+      </div>
       <HorizontalSeparator />
       <nav className="flex-grow overflow-auto">
         <ul className="flex flex-col gap-1">
