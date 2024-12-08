@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type PostContentHeading } from "@/service/posts";
 import cn from "@/utils/cn";
+import HeadingIcon from "./heading-icon";
 
 type Props = {
   headings: PostContentHeading[];
@@ -21,13 +22,7 @@ export default function PostArticleTOC({ headings }: Props) {
                   item.type === "h3" && "pl-6",
                 )}
               >
-                <div
-                  className={cn(
-                    "p-0.5 shrink-0 text-xs text-zinc-700 dark:text-zinc-300 rounded-md border border-zinc-300 dark:border-zinc-700",
-                  )}
-                >
-                  {item.type === "h2" ? "H2" : "H3"}
-                </div>
+                <HeadingIcon type={item.type} className="shrink-0" />
                 {item.text}
               </Link>
             </li>

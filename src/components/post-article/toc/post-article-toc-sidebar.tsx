@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { type PostContentHeading } from "@/service/posts";
-import PostArticleTOCSidebarItem from "./post-article-toc-sidebar-item";
+import cn from "@/utils/cn";
+import HeadingIcon from "./heading-icon";
 import HorizontalSeparator from "../../separator/horizontal-separator";
 import ScrollToTopButton from "../scroll-to-top-button";
 
@@ -67,15 +69,30 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
       <HorizontalSeparator />
       <nav className="flex-grow overflow-auto">
         <ul className="flex flex-col gap-1">
-          {headings.map((item) => (
-            <PostArticleTOCSidebarItem
-              key={item.id}
-              type={item.type}
-              link={`#${item.id}`}
-              text={item.text}
-              isActive={activeHeadingIdSet.has(item.id)}
-            />
-          ))}
+          {headings.map((item) => {
+            const isActive = activeHeadingIdSet.has(item.id);
+            return (
+              <li key={item.id}>
+                <Link
+                  href={`#${item.id}`}
+                  className={cn(
+                    "flex items-baseline gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5",
+                    item.type === "h3" && "pl-6",
+                    isActive && "text-indigo-500",
+                  )}
+                >
+                  <HeadingIcon
+                    type={item.type}
+                    className={cn(
+                      "shrink-0",
+                      isActive && "text-indigo-500 dark:text-indigo-500",
+                    )}
+                  />
+                  {item.text}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </section>
