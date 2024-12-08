@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import PostArticleContent from "@/components/post-article/content/post-article-content";
 import PostArticleHeader from "@/components/post-article/post-article-header";
+import PostArticleTOC from "@/components/post-article/post-article-toc";
 import PostArticleTOCSidebar from "@/components/post-article/toc-sidebar/post-article-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
@@ -25,6 +26,9 @@ export default async function PostPage({ params: { slug } }: Props) {
     <article className="flex flex-col gap-y-6">
       <PostArticleHeader post={post} />
       <HorizontalSeparator />
+      <div className="lg:hidden">
+        <PostArticleTOC headings={post.headings} />
+      </div>
       <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
         <PostArticleContent post={post} />
         {/* 
