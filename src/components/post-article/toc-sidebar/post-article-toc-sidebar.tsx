@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LuArrowUpToLine } from "react-icons/lu";
 import { type PostContentHeading } from "@/service/posts";
 import PostArticleTOCSidebarItem from "./post-article-toc-sidebar-item";
 import HorizontalSeparator from "../../separator/horizontal-separator";
+import ScrollToTopButton from "../scroll-to-top-button";
 
 type Props = {
   headings: PostContentHeading[];
@@ -58,21 +58,11 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
     };
   }, []);
 
-  const handleClickScrollToTopButton = () => {
-    window.scrollTo({ top: 0 });
-  };
-
   return (
     <section className="max-h-full rounded-md border border-zinc-300 dark:border-zinc-700 p-3 flex flex-col gap-3">
       <div className="shrink-0 flex justify-between items-center">
         <h2 className="text-lg">목차</h2>
-        <button
-          type="button"
-          onClick={handleClickScrollToTopButton}
-          className="rounded-md border border-zinc-300 dark:border-zinc-700 p-1 hover:bg-zinc-200 dark:hover:bg-zinc-700"
-        >
-          <LuArrowUpToLine className="size-5" />
-        </button>
+        <ScrollToTopButton />
       </div>
       <HorizontalSeparator />
       <nav className="flex-grow overflow-auto">
