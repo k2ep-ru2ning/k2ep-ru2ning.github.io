@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { LuArrowUp } from "react-icons/lu";
 import { type PostContentHeading } from "@/service/posts";
-import PostArticleTOCItem from "./post-article-toc-item";
+import PostArticleTOCSidebarItem from "./post-article-toc-sidebar-item";
 import HorizontalSeparator from "../../separator/horizontal-separator";
 
 type Props = {
@@ -78,7 +78,7 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
       <nav className="flex-grow overflow-auto">
         <ul className="flex flex-col gap-1">
           {headings.map((item) => (
-            <PostArticleTOCItem
+            <PostArticleTOCSidebarItem
               key={item.id}
               type={item.type}
               link={`#${item.id}`}

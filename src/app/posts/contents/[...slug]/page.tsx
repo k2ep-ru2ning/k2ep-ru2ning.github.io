@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import PostArticleContent from "@/components/post-article/content/post-article-content";
 import PostArticleHeader from "@/components/post-article/post-article-header";
-import PostArticleTOCSidebar from "@/components/post-article/toc/post-article-toc-sidebar";
+import PostArticleTOCSidebar from "@/components/post-article/toc-sidebar/post-article-toc-sidebar";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
 

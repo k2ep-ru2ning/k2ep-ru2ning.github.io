@@ -9,7 +9,7 @@ type Props = {
   isActive: boolean;
 };
 
-export default function PostArticleTOCItem({
+export default function PostArticleTOCSidebarItem({
   type,
   link,
   text,
