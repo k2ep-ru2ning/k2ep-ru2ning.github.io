@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LuArrowUp } from "react-icons/lu";
+import { LuArrowUpToLine } from "react-icons/lu";
 import { type PostContentHeading } from "@/service/posts";
 import PostArticleTOCSidebarItem from "./post-article-toc-sidebar-item";
 import HorizontalSeparator from "../../separator/horizontal-separator";
@@ -71,7 +71,7 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
           onClick={handleClickScrollToTopButton}
           className="rounded-md border border-zinc-300 dark:border-zinc-700 p-1 hover:bg-zinc-200 dark:hover:bg-zinc-700"
         >
-          <LuArrowUp className="size-5" />
+          <LuArrowUpToLine className="size-5" />
         </button>
       </div>
       <HorizontalSeparator />
