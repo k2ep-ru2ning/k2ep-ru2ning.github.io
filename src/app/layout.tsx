@@ -32,8 +32,11 @@ export default function RootLayout({ children }: Props) {
         }
       >
         <div className="px-4 min-h-dvh flex flex-col">
-          <div className="sticky top-0 bg-zinc-50 dark:bg-zinc-950 max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
-            <Header />
+          {/* mobile에서 scroll to top button이 헤더에 가려질 수 있도록 z-index 설정 */}
+          <div className="z-10 sticky top-0 bg-zinc-50 dark:bg-zinc-950">
+            <div className="max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
+              <Header />
+            </div>
           </div>
           <main className="px-2 py-6 grow max-w-screen-md lg:max-w-screen-lg w-full mx-auto">
             {children}
