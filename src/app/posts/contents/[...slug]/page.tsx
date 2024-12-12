@@ -28,10 +28,10 @@ export default async function PostPage({ params: { slug } }: Props) {
       <FixedScrollToTopButton />
       <article className="flex flex-col gap-y-6">
         <PostArticleHeader post={post} />
-        <HorizontalSeparator />
         <div className="lg:hidden">
           <PostArticleTOC headings={post.headings} />
         </div>
+        <HorizontalSeparator />
         <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
           <PostArticleContent post={post} />
           {/* 
