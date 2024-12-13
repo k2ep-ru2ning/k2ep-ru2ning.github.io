@@ -42,7 +42,7 @@ export default function FixedScrollToTopButton() {
           showButton ? "block" : "hidden",
         )}
       >
-        <ScrollToTopButton />
+        <ScrollToTopButton size="large" />
       </div>
     </div>
   );

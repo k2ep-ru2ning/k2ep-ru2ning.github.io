@@ -64,7 +64,7 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
     <section className="max-h-full rounded-md border border-zinc-300 dark:border-zinc-700 p-3 flex flex-col gap-3">
       <div className="shrink-0 flex justify-between items-center">
         <h2 className="text-lg">목차</h2>
-        <ScrollToTopButton />
+        <ScrollToTopButton size="base" />
       </div>
       <HorizontalSeparator />
       <nav className="flex-grow overflow-auto">
