@@ -20,6 +20,7 @@ import remarkSectionize from "remark-sectionize";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { z } from "zod";
+import { type Tag, tagSchema } from "@/schema/tags";
 
 export type PostContentHeadingType = "h2" | "h3";
 
@@ -28,20 +29,6 @@ export type PostContentHeading = {
   text: string;
   id: string;
 };
-
-const VALID_TAGS = [
-  "회고",
-  "개발 환경 설정",
-  "React",
-  "Babel",
-  "Webpack",
-  "Vite",
-  "Next.js",
-] as const;
-
-export const tagSchema = z.enum(VALID_TAGS);
-
-export type Tag = z.infer<typeof tagSchema>;
 
 const postMatterSchema = z.object({
   title: z.string().trim().min(1),

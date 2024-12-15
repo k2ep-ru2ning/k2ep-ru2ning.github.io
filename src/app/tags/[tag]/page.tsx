@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
 import PostList from "@/components/post-list";
-import { getPostsByTag, getUsedTags, tagSchema } from "@/service/posts";
+import { tagSchema } from "@/schema/tags";
+import { getPostsByTag, getUsedTags } from "@/service/posts";
 
 type Props = {
   params: {
