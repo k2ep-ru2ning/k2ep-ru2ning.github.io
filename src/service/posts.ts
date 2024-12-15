@@ -19,32 +19,13 @@ import remarkParse from "remark-parse";
 import remarkSectionize from "remark-sectionize";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
-import { z } from "zod";
-import { type Tag, tagSchema } from "@/schema/tags";
-
-export type PostContentHeadingType = "h2" | "h3";
-
-export type PostContentHeading = {
-  type: PostContentHeadingType;
-  text: string;
-  id: string;
-};
-
-const postMatterSchema = z.object({
-  title: z.string().trim().min(1),
-  description: z.string().trim(),
-  createdAt: z.date(),
-  tags: tagSchema.array().nullable().optional(),
-});
-
-type PostMatter = z.infer<typeof postMatterSchema>;
-
-export type Post = PostMatter & {
-  absoluteUrl: string;
-  rawContent: string; // 읽어들인 .md, .mdx 파일 내용
-  bundledContent: string; // mdx-bundler에 의해 처리된 파일 내용
-  headings: PostContentHeading[];
-};
+import {
+  type Post,
+  type PostContentHeading,
+  type PostContentHeadingType,
+  postMatterSchema,
+} from "@/schema/posts";
+import { type Tag } from "@/schema/tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
 

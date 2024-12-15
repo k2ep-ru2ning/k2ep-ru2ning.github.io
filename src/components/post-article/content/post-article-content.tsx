@@ -2,7 +2,7 @@
 
 import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
-import { type Post } from "@/service/posts";
+import { type Post } from "@/schema/posts";
 import PostArticleContentHeading from "./post-article-content-heading";
 
 type Props = {

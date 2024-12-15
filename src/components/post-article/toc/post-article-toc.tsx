@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { type PostContentHeading } from "@/service/posts";
+import { type PostContentHeading } from "@/schema/posts";
 import cn from "@/utils/cn";
 import HeadingIcon from "./heading-icon";
 

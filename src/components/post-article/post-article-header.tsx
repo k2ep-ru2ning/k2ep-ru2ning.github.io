@@ -1,4 +1,4 @@
-import { type Post } from "@/service/posts";
+import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils/date-formatter";
 import TagList from "../tag-list";
 
