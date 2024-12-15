@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { BsGithub } from "react-icons/bs";
 import {
   LuAlignJustify,
+  LuBookMarked,
   LuExternalLink,
   LuFileCode,
   LuHome,
@@ -84,6 +85,12 @@ export default function MobileMenu() {
                   icon: <LuTags className="size-5" />,
                   label: "태그",
                   isActive: pathname === "/tags",
+                },
+                {
+                  link: "/series",
+                  icon: <LuBookMarked className="size-5" />,
+                  label: "시리즈",
+                  isActive: pathname === "/series",
                 },
               ].map(({ link, icon, label, isActive }) => (
                 <li key={link}>
