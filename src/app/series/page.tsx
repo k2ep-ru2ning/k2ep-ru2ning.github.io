@@ -1,3 +1,4 @@
+import { type Metadata } from "next";
 import Link from "next/link";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
@@ -27,3 +28,8 @@ export default async function SeriesPage() {
     </ListSection>
   );
 }
+
+export const metadata: Metadata = {
+  title: "시리즈 목록",
+  description: "시리즈 목록 페이지입니다.",
+};
