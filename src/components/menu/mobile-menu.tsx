@@ -8,9 +8,9 @@ import { useEffect, useState } from "react";
 import { BsGithub } from "react-icons/bs";
 import {
   LuAlignJustify,
-  LuBookMarked,
   LuExternalLink,
   LuFileCode,
+  LuFileStack,
   LuHome,
   LuMoon,
   LuSun,
@@ -88,7 +88,7 @@ export default function MobileMenu() {
                 },
                 {
                   link: "/series",
-                  icon: <LuBookMarked className="size-5" />,
+                  icon: <LuFileStack className="size-5" />,
                   label: "시리즈",
                   isActive: pathname === "/series",
                 },
