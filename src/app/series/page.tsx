@@ -1,3 +1,3 @@
-export default function SeriesPage() {
+export default async function SeriesPage() {
   return <>시리즈 목록 페이지</>;
 }

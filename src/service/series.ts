@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
+import { Series, seriesArraySchema } from "@/schema/series";
 
 const SERIES_JSON_FILE_PATH = path.resolve(
   cwd(),
@@ -15,7 +16,22 @@ export async function getSeries() {
     const fileContents = await readFile(SERIES_JSON_FILE_PATH, {
       encoding: "utf8",
     });
-    return JSON.parse(fileContents);
+
+    // zod로 읽어들인 배열의 스키마 검증
+    const seriesArray = seriesArraySchema.parse(JSON.parse(fileContents));
+
+    // 읽어온 json 파일에서 name 속성의 중복 여부 검증
+    const seriesMap = new Map<Series["name"], Series>();
+    for (const series of seriesArray) {
+      if (seriesMap.has(series.name)) {
+        throw new Error(
+          "series.json 파일에 중복된 name을 가진 series 들이 존재합니다.",
+        );
+      }
+      seriesMap.set(series.name, series);
+    }
+
+    return [...seriesMap.values()];
   } catch (e) {
     throw new Error(
       "series.json 파일을 read, parse 하는데 문제가 발생했습니다.",
