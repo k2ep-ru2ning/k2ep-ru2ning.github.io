@@ -39,3 +39,8 @@ export async function getSeries() {
     );
   }
 }
+
+export async function getSeriesByName(name: string) {
+  const series = await getSeries();
+  return series.find((s) => s.name === name);
+}
