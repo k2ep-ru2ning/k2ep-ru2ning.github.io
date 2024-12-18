@@ -42,6 +42,11 @@ export async function getSeries() {
   }
 }
 
+export async function getSeriesNameSet() {
+  const series = await getSeries();
+  return new Set(series.map((s) => s.name));
+}
+
 export async function getSeriesByName(name: string) {
   const series = await getSeries();
   return series.find((s) => s.name === name);

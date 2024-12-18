@@ -26,6 +26,7 @@ import {
   postMatterSchema,
 } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
+import { getSeriesNameSet } from "./series";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
 
@@ -107,6 +108,7 @@ async function extractHeadingsFromMDXString(sourceMDXString: string) {
 }
 
 export async function getPosts() {
+  const validSeriesNameSet = await getSeriesNameSet();
   const posts: Post[] = [];
   try {
     const postAbsolutePaths = await getPostAbsolutePaths();
@@ -115,6 +117,11 @@ export async function getPosts() {
       const { content, data } = matter(file);
       const { createdAt, description, title, tags, series } =
         postMatterSchema.parse(data);
+      if (series && !validSeriesNameSet.has(series)) {
+        throw new Error(
+          `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${series}"`,
+        );
+      }
       const { code: bundledContent } = await bundleMDX({
         source: content,
         mdxOptions(options) {
