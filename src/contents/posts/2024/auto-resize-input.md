@@ -1,6 +1,6 @@
 ---
-title: "value 값에 따라 width가 늘어나고 줄어드는 input React 컴포넌트 개발 회고"
-description: "value 값에 따라 width가 알아서 늘어나고 줄어드는 input React 컴포넌트를 만들면서 겪었던 시행착오 정리 및 개발 회고"
+title: "value 값에 따라 width가 늘어나고 줄어드는 input 컴포넌트 만들기"
+description: "value 값에 따라 width가 알아서 늘어나고 줄어드는 input (React) 컴포넌트를 만들면서 겪었던 시행착오 정리"
 createdAt: 2024-01-16 20:00:00
 tags:
   - "회고"

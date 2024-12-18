@@ -1,6 +1,6 @@
 ---
-title: "라이브러리 개발 환경 설정 회고 (Rollup -> Vite 전환 회고)"
-description: "Vite 기반의 React 컴포넌트 라이브러리 개발 환경 설정 회고"
+title: "라이브러리 개발 환경 설정 회고 (Rollup -> Vite 마이그레이션)"
+description: "Vite 기반의 React 컴포넌트 라이브러리 개발 환경 설정 후기"
 createdAt: 2024-06-12 20:00:00
 tags:
   - "회고"
