@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
-import SeriesList from "@/components/series-list";
+import SeriesList from "@/components/series/series-list";
 import { getSeries } from "@/service/series";
 
 export default async function SeriesPage() {

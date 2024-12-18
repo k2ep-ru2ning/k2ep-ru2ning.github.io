@@ -16,12 +16,10 @@ export default function SeriesList({ series }: Props) {
         <li key={name}>
           <Link
             href={`/series/${name}`}
-            className="transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-700 h-full block p-2 rounded-md border border-zinc-300 dark:border-zinc-700"
+            className="transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-700 h-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 flex flex-col gap-3"
           >
-            <section className="flex flex-col gap-3">
-              <h3 className="font-bold text-xl">{name}</h3>
-              {description ? <p>{description}</p> : null}
-            </section>
+            <h3 className="font-bold text-xl">{name}</h3>
+            {description ? <p>{description}</p> : null}
           </Link>
         </li>
       ))}
