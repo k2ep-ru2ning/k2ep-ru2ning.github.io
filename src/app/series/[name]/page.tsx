@@ -1,3 +1,4 @@
+import { type Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
@@ -67,4 +68,19 @@ export default async function SeriesDetailPage({ params }: Props) {
 export async function generateStaticParams() {
   const series = await getSeries();
   return series.map(({ name }) => ({ name }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const seriesName = decodeURIComponent(params.name);
+
+  const series = await getSeriesByName(seriesName);
+
+  if (!series) {
+    notFound();
+  }
+
+  return {
+    title: `"${series.name}" 시리즈`,
+    description: series.description,
+  };
 }
