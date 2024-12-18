@@ -12,7 +12,8 @@
     "format": "prettier . --write",
     "prepare": "husky",
     "deploy": "gh-pages -d out --nojekyll",
-    "build:deploy": "pnpm run build && pnpm run deploy"
+    "build:deploy": "next build && gh-pages -d out --nojekyll",
+    "build:serve": "next build && serve out"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.2",
