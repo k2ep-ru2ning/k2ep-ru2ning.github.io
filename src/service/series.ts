@@ -31,7 +31,9 @@ export async function getSeries() {
       seriesMap.set(series.name, series);
     }
 
-    return [...seriesMap.values()];
+    return [...seriesMap.values()].sort((s1, s2) =>
+      s1.name.localeCompare(s2.name),
+    );
   } catch (e) {
     throw new Error(
       "series.json 파일을 read, parse 하는데 문제가 발생했습니다.",
