@@ -10,6 +10,7 @@ import {
   LuAlignJustify,
   LuExternalLink,
   LuFileCode,
+  LuFileStack,
   LuHome,
   LuMoon,
   LuSun,
@@ -84,6 +85,12 @@ export default function MobileMenu() {
                   icon: <LuTags className="size-5" />,
                   label: "태그",
                   isActive: pathname === "/tags",
+                },
+                {
+                  link: "/series",
+                  icon: <LuFileStack className="size-5" />,
+                  label: "시리즈",
+                  isActive: pathname === "/series",
                 },
               ].map(({ link, icon, label, isActive }) => (
                 <li key={link}>

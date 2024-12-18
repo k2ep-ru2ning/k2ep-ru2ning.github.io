@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { seriesSchema } from "./series";
 import { tagSchema } from "./tags";
 
 export const postMatterSchema = z.object({
@@ -6,6 +7,7 @@ export const postMatterSchema = z.object({
   description: z.string().trim(),
   createdAt: z.date(),
   tags: tagSchema.array().nullable().optional(),
+  series: seriesSchema.shape.name.optional(),
 });
 
 type PostMatter = z.infer<typeof postMatterSchema>;
