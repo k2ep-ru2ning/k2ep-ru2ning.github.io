@@ -4,7 +4,7 @@ import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
 import TagList from "@/components/tag-list";
 import { getPostsBySeries } from "@/service/posts";
-import { getSeriesByName } from "@/service/series";
+import { getSeries, getSeriesByName } from "@/service/series";
 import { formatDate } from "@/utils/date-formatter";
 
 type Props = {
@@ -62,4 +62,9 @@ export default async function SeriesDetailPage({ params }: Props) {
       </ul>
     </ListSection>
   );
+}
+
+export async function generateStaticParams() {
+  const series = await getSeries();
+  return series.map(({ name }) => ({ name }));
 }
