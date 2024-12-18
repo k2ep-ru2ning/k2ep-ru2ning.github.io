@@ -15,7 +15,7 @@ export default async function SeriesPage() {
           <li key={name}>
             <Link
               href={`/series/${name}`}
-              className="transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-700 h-full block px-3 py-4 rounded-md border border-zinc-300 dark:border-zinc-700"
+              className="transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-700 h-full block p-2 rounded-md border border-zinc-300 dark:border-zinc-700"
             >
               <section className="flex flex-col gap-3">
                 <h3 className="font-bold text-xl">{name}</h3>
