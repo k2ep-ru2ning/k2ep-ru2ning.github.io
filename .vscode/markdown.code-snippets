@@ -1,7 +1,7 @@
 {
   "Post Front Matter": {
-    "scope": "markdown,mdx",
-    "prefix": ["fm"],
+    "scope": "markdown",
+    "prefix": ["fm", "---"],
     "body": [
       "---",
       "title: '$1'",
@@ -9,6 +9,7 @@
       "createdAt: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
       "tags:",
       "  - $3",
+      "series: '$4'",
       "---",
       "",
       "$0",
