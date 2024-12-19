@@ -169,14 +169,6 @@ export async function getPostByAbsoluteUrl(url: string) {
   return posts.find((post) => post.absoluteUrl === url);
 }
 
-// valid tag들이 아닌, valid tag들 중 실제로 post에서 사용 중인 tag들을 조회
-export async function getUsedTags() {
-  const posts = await getPosts();
-  return [...new Set(posts.flatMap((post) => post.tags ?? []))].sort(
-    (tag1, tag2) => tag1.localeCompare(tag2),
-  );
-}
-
 export async function getPostsByTag(tag: Tag) {
   return (await getPosts()).filter((post) => post.tags?.includes(tag));
 }

@@ -1,10 +1,10 @@
-import { Metadata } from "next";
+import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
 import PostList from "@/components/post-list";
-import { tagSchema } from "@/schema/tags";
-import { getPostsByTag, getUsedTags } from "@/service/posts";
+import { getPostsByTag } from "@/service/posts";
+import { getTags, getTagSet } from "@/service/tags";
 
 type Props = {
   params: {
@@ -12,22 +12,20 @@ type Props = {
   };
 };
 
-export default async function PostListInTagPage({ params }: Props) {
-  const tagParamParsingResult = tagSchema.safeParse(
-    decodeURIComponent(params.tag),
-  );
+export default async function TagDetailPage({ params }: Props) {
+  const tag = decodeURIComponent(params.tag);
+
+  const tagSet = await getTagSet();
 
   // valid한 태그 이름이 아닌 경우.
-  if (!tagParamParsingResult.success) {
+  if (!tagSet.has(tag)) {
     notFound();
   }
 
-  const { data: tag } = tagParamParsingResult;
-
-  const posts = await getPostsByTag(tag);
+  const postsOnTag = await getPostsByTag(tag);
 
   // valid tag이더라도 실제로 그 태그를 사용하는 글이 없는 경우.
-  if (posts.length === 0) {
+  if (postsOnTag.length === 0) {
     notFound();
   }
 
@@ -40,37 +38,35 @@ export default async function PostListInTagPage({ params }: Props) {
         </strong>
         &quot; 태그에 속한 글 목록
       </ListHeading>
-      <PostList posts={posts} />
+      <PostList posts={postsOnTag} />
     </ListSection>
   );
 }
 
 export async function generateStaticParams() {
-  const tags = await getUsedTags();
+  const tags = await getTags();
   return tags.map((tag) => ({ tag }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tagParamParsingResult = tagSchema.safeParse(
-    decodeURIComponent(params.tag),
-  );
+  const tag = decodeURIComponent(params.tag);
+
+  const tagSet = await getTagSet();
 
   // valid한 태그 이름이 아닌 경우.
-  if (!tagParamParsingResult.success) {
+  if (!tagSet.has(tag)) {
     notFound();
   }
 
-  const { data: tag } = tagParamParsingResult;
-
-  const posts = await getPostsByTag(tag);
+  const postsOnTag = await getPostsByTag(tag);
 
   // valid tag이더라도 실제로 그 태그를 사용하는 글이 없는 경우.
-  if (posts.length === 0) {
+  if (postsOnTag.length === 0) {
     notFound();
   }
 
   return {
-    title: `${tag} 태그`,
+    title: `"${tag}" 태그`,
     description: `"${tag}" 태그에 속한 글 목록입니다.`,
   };
 }

@@ -1,15 +1,9 @@
 import { z } from "zod";
 
-const VALID_TAGS = [
-  "회고",
-  "개발 환경 설정",
-  "React",
-  "Babel",
-  "Webpack",
-  "Vite",
-  "Next.js",
-] as const;
-
-export const tagSchema = z.enum(VALID_TAGS);
+export const tagSchema = z.string().trim().min(1);
 
 export type Tag = z.infer<typeof tagSchema>;
+
+export const tagArraySchema = tagSchema.array();
+
+export type TagArray = z.infer<typeof tagArraySchema>;
