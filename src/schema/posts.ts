@@ -6,7 +6,7 @@ export const postMatterSchema = z.object({
   title: z.string().trim().min(1),
   description: z.string().trim(),
   createdAt: z.date(),
-  tags: tagArraySchema.nullable().optional(),
+  tags: tagArraySchema.optional(),
   series: seriesSchema.shape.name.optional(),
 });
 
