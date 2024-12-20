@@ -52,7 +52,7 @@ export default function MobileMenu() {
         <Dialog.Content className="z-10 bg-zinc-50 dark:bg-zinc-950 fixed inset-0 focus:outline-none flex flex-col">
           <header className="flex items-center justify-between p-3">
             <Dialog.Title className="px-2 py-1 font-extrabold text-xl shrink-0">
-              k2ep-ru2ning
+              메뉴
             </Dialog.Title>
             <VisuallyHidden.Root asChild>
               <Dialog.Description>
