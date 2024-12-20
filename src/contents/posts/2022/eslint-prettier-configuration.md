@@ -5,6 +5,7 @@ createdAt: 2022-09-26 17:00:00
 tags:
   - "React"
   - "개발 환경 설정"
+series: "React 개발 환경 직접 설정하기"
 ---
 
 ## eslint 역할
