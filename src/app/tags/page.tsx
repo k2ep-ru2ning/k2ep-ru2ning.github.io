@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
 import TagList from "@/components/tag-list";
-import { getUsedTags } from "@/service/posts";
+import { getTags } from "@/service/tags";
 
 export default async function TagsPage() {
-  const tags = await getUsedTags();
+  const tags = await getTags();
 
   return (
     <ListSection>

@@ -27,6 +27,7 @@ import {
 } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
 import { getSeriesNameSet } from "./series";
+import { getTagSet } from "./tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
 
@@ -109,11 +110,13 @@ async function extractHeadingsFromMDXString(sourceMDXString: string) {
 
 export async function getPosts() {
   const validSeriesNameSet = await getSeriesNameSet();
+  const validTagSet = await getTagSet();
   const posts: Post[] = [];
   try {
     const postAbsolutePaths = await getPostAbsolutePaths();
     for (const postAbsolutePath of postAbsolutePaths) {
       const file = await readFile(postAbsolutePath, { encoding: "utf8" });
+      // front matter에 key만 작성한 경우, gray-matter가 명시적으로 null을 할당한다.
       const { content, data } = matter(file);
       const { createdAt, description, title, tags, series } =
         postMatterSchema.parse(data);
@@ -121,6 +124,15 @@ export async function getPosts() {
         throw new Error(
           `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${series}"`,
         );
+      }
+      if (tags) {
+        for (const tag of tags) {
+          if (!validTagSet.has(tag)) {
+            throw new Error(
+              `글의 front matter에 존재하지 않는 tag를 작성했습니다. 작성한 tag: "${tag}"`,
+            );
+          }
+        }
       }
       const { code: bundledContent } = await bundleMDX({
         source: content,
@@ -167,14 +179,6 @@ export async function getPosts() {
 export async function getPostByAbsoluteUrl(url: string) {
   const posts = await getPosts();
   return posts.find((post) => post.absoluteUrl === url);
-}
-
-// valid tag들이 아닌, valid tag들 중 실제로 post에서 사용 중인 tag들을 조회
-export async function getUsedTags() {
-  const posts = await getPosts();
-  return [...new Set(posts.flatMap((post) => post.tags ?? []))].sort(
-    (tag1, tag2) => tag1.localeCompare(tag2),
-  );
 }
 
 export async function getPostsByTag(tag: Tag) {

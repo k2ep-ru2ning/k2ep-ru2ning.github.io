@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { seriesSchema } from "./series";
-import { tagSchema } from "./tags";
+import { tagArraySchema } from "./tags";
 
 export const postMatterSchema = z.object({
   title: z.string().trim().min(1),
   description: z.string().trim(),
   createdAt: z.date(),
-  tags: tagSchema.array().nullable().optional(),
+  tags: tagArraySchema.optional(),
   series: seriesSchema.shape.name.optional(),
 });
 

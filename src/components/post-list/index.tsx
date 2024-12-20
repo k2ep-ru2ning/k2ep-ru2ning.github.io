@@ -8,6 +8,10 @@ type Props = {
 };
 
 export default function PostList({ posts }: Props) {
+  if (posts.length === 0) {
+    return <p>글이 존재하지 않습니다.</p>;
+  }
+
   return (
     <ul className="flex flex-col gap-8">
       {posts.map((post, idx) => (
