@@ -1,4 +1,4 @@
-export function formatDate(target: Date) {
+export default function formatDate(target: Date) {
   const year = target.getFullYear();
   const month =
     target.getMonth() + 1 < 10

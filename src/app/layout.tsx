@@ -6,7 +6,7 @@ import Header from "@/components/header";
 import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import jetbrainsMono from "@/fonts/jetbrains-mono";
 import pretendard from "@/fonts/pretendard";
-import { initializeThemeFromLocal } from "@/utils/theme";
+import initializeThemeFromLocal from "@/scripts/initialize-theme-from-local";
 
 type Props = {
   children: ReactNode;

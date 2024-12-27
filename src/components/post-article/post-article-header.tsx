@@ -1,5 +1,5 @@
 import { type Post } from "@/schema/posts";
-import { formatDate } from "@/utils/date-formatter";
+import formatDate from "@/utils/format-date";
 import TagList from "../tag-list";
 
 type Props = {
