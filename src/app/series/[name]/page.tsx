@@ -7,13 +7,13 @@ import { getPostsBySeries } from "@/service/posts";
 import { getSeries, getSeriesByName } from "@/service/series";
 
 type Props = {
-  params: {
+  params: Promise<{
     name: string;
-  };
+  }>;
 };
 
 export default async function SeriesDetailPage({ params }: Props) {
-  const seriesName = decodeURIComponent(params.name);
+  const seriesName = decodeURIComponent((await params).name);
 
   const series = await getSeriesByName(seriesName);
 
@@ -48,7 +48,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const seriesName = decodeURIComponent(params.name);
+  const seriesName = decodeURIComponent((await params).name);
 
   const series = await getSeriesByName(seriesName);
 
