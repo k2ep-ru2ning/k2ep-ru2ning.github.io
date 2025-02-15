@@ -49,7 +49,7 @@ export default function MobileMenu() {
       <Dialog.Portal>
         <Dialog.Overlay />
         {/* sticky header의 z-index가 10이어서 그 위에 정상적으로 표시되려면 z-index가 10어야 함 */}
-        <Dialog.Content className="z-10 bg-zinc-50 dark:bg-zinc-950 fixed inset-0 focus:outline-none flex flex-col">
+        <Dialog.Content className="z-10 bg-zinc-50 dark:bg-zinc-950 fixed inset-0 focus:outline-hidden flex flex-col">
           <header className="flex items-center justify-between p-3">
             <Dialog.Title className="px-2 py-1 font-extrabold text-xl shrink-0">
               메뉴
