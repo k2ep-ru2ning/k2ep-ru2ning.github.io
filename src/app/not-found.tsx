@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LuHome } from "react-icons/lu";
+import { LuHouse } from "react-icons/lu";
 
 export default function NotFound() {
   return (
@@ -12,7 +12,7 @@ export default function NotFound() {
         className="flex items-center gap-1.5 p-1 rounded-md self-start hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
         Home으로 이동
-        <LuHome className="size-5" />
+        <LuHouse className="size-5" />
       </Link>
     </div>
   );

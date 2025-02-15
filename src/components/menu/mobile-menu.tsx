@@ -11,7 +11,7 @@ import {
   LuExternalLink,
   LuFileCode,
   LuFileStack,
-  LuHome,
+  LuHouse,
   LuMoon,
   LuSun,
   LuTags,
@@ -70,7 +70,7 @@ export default function MobileMenu() {
               {[
                 {
                   link: "/",
-                  icon: <LuHome className="size-5" />,
+                  icon: <LuHouse className="size-5" />,
                   label: "홈",
                   isActive: pathname === "/",
                 },

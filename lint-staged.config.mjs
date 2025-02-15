@@ -6,9 +6,12 @@ function buildEslintCommand(filenames) {
     .join(" --file ")}`;
 }
 
+/**
+ * @type {import('lint-staged').Configuration}
+ */
 const config = {
-  "*.{js,jsx,ts,tsx}": [buildEslintCommand, "prettier --write"],
-  "*.{md,mdx,css,json}": "prettier --write",
+  "*.{js,mjs,jsx,ts,tsx}": [buildEslintCommand, "prettier --write"],
+  "*.{md,mdx,css,json}": ["prettier --write"],
 };
 
 export default config;

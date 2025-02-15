@@ -7,13 +7,13 @@ import { getPostsByTag } from "@/service/posts";
 import { getTags, getTagSet } from "@/service/tags";
 
 type Props = {
-  params: {
+  params: Promise<{
     tag: string;
-  };
+  }>;
 };
 
 export default async function TagDetailPage({ params }: Props) {
-  const tag = decodeURIComponent(params.tag);
+  const tag = decodeURIComponent((await params).tag);
 
   const tagSet = await getTagSet();
 
@@ -44,7 +44,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = decodeURIComponent(params.tag);
+  const tag = decodeURIComponent((await params).tag);
 
   const tagSet = await getTagSet();
 

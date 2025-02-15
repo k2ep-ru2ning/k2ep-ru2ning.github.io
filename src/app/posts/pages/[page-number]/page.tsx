@@ -7,23 +7,23 @@ import PostList from "@/components/post-list";
 import { getPosts } from "@/service/posts";
 
 type Props = {
-  params: {
+  params: Promise<{
     "page-number": string;
-  };
+  }>;
 };
 
 const PAGE_SIZE = 4;
 
-export default async function PostListPage({
-  params: { "page-number": pageNumber },
-}: Props) {
-  if (!/^\d+$/.test(pageNumber)) {
+export default async function PostListPage({ params }: Props) {
+  const { "page-number": pageNumberParam } = await params;
+
+  if (!/^\d+$/.test(pageNumberParam)) {
     notFound();
   }
 
   const posts = await getPosts();
 
-  const currentPageNumber = Number(pageNumber);
+  const currentPageNumber = Number(pageNumberParam);
 
   const numberOfPages = Math.ceil(posts.length / PAGE_SIZE);
 
@@ -59,9 +59,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params: { "page-number": pageNumberParam },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { "page-number": pageNumberParam } = await params;
+
   if (!/^\d+$/.test(pageNumberParam)) {
     notFound();
   }

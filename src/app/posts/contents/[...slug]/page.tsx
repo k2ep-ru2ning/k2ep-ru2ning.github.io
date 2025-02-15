@@ -11,12 +11,14 @@ import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
 type Slug = string[];
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: Slug;
-  };
+  }>;
 };
 
-export default async function PostPage({ params: { slug } }: Props) {
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
+
   const post = await getPostBySlug(slug);
 
   if (!post) {
@@ -60,9 +62,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params: { slug },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+
   const post = await getPostBySlug(slug);
 
   if (!post) {
