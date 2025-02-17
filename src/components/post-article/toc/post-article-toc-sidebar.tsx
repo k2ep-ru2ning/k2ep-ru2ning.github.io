@@ -67,7 +67,7 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
         <ScrollToTopButton size="base" />
       </div>
       <HorizontalSeparator />
-      <nav className="flex-grow overflow-auto">
+      <nav className="grow overflow-auto">
         <ul className="flex flex-col gap-1">
           {headings.map((item) => {
             const isActive = activeHeadingIdSet.has(item.id);
