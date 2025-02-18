@@ -25,10 +25,10 @@ export default function InternalLinks() {
       isActive: pathname === "/",
     },
     {
-      link: "/posts/pages/1",
+      link: "/posts",
       icon: <LuFileCode className="size-6" />,
       tooltipText: "글",
-      isActive: pathname.startsWith("/posts/pages"),
+      isActive: pathname === "/posts",
     },
     {
       link: "/tags",

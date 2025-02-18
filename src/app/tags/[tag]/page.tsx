@@ -2,8 +2,8 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
-import PostList from "@/components/post-list";
-import { getPostsByTag } from "@/service/posts";
+// import PostList from "@/components/post-list";
+// import { getPostsByTag } from "@/service/posts";
 import { getTags, getTagSet } from "@/service/tags";
 
 type Props = {
@@ -22,7 +22,7 @@ export default async function TagDetailPage({ params }: Props) {
     notFound();
   }
 
-  const postsOnTag = await getPostsByTag(tag);
+  // const postsOnTag = await getPostsByTag(tag);
 
   return (
     <ListSection>
@@ -33,7 +33,7 @@ export default async function TagDetailPage({ params }: Props) {
         </strong>
         &quot; 태그
       </ListHeading>
-      <PostList posts={postsOnTag} />
+      {/* <PostList posts={postsOnTag} /> */}
     </ListSection>
   );
 }
