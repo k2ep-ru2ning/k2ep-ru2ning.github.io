@@ -2,7 +2,7 @@ import { type Metadata } from "next";
 import { Suspense } from "react";
 import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
-import PostList from "@/components/post-list";
+import FilterablePostList from "@/components/posts/filterable-post-list";
 import { getPosts } from "@/service/posts";
 
 export default async function PostsPage() {
@@ -12,7 +12,7 @@ export default async function PostsPage() {
     <ListSection>
       <ListHeading>글 목록</ListHeading>
       <Suspense>
-        <PostList posts={posts} />
+        <FilterablePostList posts={posts} />
       </Suspense>
     </ListSection>
   );

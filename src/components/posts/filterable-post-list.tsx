@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { Fragment } from "react";
 import { type Post } from "@/schema/posts";
+import PostList from "./post-list";
 import PostListItem from "./post-list-item";
 import Pagination from "../pagination";
 import HorizontalSeparator from "../separator/horizontal-separator";
@@ -13,7 +14,7 @@ type Props = {
 
 const PAGE_SIZE = 4;
 
-export default function PostList({ posts }: Props) {
+export default function FilterablePostList({ posts }: Props) {
   const searchParams = useSearchParams();
 
   const pageSearchParam = searchParams.get("page") ?? "1";
@@ -43,7 +44,7 @@ export default function PostList({ posts }: Props) {
       {postsOfCurrentPage.length === 0 ? (
         <p>글이 존재하지 않습니다.</p>
       ) : (
-        <ul className="flex flex-col gap-8">
+        <PostList>
           {postsOfCurrentPage.map((post, idx) => (
             <Fragment key={post.absoluteUrl}>
               <PostListItem post={post} />
@@ -52,7 +53,7 @@ export default function PostList({ posts }: Props) {
               ) : null}
             </Fragment>
           ))}
-        </ul>
+        </PostList>
       )}
       <Pagination
         generatePageLink={(pageNumber) => `/posts?page=${pageNumber}`}
