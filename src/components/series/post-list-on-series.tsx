@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { type Post } from "@/schema/posts";
 import formatDate from "@/utils/format-date";
-import TagList from "../tag-list";
+import TagList from "../tags/tag-list";
+import TagListItem from "../tags/tag-list-item";
 
 type Props = {
   postsOnSeries: Post[];
@@ -30,7 +31,13 @@ export default function PostListOnSeries({ postsOnSeries }: Props) {
             <time className="text-sm text-zinc-700 dark:text-zinc-300">
               {formatDate(post.createdAt)}
             </time>
-            {post.tags ? <TagList tags={post.tags} /> : null}
+            {post.tags && post.tags.length > 0 ? (
+              <TagList>
+                {post.tags.map((tag) => (
+                  <TagListItem key={tag} tag={tag} link={`/posts?tag=${tag}`} />
+                ))}
+              </TagList>
+            ) : null}
           </div>
         </li>
       ))}

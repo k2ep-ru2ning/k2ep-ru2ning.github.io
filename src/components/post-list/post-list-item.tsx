@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { type Post } from "@/schema/posts";
 import formatDate from "@/utils/format-date";
-import TagList from "../tag-list";
+import TagList from "../tags/tag-list";
+import TagListItem from "../tags/tag-list-item";
 
 type Props = {
   post: Post;
@@ -24,7 +25,13 @@ export default function PostListItem({
             <h3 className="leading-8 font-bold text-xl">{title}</h3>
             {description.length > 0 ? <p>{description}</p> : null}
           </Link>
-          {tags ? <TagList tags={tags} /> : null}
+          {tags && tags.length > 0 ? (
+            <TagList>
+              {tags.map((tag) => (
+                <TagListItem key={tag} tag={tag} link={`/posts?tag=${tag}`} />
+              ))}
+            </TagList>
+          ) : null}
         </div>
       </section>
     </li>
