@@ -4,15 +4,16 @@ import ListHeading from "@/components/list-heading";
 import ListSection from "@/components/list-section";
 import FilterablePostList from "@/components/posts/filterable-post-list";
 import { getPosts } from "@/service/posts";
+import { getTags } from "@/service/tags";
 
 export default async function PostsPage() {
-  const posts = await getPosts();
+  const [posts, tags] = await Promise.all([getPosts(), getTags()]);
 
   return (
     <ListSection>
       <ListHeading>글 목록</ListHeading>
       <Suspense>
-        <FilterablePostList posts={posts} />
+        <FilterablePostList posts={posts} tags={tags} />
       </Suspense>
     </ListSection>
   );

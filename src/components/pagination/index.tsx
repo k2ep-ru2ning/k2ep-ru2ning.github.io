@@ -17,6 +17,9 @@ export default function Pagination({
 }: Props) {
   const pageNumbers = getPageNumbers(activePageNumber, numberOfPages);
 
+  const isActivePageNumberValid =
+    activePageNumber >= 1 && activePageNumber <= numberOfPages;
+
   return (
     <nav>
       <ul className="p-4 flex items-center justify-center gap-2">
@@ -26,7 +29,7 @@ export default function Pagination({
             href={generatePageLink(activePageNumber - 1)}
             className={cn(
               "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md",
-              activePageNumber === 1 &&
+              (!isActivePageNumberValid || activePageNumber === 1) &&
                 "pointer-events-none text-zinc-300 dark:text-zinc-700",
             )}
           >
@@ -52,7 +55,8 @@ export default function Pagination({
             href={generatePageLink(activePageNumber + 1)}
             className={cn(
               "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md",
-              activePageNumber === numberOfPages &&
+              (!isActivePageNumberValid ||
+                activePageNumber === numberOfPages) &&
                 "pointer-events-none text-zinc-300 dark:text-zinc-700",
             )}
           >
@@ -69,6 +73,13 @@ export default function Pagination({
  * min(numberOfPages, PAGINATION_SIZE)개의 페이지 번호 배열을 계산하는 함수.
  */
 function getPageNumbers(activePageNumber: number, numberOfPages: number) {
+  if (activePageNumber < 1) {
+    activePageNumber = 1;
+  }
+  if (activePageNumber > numberOfPages) {
+    activePageNumber = numberOfPages;
+  }
+
   // 화면에 표시할, 페이지 번호 버튼 개수.
   const size = Math.min(PAGINATION_SIZE, numberOfPages);
 
