@@ -3,7 +3,7 @@ import path from "node:path";
 import { cwd } from "node:process";
 import { type Tag, tagArraySchema } from "@/schema/tags";
 
-const TAGS_JSON_FILE_PATH = path.resolve(cwd(), "src", "contents", "tags.json");
+const TAGS_JSON_FILE_PATH = path.resolve(cwd(), "src", "data", "tags.json");
 
 export async function getTagSet() {
   try {

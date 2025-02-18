@@ -31,7 +31,7 @@ import { getTagSet } from "./tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
 
-const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "src", "contents", "posts");
+const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "src", "data", "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
 
@@ -49,7 +49,7 @@ const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
 
 function convertPostAbsolutePathToAbsoluteUrl(absolutePath: string) {
   const ext = path.extname(absolutePath);
-  return `/posts/contents/${absolutePath.slice(`${cwd()}/src/contents/posts/`.length).replace(ext, "")}`;
+  return `/posts/${absolutePath.slice(`${cwd()}/src/data/posts/`.length).replace(ext, "")}`;
 }
 
 async function getPostAbsolutePaths() {
