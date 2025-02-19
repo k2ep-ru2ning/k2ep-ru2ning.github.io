@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import { LuRefreshCw } from "react-icons/lu";
+import useCreateQueryString from "@/hooks/use-create-query-string";
 import usePageSearchParam from "@/hooks/use-page-search-param";
 import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
@@ -21,6 +22,8 @@ type Props = {
 const PAGE_SIZE = 4;
 
 export default function FilterablePostList({ posts, tags }: Props) {
+  const createQueryString = useCreateQueryString();
+
   const pageSearchParam = usePageSearchParam();
 
   if (!pageSearchParam.isValid) {
@@ -83,7 +86,9 @@ export default function FilterablePostList({ posts, tags }: Props) {
         </PostList>
       )}
       <Pagination
-        generatePageLink={(pageNumber) => `/posts?page=${pageNumber}`}
+        generatePageLink={(pageNumber) =>
+          "/posts?" + createQueryString("page", String(pageNumber))
+        }
         activePageNumber={pageNumber}
         numberOfPages={numberOfPages}
       />
