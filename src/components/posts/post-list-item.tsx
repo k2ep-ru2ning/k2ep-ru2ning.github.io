@@ -12,7 +12,7 @@ export default function PostListItem({
   post: { title, description, createdAt, absoluteUrl, tags },
 }: Props) {
   return (
-    <li>
+    <li className="py-6 sm:py-8 border-b-1 first:border-t-1 border-zinc-300 dark:border-zinc-700">
       <Link
         href={absoluteUrl}
         className="group flex flex-col md:flex-row md:gap-x-8"

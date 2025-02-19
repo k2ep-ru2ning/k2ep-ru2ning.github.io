@@ -12,7 +12,6 @@ import cn from "@/utils/cn";
 import PostList from "./post-list";
 import PostListItem from "./post-list-item";
 import Pagination from "../pagination";
-import HorizontalSeparator from "../separator/horizontal-separator";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
 
@@ -108,12 +107,8 @@ export default function FilterablePostList({ posts, tags }: Props) {
         </p>
       ) : (
         <PostList>
-          <HorizontalSeparator />
           {filteredPostsByTagOnPage.map((post) => (
-            <Fragment key={post.absoluteUrl}>
-              <PostListItem post={post} />
-              <HorizontalSeparator />
-            </Fragment>
+            <PostListItem key={post.absoluteUrl} post={post} />
           ))}
         </PostList>
       )}

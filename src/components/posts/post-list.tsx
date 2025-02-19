@@ -5,5 +5,5 @@ export default function PostList({
   className,
   ...props
 }: ComponentProps<"ul">) {
-  return <ul className={cn("flex flex-col gap-8", className)} {...props} />;
+  return <ul className={cn("flex flex-col", className)} {...props} />;
 }
