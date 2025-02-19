@@ -12,7 +12,7 @@ export default function TagListItem({ link, tag, className }: Props) {
     <Link
       href={link}
       className={cn(
-        "block px-2 py-1 rounded-md bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600",
+        "shrink-0 block px-2 py-1 rounded-md bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600",
         className,
       )}
     >

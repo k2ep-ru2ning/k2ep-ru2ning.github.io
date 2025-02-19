@@ -75,7 +75,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
   return (
     <>
       {tags.length === 0 ? null : (
-        <TagList>
+        <TagList className="flex-nowrap max-w-ful overflow-auto">
           <TagListItem
             tag="전체"
             link="/posts"
