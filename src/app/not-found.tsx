@@ -9,6 +9,7 @@ export default function NotFound() {
       <p className="text-xl">주소를 확인해주세요</p>
       <Link
         href="/"
+        replace
         className="flex items-center gap-1.5 p-1 rounded-md self-start hover:bg-zinc-200 dark:hover:bg-zinc-700"
       >
         Home으로 이동
