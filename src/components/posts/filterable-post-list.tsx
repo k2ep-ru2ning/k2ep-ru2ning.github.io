@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Fragment } from "react";
+import { LuRefreshCw } from "react-icons/lu";
 import usePageSearchParam from "@/hooks/use-page-search-param";
 import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
@@ -19,7 +21,28 @@ type Props = {
 const PAGE_SIZE = 4;
 
 export default function FilterablePostList({ posts, tags }: Props) {
-  const pageNumber = parseInt(usePageSearchParam());
+  const pageSearchParam = usePageSearchParam();
+
+  if (!pageSearchParam.isValid) {
+    return (
+      <div className="flex flex-col gap-y-3">
+        <p>
+          선택한 <strong>태그</strong> 또는 <strong>페이지 번호</strong>가
+          잘못되었습니다.
+        </p>
+        <Link
+          href="/posts"
+          replace
+          className="flex items-center gap-1.5 p-1 rounded-md self-start hover:bg-zinc-200 dark:hover:bg-zinc-700"
+        >
+          초기화
+          <LuRefreshCw className="size-5" />
+        </Link>
+      </div>
+    );
+  }
+
+  const pageNumber = parseInt(pageSearchParam.value);
 
   // 글이 없는 경우도 페이지가 1개 존재한다고 간주.
   // 1 <= 유효한 페이지 번호 <= numberOfPages 가 성립하려면,
