@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { LuRefreshCw } from "react-icons/lu";
 import useCreateQueryString from "@/hooks/use-create-query-string";
-import usePageSearchParam from "@/hooks/use-page-search-param";
+import usePageQueryString from "@/hooks/use-page-query-string";
 import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
 import PostList from "./post-list";
@@ -24,9 +24,9 @@ const PAGE_SIZE = 4;
 export default function FilterablePostList({ posts, tags }: Props) {
   const createQueryString = useCreateQueryString();
 
-  const pageSearchParam = usePageSearchParam();
+  const pageQueryString = usePageQueryString();
 
-  if (!pageSearchParam.isValid) {
+  if (!pageQueryString.isValid) {
     return (
       <div className="flex flex-col gap-y-3">
         <p>
@@ -45,7 +45,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
     );
   }
 
-  const pageNumber = parseInt(pageSearchParam.value);
+  const pageNumber = parseInt(pageQueryString.value);
 
   // 글이 없는 경우도 페이지가 1개 존재한다고 간주.
   // 1 <= 유효한 페이지 번호 <= numberOfPages 가 성립하려면,
