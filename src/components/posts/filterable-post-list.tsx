@@ -73,10 +73,11 @@ export default function FilterablePostList({ posts, tags }: Props) {
         </p>
       ) : (
         <PostList>
-          {postsOnPage.map((post, idx) => (
+          <HorizontalSeparator />
+          {postsOnPage.map((post) => (
             <Fragment key={post.absoluteUrl}>
               <PostListItem post={post} />
-              {idx < postsOnPage.length - 1 ? <HorizontalSeparator /> : null}
+              <HorizontalSeparator />
             </Fragment>
           ))}
         </PostList>
