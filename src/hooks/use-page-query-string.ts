@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 
-type PageQueryStringParsingResult =
+type PageQueryString =
   | {
       isValid: true;
       value: string;
@@ -10,7 +10,7 @@ type PageQueryStringParsingResult =
       reason: string;
     };
 
-export default function usePageQueryString(): PageQueryStringParsingResult {
+export default function usePageQueryString(): PageQueryString {
   const searchParams = useSearchParams();
 
   const pageQueryStrings = searchParams.getAll("page");
