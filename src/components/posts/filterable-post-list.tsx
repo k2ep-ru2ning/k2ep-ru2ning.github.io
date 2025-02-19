@@ -13,8 +13,8 @@ import PostList from "./post-list";
 import PostListItem from "./post-list-item";
 import Pagination from "../pagination";
 import HorizontalSeparator from "../separator/horizontal-separator";
+import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
-import TagListItem from "../tags/tag-list-item";
 
 type Props = {
   posts: Post[];
@@ -76,25 +76,28 @@ export default function FilterablePostList({ posts, tags }: Props) {
     <>
       {tags.length === 0 ? null : (
         <TagList className="flex-nowrap max-w-ful overflow-auto">
-          <TagListItem
-            tag="전체"
-            link="/posts"
-            className={cn(
-              tagQueryString.result === "selectAll" &&
-                "text-indigo-500 font-bold",
-            )}
-          />
-          {tags.map((tag) => (
-            <TagListItem
-              key={tag}
-              tag={tag}
-              link={`/posts?tag=${tag}`}
+          <li className="shrink-0">
+            <TagLink
+              tag="전체"
+              link="/posts"
               className={cn(
-                tagQueryString.result === "selectTag" &&
-                  tagQueryString.value === tag &&
+                tagQueryString.result === "selectAll" &&
                   "text-indigo-500 font-bold",
               )}
             />
+          </li>
+          {tags.map((tag) => (
+            <li key={tag} className="shrink-0">
+              <TagLink
+                tag={tag}
+                link={`/posts?tag=${tag}`}
+                className={cn(
+                  tagQueryString.result === "selectTag" &&
+                    tagQueryString.value === tag &&
+                    "text-indigo-500 font-bold",
+                )}
+              />
+            </li>
           ))}
         </TagList>
       )}

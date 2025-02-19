@@ -1,7 +1,7 @@
 import { type Post } from "@/schema/posts";
 import formatDate from "@/utils/format-date";
+import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
-import TagListItem from "../tags/tag-list-item";
 
 type Props = {
   post: Post;
@@ -14,7 +14,9 @@ export default function PostArticleHeader({ post }: Props) {
       {post.tags && post.tags.length > 0 ? (
         <TagList>
           {post.tags.map((tag) => (
-            <TagListItem key={tag} tag={tag} link={`/posts?tag=${tag}`} />
+            <li key={tag}>
+              <TagLink tag={tag} link={`/posts?tag=${tag}`} />
+            </li>
           ))}
         </TagList>
       ) : null}

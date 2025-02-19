@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { type Post } from "@/schema/posts";
 import formatDate from "@/utils/format-date";
+import Tag from "../tags/tag";
 import TagList from "../tags/tag-list";
-import TagListItem from "../tags/tag-list-item";
 
 type Props = {
   post: Post;
@@ -28,7 +28,9 @@ export default function PostListItem({
           {tags && tags.length > 0 ? (
             <TagList>
               {tags.map((tag) => (
-                <TagListItem key={tag} tag={tag} link={`/posts?tag=${tag}`} />
+                <li key={tag}>
+                  <Tag tag={tag} />
+                </li>
               ))}
             </TagList>
           ) : null}
