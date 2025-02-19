@@ -82,7 +82,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
               link="/posts"
               className={cn(
                 tagQueryString.result === "selectAll" &&
-                  "text-indigo-500 font-bold",
+                  "text-indigo-500 dark:text-indigo-400 font-bold",
               )}
             />
           </li>
@@ -94,7 +94,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
                 className={cn(
                   tagQueryString.result === "selectTag" &&
                     tagQueryString.value === tag &&
-                    "text-indigo-500 font-bold",
+                    "text-indigo-500 dark:text-indigo-400 font-bold",
                 )}
               />
             </li>
