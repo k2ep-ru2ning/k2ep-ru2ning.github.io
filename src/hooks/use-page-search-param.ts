@@ -1,29 +1,29 @@
 import { useSearchParams } from "next/navigation";
 
-export default function usePageSearchParam(maxPageNumber: number): number {
+export default function usePageSearchParam(): string {
   const searchParams = useSearchParams();
 
-  // page search param이 두 개이상 있는 경우에는 첫 번째 page search param 값을 이용한다.
-  // 두 개이상인 경우에 대해 별도의 예외처리 하지 않는다.
-  const pageSearchParam = searchParams.get("page");
+  const pageSearchParams = searchParams.getAll("page");
 
-  if (pageSearchParam === null) {
-    return 1;
+  if (pageSearchParams.length >= 2) {
+    throw new Error(
+      `page searchParams[${pageSearchParams.join(",")}]가 2개 이상입니다.`,
+    );
   }
 
-  if (!/^\d+$/.test(pageSearchParam)) {
-    return 1;
+  if (pageSearchParams.length === 0) {
+    return "1";
   }
 
-  let pageNumber = Number(pageSearchParam);
-
-  if (pageNumber < 1) {
-    pageNumber = 1;
+  if (pageSearchParams[0] === "") {
+    return "1";
   }
 
-  if (pageNumber > maxPageNumber) {
-    pageNumber = maxPageNumber;
+  if (!/^[-+]?\d+$/.test(pageSearchParams[0])) {
+    throw new Error(
+      `page searchParam("${pageSearchParams[0]}")이 정수로 파싱할 수 있는 문자열이 아닙니다.`,
+    );
   }
 
-  return pageNumber;
+  return pageSearchParams[0];
 }
