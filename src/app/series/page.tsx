@@ -9,13 +9,13 @@ export default async function SeriesPage() {
 
   return (
     <ListSection>
-      <ListHeading>시리즈 목록</ListHeading>
+      <ListHeading>시리즈</ListHeading>
       <SeriesList series={series} />
     </ListSection>
   );
 }
 
 export const metadata: Metadata = {
-  title: "시리즈 목록",
+  title: "시리즈",
   description: "시리즈 목록 페이지입니다.",
 };

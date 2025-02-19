@@ -9,12 +9,11 @@ import { BsGithub } from "react-icons/bs";
 import {
   LuAlignJustify,
   LuExternalLink,
-  LuFileCode,
+  LuFile,
   LuFileStack,
   LuHouse,
   LuMoon,
   LuSun,
-  LuTags,
   LuX,
 } from "react-icons/lu";
 import useMediaQuery from "@/hooks/use-media-query";
@@ -76,15 +75,9 @@ export default function MobileMenu() {
                 },
                 {
                   link: "/posts",
-                  icon: <LuFileCode className="size-5" />,
+                  icon: <LuFile className="size-5" />,
                   label: "글",
                   isActive: pathname === "/posts",
-                },
-                {
-                  link: "/tags",
-                  icon: <LuTags className="size-5" />,
-                  label: "태그",
-                  isActive: pathname === "/tags",
                 },
                 {
                   link: "/series",

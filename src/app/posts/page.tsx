@@ -11,7 +11,7 @@ export default async function PostsPage() {
 
   return (
     <ListSection>
-      <ListHeading>글 목록</ListHeading>
+      <ListHeading>글</ListHeading>
       <Suspense>
         <FilterablePostList posts={posts} tags={tags} />
       </Suspense>
@@ -20,6 +20,6 @@ export default async function PostsPage() {
 }
 
 export const metadata: Metadata = {
-  title: "글 목록",
+  title: "글",
   description: "글 목록 페이지입니다.",
 };
