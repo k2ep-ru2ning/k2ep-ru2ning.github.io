@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment } from "react";
 import { LuRefreshCw } from "react-icons/lu";
 import useCreateQueryString from "@/hooks/use-create-query-string";
 import usePageQueryString from "@/hooks/use-page-query-string";
