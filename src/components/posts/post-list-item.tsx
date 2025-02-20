@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type Post } from "@/schema/posts";
 import formatDate from "@/utils/format-date";
+import Heading from "../heading";
 import Tag from "../tags/tag";
 import TagList from "../tags/tag-list";
 
@@ -22,7 +23,9 @@ export default function PostListItem({
         </time>
         <div className="flex flex-col gap-3 md:grow">
           <div className="flex flex-col gap-3 group-hover:text-indigo-500 transition-colors">
-            <h3 className="leading-8 font-bold text-xl">{title}</h3>
+            <Heading as="h3" className="leading-8">
+              {title}
+            </Heading>
             {description.length > 0 ? <p>{description}</p> : null}
           </div>
           {tags && tags.length > 0 ? (

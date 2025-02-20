@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { type Post } from "@/schema/posts";
 import formatDate from "@/utils/format-date";
+import Heading from "../heading";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
 
@@ -25,7 +26,7 @@ export default function PostListOnSeries({ postsOnSeries }: Props) {
               href={post.absoluteUrl}
               className="flex flex-col gap-3 hover:text-indigo-500 transition-colors"
             >
-              <h3 className="font-bold text-xl">{post.title}</h3>
+              <Heading as="h3">{post.title}</Heading>
               {post.description.length > 0 ? <p>{post.description}</p> : null}
             </Link>
             <time className="text-sm text-zinc-700 dark:text-zinc-300">

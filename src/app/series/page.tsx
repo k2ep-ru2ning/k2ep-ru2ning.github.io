@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import ListHeading from "@/components/list-heading";
+import Heading from "@/components/heading";
 import Section from "@/components/section";
 import SeriesList from "@/components/series/series-list";
 import { getSeries } from "@/service/series";
@@ -9,7 +9,7 @@ export default async function SeriesPage() {
 
   return (
     <Section>
-      <ListHeading>시리즈</ListHeading>
+      <Heading as="h2">시리즈</Heading>
       <SeriesList series={series} />
     </Section>
   );
