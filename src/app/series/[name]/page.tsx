@@ -27,9 +27,7 @@ export default async function SeriesDetailPage({ params }: Props) {
     <Section>
       <Heading as="h2">
         &quot;
-        <strong className="underline decoration-wavy decoration-indigo-500">
-          {series.name}
-        </strong>
+        {series.name}
         &quot; 시리즈
       </Heading>
       {series.description ? (
