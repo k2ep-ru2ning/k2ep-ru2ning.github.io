@@ -12,7 +12,7 @@ export default async function PostsPage() {
   return (
     <Section>
       <Heading as="h2">글</Heading>
-      <Suspense>
+      <Suspense fallback={<p>글을 가져오는 중...</p>}>
         <FilterablePostList posts={posts} tags={tags} />
       </Suspense>
     </Section>
