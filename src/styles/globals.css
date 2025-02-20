@@ -29,7 +29,27 @@
     Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-/* 기본적으로 dark variant는 prefers-color-scheme 기반으로 동작. 즉 시스템 테마 설정 기반으로 동작
-   아래 설정을 통해, html 태그에 .dark class가 있으면 다크모드로 인식한다.
+/* 
+  기본적으로 dark variant는 prefers-color-scheme 기반으로 동작. 즉 시스템 테마 설정 기반으로 동작
+  아래 설정을 통해, html 태그에 .dark class가 있으면 다크모드로 인식한다.
 */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* 
+  tailwind v4에서 hover를 지원하는 기기에서만 hover를 적용하도록
+  hover 미디어 쿼리를 사용해 hover variant를 만들었다.
+
+  하지만 안드로이드의 크롬 기반 브라우저(크롬, 브레이브 등)에서
+  여전히 hover 스타일링을 적용한 요소들을 클릭하고 뗐을 때
+  hover 스타일링이 적용되는 문제가 발생했다.
+
+  pointer 미디어 쿼리까지 적용해서 마우스와 같은 정확한 포인터를 쓸 때
+  hover가 적용되도록 tailwind의 기본 hover variant를 덮어쓴다.
+*/
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
