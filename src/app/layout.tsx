@@ -54,6 +54,7 @@ export const metadata: Metadata = {
     template: "%s | k2ep-ru2ning",
     default: "k2ep-ru2ning | Software Engineer & Front-end Web Developer",
   },
-  description: "프로그래밍 관련 지식/경험을 기록/회고하는 공간",
+  description:
+    "k2ep-ru2ning의 개발 블로그. 개발하면서 배우고 경험한 내용을 정리하는 공간.",
   authors: [{ name: "k2ep-ru2ning" }],
 };
