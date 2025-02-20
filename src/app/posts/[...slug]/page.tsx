@@ -58,7 +58,7 @@ export default async function PostPage({ params }: Props) {
 export async function generateStaticParams() {
   const posts = await getPosts();
   return posts.map(({ absoluteUrl }) => ({
-    slug: absoluteUrl.replace("/posts/contents/", "").split("/"),
+    slug: absoluteUrl.replace("/posts/", "").split("/"),
   }));
 }
 
@@ -78,6 +78,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 async function getPostBySlug(slug: Slug) {
-  const url = `/posts/contents/${slug.map(decodeURIComponent).join("/")}`;
+  const url = `/posts/${slug.map(decodeURIComponent).join("/")}`;
   return getPostByAbsoluteUrl(url);
 }

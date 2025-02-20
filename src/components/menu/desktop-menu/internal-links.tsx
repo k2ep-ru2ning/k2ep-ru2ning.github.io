@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
-import { LuFileCode, LuFileStack, LuHouse, LuTags } from "react-icons/lu";
+import { LuFile, LuFileStack, LuHouse } from "react-icons/lu";
 import cn from "@/utils/cn";
 import Tooltip from "../../tooltip";
 
@@ -25,16 +25,10 @@ export default function InternalLinks() {
       isActive: pathname === "/",
     },
     {
-      link: "/posts/pages/1",
-      icon: <LuFileCode className="size-6" />,
+      link: "/posts",
+      icon: <LuFile className="size-6" />,
       tooltipText: "글",
-      isActive: pathname.startsWith("/posts/pages"),
-    },
-    {
-      link: "/tags",
-      icon: <LuTags className="size-6" />,
-      tooltipText: "태그",
-      isActive: pathname === "/tags",
+      isActive: pathname === "/posts",
     },
     {
       link: "/series",

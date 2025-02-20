@@ -3,7 +3,6 @@ import { type Metadata } from "next";
 import { type ReactNode } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import HorizontalSeparator from "@/components/separator/horizontal-separator";
 import jetbrainsMono from "@/fonts/jetbrains-mono";
 import pretendard from "@/fonts/pretendard";
 import initializeThemeFromLocal from "@/scripts/initialize-theme-from-local";
@@ -41,8 +40,7 @@ export default function RootLayout({ children }: Props) {
           <main className="px-2 py-6 grow max-w-3xl lg:max-w-5xl w-full mx-auto">
             {children}
           </main>
-          <div className="max-w-3xl lg:max-w-5xl w-full mx-auto">
-            <HorizontalSeparator />
+          <div className="max-w-3xl lg:max-w-5xl w-full mx-auto border-t-1 border-zinc-300 dark:border-zinc-700">
             <Footer />
           </div>
         </div>
@@ -56,6 +54,7 @@ export const metadata: Metadata = {
     template: "%s | k2ep-ru2ning",
     default: "k2ep-ru2ning | Software Engineer & Front-end Web Developer",
   },
-  description: "프로그래밍 관련 지식/경험을 기록/회고하는 공간",
+  description:
+    "k2ep-ru2ning의 개발 블로그. 개발하면서 배우고 경험한 내용을 정리하는 공간.",
   authors: [{ name: "k2ep-ru2ning" }],
 };

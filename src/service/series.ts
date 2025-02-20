@@ -3,12 +3,7 @@ import path from "node:path";
 import { cwd } from "node:process";
 import { Series, seriesArraySchema } from "@/schema/series";
 
-const SERIES_JSON_FILE_PATH = path.resolve(
-  cwd(),
-  "src",
-  "contents",
-  "series.json",
-);
+const SERIES_JSON_FILE_PATH = path.resolve(cwd(), "src", "data", "series.json");
 
 // 모든 시리즈를 조회하는 함수
 export async function getSeries() {

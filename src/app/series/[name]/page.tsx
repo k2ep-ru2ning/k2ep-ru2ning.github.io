@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import ListHeading from "@/components/list-heading";
-import ListSection from "@/components/list-section";
+import Heading from "@/components/heading";
+import Section from "@/components/section";
 import PostListOnSeries from "@/components/series/post-list-on-series";
 import { getPostsBySeries } from "@/service/posts";
 import { getSeries, getSeriesByName } from "@/service/series";
@@ -24,21 +24,21 @@ export default async function SeriesDetailPage({ params }: Props) {
   const postsOnSeries = await getPostsBySeries(series.name);
 
   return (
-    <ListSection>
-      <ListHeading>
+    <Section>
+      <Heading as="h2">
         &quot;
         <strong className="underline decoration-wavy decoration-indigo-500">
           {series.name}
         </strong>
         &quot; 시리즈
-      </ListHeading>
+      </Heading>
       {series.description ? (
         <p className="p-2 rounded-md bg-zinc-200 dark:bg-zinc-800">
           {series.description}
         </p>
       ) : null}
       <PostListOnSeries postsOnSeries={postsOnSeries} />
-    </ListSection>
+    </Section>
   );
 }
 
