@@ -4,7 +4,7 @@ import cn from "@/utils/cn";
 export default function TagList({ className, ...props }: ComponentProps<"ul">) {
   return (
     <ul
-      className={cn("flex flex-wrap gap-3 items-center", className)}
+      className={cn("flex flex-wrap gap-2 items-center", className)}
       {...props}
     />
   );
