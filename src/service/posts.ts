@@ -109,8 +109,10 @@ async function extractHeadingsFromMDXString(sourceMDXString: string) {
 }
 
 export async function getPosts() {
-  const validSeriesNameSet = await getSeriesNameSet();
-  const validTagSet = await getTagSet();
+  const [validSeriesNameSet, validTagSet] = await Promise.all([
+    getSeriesNameSet(),
+    getTagSet(),
+  ]);
   const posts: Post[] = [];
   try {
     const postAbsolutePaths = await getPostAbsolutePaths();
