@@ -1,13 +1,13 @@
-import type { NextConfig } from "next";
 import process from "node:process";
+import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   output: isProd ? "export" : undefined,
   images: {
     unoptimized: true,
   },
-};
+} satisfies NextConfig;
 
 export default nextConfig;
