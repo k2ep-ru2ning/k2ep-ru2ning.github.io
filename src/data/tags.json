@@ -8,5 +8,6 @@
   "Vite",
   "Next.js",
   "algorithm",
-  "MobX"
+  "MobX",
+  "TypeScript"
 ]
