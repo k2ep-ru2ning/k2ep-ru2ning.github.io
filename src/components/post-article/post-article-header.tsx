@@ -18,7 +18,7 @@ export default function PostArticleHeader({ post }: Props) {
         <TagList>
           {post.tags.map((tag) => (
             <li key={tag}>
-              <TagLink tag={tag} link={`/posts?tag=${tag}`} />
+              <TagLink tag={tag} />
             </li>
           ))}
         </TagList>

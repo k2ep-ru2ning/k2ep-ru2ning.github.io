@@ -4,6 +4,7 @@ description: "Union-Find 자료구조에 대해 학습한 내용 정리"
 createdAt: 2025-06-03 20:33:07
 tags:
   - "algorithm"
+  - "C++"
 ---
 
 ## 소개

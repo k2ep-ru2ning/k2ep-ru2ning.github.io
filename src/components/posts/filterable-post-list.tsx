@@ -7,7 +7,6 @@ import usePageQueryString from "@/hooks/use-page-query-string";
 import useTagQueryString from "@/hooks/use-tag-query-string";
 import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
-import cn from "@/utils/cn";
 import PostList from "./post-list";
 import PostListItem from "./post-list-item";
 import Pagination from "../pagination";
@@ -77,23 +76,17 @@ export default function FilterablePostList({ posts, tags }: Props) {
           <li className="shrink-0">
             <TagLink
               tag="전체"
-              link="/posts"
-              className={cn(
-                tagQueryString.result === "selectAll" &&
-                  "bg-indigo-500 dark:bg-indigo-500 hover:bg-indigo-500 hover:dark:bg-indigo-500 text-zinc-50",
-              )}
+              isActive={tagQueryString.result === "selectAll"}
             />
           </li>
           {tags.map((tag) => (
             <li key={tag} className="shrink-0">
               <TagLink
                 tag={tag}
-                link={`/posts?tag=${tag}`}
-                className={cn(
+                isActive={
                   tagQueryString.result === "selectTag" &&
-                    tagQueryString.value === tag &&
-                    "bg-indigo-500 dark:bg-indigo-500 hover:bg-indigo-500 hover:dark:bg-indigo-500 text-zinc-50",
-                )}
+                  tagQueryString.value === tag
+                }
               />
             </li>
           ))}
