@@ -113,3 +113,15 @@
 .prose > section:first-child > h2:first-child {
   @apply mt-0;
 }
+
+/* ================================================================== */
+/*** paragraph ***/
+/*
+  엄청 긴 단어가 있어서 한줄을 넘게 채우는 경우
+  줄바꿈을 넣기 위해서 
+  overflow-wrap: break-word;
+  스타일 추가
+*/
+.prose p {
+  @apply wrap-break-word;
+}

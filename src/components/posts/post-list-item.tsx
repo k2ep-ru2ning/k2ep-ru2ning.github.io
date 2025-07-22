@@ -26,7 +26,9 @@ export default function PostListItem({
             <Heading as="h3" className="leading-8">
               {title}
             </Heading>
-            {description.length > 0 ? <p>{description}</p> : null}
+            {description.length > 0 ? (
+              <p className="whitespace-pre-wrap">{description}</p>
+            ) : null}
           </div>
           {tags && tags.length > 0 ? (
             <TagList>
