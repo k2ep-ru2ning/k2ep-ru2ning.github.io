@@ -1,4 +1,4 @@
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import { Tooltip as TooltipPrimitive } from "radix-ui";
 import { type PropsWithChildren } from "react";
 
 export default function TooltipProvider({ children }: PropsWithChildren) {

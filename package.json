@@ -16,16 +16,13 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.14",
-    "@radix-ui/react-separator": "^1.1.7",
-    "@radix-ui/react-tooltip": "^1.2.7",
-    "@radix-ui/react-visually-hidden": "^1.2.3",
     "@vcarl/remark-headings": "^0.1.0",
     "clsx": "^2.1.1",
     "esbuild": "^0.25.6",
     "gray-matter": "^4.0.3",
     "mdx-bundler": "^10.1.1",
     "next": "^15.3.5",
+    "radix-ui": "^1.4.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",

@@ -1,9 +1,8 @@
 "use client";
 
-import * as Dialog from "@radix-ui/react-dialog";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Dialog, VisuallyHidden } from "radix-ui";
 import { useEffect, useState } from "react";
 import { BsGithub } from "react-icons/bs";
 import {

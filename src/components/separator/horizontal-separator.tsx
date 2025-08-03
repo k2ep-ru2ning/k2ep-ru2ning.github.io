@@ -1,4 +1,4 @@
-import * as Separator from "@radix-ui/react-separator";
+import { Separator } from "radix-ui";
 
 export default function HorizontalSeparator() {
   return (
