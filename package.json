@@ -9,9 +9,9 @@
     "lint": "next lint",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "preserve": "npm run build",
+    "preserve": "pnpm run build",
     "serve": "serve out",
-    "predeploy": "npm run build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d out --nojekyll",
     "prepare": "husky"
   },
