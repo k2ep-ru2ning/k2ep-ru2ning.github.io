@@ -72,7 +72,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
   return (
     <>
       {tags.length === 0 ? null : (
-        <TagList className="flex-nowrap max-w-ful overflow-auto">
+        <TagList className="flex-nowrap max-w-full overflow-auto">
           <li className="shrink-0">
             <TagLink
               tag="전체"
