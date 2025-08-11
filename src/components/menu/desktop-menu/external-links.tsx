@@ -1,6 +1,5 @@
+import { ExternalLink, Github } from "lucide-react";
 import { type ReactNode } from "react";
-import { BsGithub } from "react-icons/bs";
-import { LuExternalLink } from "react-icons/lu";
 import Tooltip from "../../tooltip";
 
 type LinkType = {
@@ -13,7 +12,7 @@ export default function ExternalLinks() {
   const links: LinkType[] = [
     {
       link: "https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io",
-      icon: <BsGithub className="size-6" />,
+      icon: <Github className="size-6" />,
       tooltipText: "Github 저장소",
     },
   ];
@@ -26,7 +25,7 @@ export default function ExternalLinks() {
           content={
             <div className="flex gap-1 items-center">
               {tooltipText}
-              <LuExternalLink className="size-4" />
+              <ExternalLink className="size-4" />
             </div>
           }
           trigger={

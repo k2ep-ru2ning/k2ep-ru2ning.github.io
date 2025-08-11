@@ -1,6 +1,6 @@
 "use client";
 
-import { LuMoon, LuSun } from "react-icons/lu";
+import { Moon, Sun } from "lucide-react";
 import { toggleTheme } from "@/utils";
 import Tooltip from "../../tooltip";
 
@@ -13,8 +13,8 @@ export default function ThemeSwitchButton() {
     <Tooltip
       trigger={
         <button type="button" onClick={handleClick} className="size-8">
-          <LuSun className="dark:hidden size-6" />
-          <LuMoon className="hidden dark:block size-6" />
+          <Sun className="dark:hidden size-6" />
+          <Moon className="hidden dark:block size-6" />
         </button>
       }
       content="테마 변경"

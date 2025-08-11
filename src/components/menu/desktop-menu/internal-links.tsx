@@ -1,9 +1,9 @@
 "use client";
 
+import { House, File, FileStack } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
-import { LuFile, LuFileStack, LuHouse } from "react-icons/lu";
 import { cn } from "@/utils";
 import Tooltip from "../../tooltip";
 
@@ -20,19 +20,19 @@ export default function InternalLinks() {
   const links: LinkType[] = [
     {
       link: "/",
-      icon: <LuHouse className="size-6" />,
+      icon: <House className="size-6" />,
       tooltipText: "홈",
       isActive: pathname === "/",
     },
     {
       link: "/posts",
-      icon: <LuFile className="size-6" />,
+      icon: <File className="size-6" />,
       tooltipText: "글",
       isActive: pathname === "/posts",
     },
     {
       link: "/series",
-      icon: <LuFileStack className="size-6" />,
+      icon: <FileStack className="size-6" />,
       tooltipText: "시리즈",
       isActive: pathname === "/series",
     },

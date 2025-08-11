@@ -1,5 +1,5 @@
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { LuArrowRight } from "react-icons/lu";
 import Heading from "@/components/heading";
 import Section from "@/components/section";
 
@@ -60,7 +60,7 @@ export default function HomePage() {
                 className="inline-flex gap-1 items-center p-1 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700"
               >
                 {label}
-                <LuArrowRight className="size-4" />
+                <ArrowRight className="size-4" />
               </Link>
             </div>
             <p className="p-1 text-sm text-zinc-700 dark:text-zinc-300">

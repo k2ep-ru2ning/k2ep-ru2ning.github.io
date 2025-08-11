@@ -1,7 +1,7 @@
 "use client";
 
+import { RefreshCw } from "lucide-react";
 import Link from "next/link";
-import { LuRefreshCw } from "react-icons/lu";
 import useCreateQueryString from "@/hooks/use-create-query-string";
 import usePageQueryString from "@/hooks/use-page-query-string";
 import useTagQueryString from "@/hooks/use-tag-query-string";
@@ -40,7 +40,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
           className="flex items-center gap-1.5 p-1 rounded-md self-start hover:bg-zinc-200 dark:hover:bg-zinc-700"
         >
           초기화
-          <LuRefreshCw className="size-5" />
+          <RefreshCw className="size-5" />
         </Link>
       </div>
     );

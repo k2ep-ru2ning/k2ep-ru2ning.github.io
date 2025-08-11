@@ -1,20 +1,20 @@
 "use client";
 
+import {
+  AlignJustify,
+  ExternalLink,
+  File,
+  FileStack,
+  House,
+  Moon,
+  Sun,
+  X,
+  Github,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Dialog, VisuallyHidden } from "radix-ui";
 import { useEffect, useState } from "react";
-import { BsGithub } from "react-icons/bs";
-import {
-  LuAlignJustify,
-  LuExternalLink,
-  LuFile,
-  LuFileStack,
-  LuHouse,
-  LuMoon,
-  LuSun,
-  LuX,
-} from "react-icons/lu";
 import useMediaQuery from "@/hooks/use-media-query";
 import { cn, toggleTheme } from "@/utils";
 import HorizontalSeparator from "../separator/horizontal-separator";
@@ -40,7 +40,7 @@ export default function MobileMenu() {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <button className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex sm:hidden justify-center items-center rounded-md">
-          <LuAlignJustify className="size-6" />
+          <AlignJustify className="size-6" />
         </button>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -58,7 +58,7 @@ export default function MobileMenu() {
             </VisuallyHidden.Root>
             <Dialog.Close asChild>
               <button className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex justify-center items-center rounded-md">
-                <LuX className="size-6" />
+                <X className="size-6" />
               </button>
             </Dialog.Close>
           </header>
@@ -67,19 +67,19 @@ export default function MobileMenu() {
               {[
                 {
                   link: "/",
-                  icon: <LuHouse className="size-5" />,
+                  icon: <House className="size-5" />,
                   label: "홈",
                   isActive: pathname === "/",
                 },
                 {
                   link: "/posts",
-                  icon: <LuFile className="size-5" />,
+                  icon: <File className="size-5" />,
                   label: "글",
                   isActive: pathname === "/posts",
                 },
                 {
                   link: "/series",
-                  icon: <LuFileStack className="size-5" />,
+                  icon: <FileStack className="size-5" />,
                   label: "시리즈",
                   isActive: pathname === "/series",
                 },
@@ -106,9 +106,9 @@ export default function MobileMenu() {
                   rel="noopener noreferrer"
                   className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
                 >
-                  <BsGithub className="size-5" />
+                  <Github className="size-5" />
                   Github 저장소
-                  <LuExternalLink className="size-5" />
+                  <ExternalLink className="size-5" />
                 </a>
               </li>
             </ul>
@@ -118,8 +118,8 @@ export default function MobileMenu() {
               onClick={toggleTheme}
               className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
             >
-              <LuSun className="dark:hidden size-5" />
-              <LuMoon className="hidden dark:block size-5" />
+              <Sun className="dark:hidden size-5" />
+              <Moon className="hidden dark:block size-5" />
               테마 변경
             </button>
           </div>

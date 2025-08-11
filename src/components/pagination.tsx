@@ -1,5 +1,5 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { cn } from "@/utils";
 
 type Props = {
@@ -33,7 +33,7 @@ export default function Pagination({
                 "pointer-events-none text-zinc-300 dark:text-zinc-700",
             )}
           >
-            <LuChevronLeft className="size-4" />
+            <ChevronLeft className="size-4" />
           </Link>
         </li>
         {pageNumbers.map((pageNumber) => (
@@ -60,7 +60,7 @@ export default function Pagination({
                 "pointer-events-none text-zinc-300 dark:text-zinc-700",
             )}
           >
-            <LuChevronRight className="size-4" />
+            <ChevronRight className="size-4" />
           </Link>
         </li>
       </ul>
