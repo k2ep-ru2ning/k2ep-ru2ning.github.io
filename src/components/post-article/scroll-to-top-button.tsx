@@ -1,7 +1,7 @@
 "use client";
 
 import { LuArrowUpToLine } from "react-icons/lu";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 
 type Props = {
   size: "large" | "base";

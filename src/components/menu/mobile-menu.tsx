@@ -16,8 +16,7 @@ import {
   LuX,
 } from "react-icons/lu";
 import useMediaQuery from "@/hooks/use-media-query";
-import cn from "@/utils/cn";
-import toggleTheme from "@/utils/toggle-theme";
+import { cn, toggleTheme } from "@/utils";
 import HorizontalSeparator from "../separator/horizontal-separator";
 
 export default function MobileMenu() {

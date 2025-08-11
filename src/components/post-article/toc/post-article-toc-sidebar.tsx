@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { type PostContentHeading } from "@/schema/posts";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 import HeadingIcon from "./heading-icon";
 import HorizontalSeparator from "../../separator/horizontal-separator";
 import ScrollToTopButton from "../scroll-to-top-button";

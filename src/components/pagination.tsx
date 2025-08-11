@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 
 type Props = {
   activePageNumber: number;

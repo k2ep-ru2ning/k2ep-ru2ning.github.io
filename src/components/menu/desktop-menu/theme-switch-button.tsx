@@ -1,7 +1,7 @@
 "use client";
 
 import { LuMoon, LuSun } from "react-icons/lu";
-import toggleTheme from "@/utils/toggle-theme";
+import { toggleTheme } from "@/utils";
 import Tooltip from "../../tooltip";
 
 export default function ThemeSwitchButton() {

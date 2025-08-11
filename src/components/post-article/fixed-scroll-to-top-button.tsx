@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 import ScrollToTopButton from "./scroll-to-top-button";
 
 export default function FixedScrollToTopButton() {

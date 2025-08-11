@@ -1,5 +1,5 @@
 import { type Post } from "@/schema/posts";
-import formatDate from "@/utils/format-date";
+import { formatDate } from "@/utils";
 import Heading from "../heading";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";

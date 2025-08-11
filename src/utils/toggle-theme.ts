@@ -1,4 +1,4 @@
-export default function toggleTheme() {
+export function toggleTheme() {
   document.documentElement.classList.toggle("dark");
   const nextTheme = document.documentElement.classList.contains("dark")
     ? "dark"

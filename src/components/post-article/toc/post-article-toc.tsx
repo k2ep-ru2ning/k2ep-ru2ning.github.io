@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { type PostContentHeading } from "@/schema/posts";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 import HeadingIcon from "./heading-icon";
 
 type Props = {

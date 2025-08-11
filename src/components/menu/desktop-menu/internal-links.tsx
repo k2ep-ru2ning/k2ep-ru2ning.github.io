@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { LuFile, LuFileStack, LuHouse } from "react-icons/lu";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 import Tooltip from "../../tooltip";
 
 type LinkType = {
