@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import useMediaQuery from "@/hooks/use-media-query";
 import { cn, toggleTheme } from "@/utils";
 import HorizontalSeparator from "../separator/horizontal-separator";
+import { Button } from "../ui/button";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -38,10 +39,10 @@ export default function MobileMenu() {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger asChild>
-        <button className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex sm:hidden justify-center items-center rounded-md">
+      <Dialog.Trigger asChild className="sm:hidden">
+        <Button variant="ghost" size="icon">
           <AlignJustify className="size-6" />
-        </button>
+        </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
@@ -57,9 +58,9 @@ export default function MobileMenu() {
               </Dialog.Description>
             </VisuallyHidden.Root>
             <Dialog.Close asChild>
-              <button className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex justify-center items-center rounded-md">
+              <Button variant="ghost" size="icon">
                 <X className="size-6" />
-              </button>
+              </Button>
             </Dialog.Close>
           </header>
           <div className="px-4 py-6 flex flex-col gap-y-2 overflow-y-auto grow">
@@ -85,43 +86,52 @@ export default function MobileMenu() {
                 },
               ].map(({ link, icon, label, isActive }) => (
                 <li key={link}>
-                  <Link
-                    href={link}
+                  <Button
+                    variant="ghost"
                     className={cn(
-                      "flex gap-2 justify-end items-center p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md",
-                      isActive && "text-indigo-500",
+                      "flex gap-2 justify-center items-center",
+                      isActive && "text-indigo-500 hover:text-indigo-500",
                     )}
+                    asChild
                   >
-                    {icon} {label}
-                  </Link>
+                    <Link href={link}>
+                      {icon} {label}
+                    </Link>
+                  </Button>
                 </li>
               ))}
             </ul>
             <HorizontalSeparator />
             <ul>
               <li>
-                <a
-                  href="https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="flex gap-2 justify-center items-center"
                 >
-                  <Github className="size-5" />
-                  Github 저장소
-                  <ExternalLink className="size-5" />
-                </a>
+                  <a
+                    href="https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="size-5" />
+                    Github 저장소
+                    <ExternalLink className="size-5" />
+                  </a>
+                </Button>
               </li>
             </ul>
             <HorizontalSeparator />
-            <button
+            <Button
               type="button"
               onClick={toggleTheme}
-              className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
+              variant="ghost"
+              className="flex gap-2 items-center justify-center"
             >
               <Sun className="dark:hidden size-5" />
               <Moon className="hidden dark:block size-5" />
               테마 변경
-            </button>
+            </Button>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
