@@ -2,6 +2,8 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Heading from "@/components/heading";
 import Section from "@/components/section";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/utils";
 
 export default function HomePage() {
   return (
@@ -55,13 +57,17 @@ export default function HomePage() {
             className="flex flex-col items-start sm:flex-row sm:gap-3 sm:items-center"
           >
             <div className="w-20">
-              <Link
-                href={link}
-                className="inline-flex gap-1 items-center p-1 rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700"
+              <Button
+                asChild
+                size="sm"
+                variant="ghost"
+                className={cn("has-[>svg]:p-1")}
               >
-                {label}
-                <ArrowRight className="size-4" />
-              </Link>
+                <Link href={link}>
+                  {label}
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
             </div>
             <p className="p-1 text-sm text-zinc-700 dark:text-zinc-300">
               {description}
