@@ -2,16 +2,6 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
-@theme {
-  /* --font-pretendard, --font-jetbrains-mono variable은 next/font가 생성한 것이다. */
-  --font-sans:
-    var(--font-pretendard), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono:
-    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
 /* 
   기본적으로 dark variant는 prefers-color-scheme 기반으로 동작. 즉 시스템 테마 설정 기반으로 동작
   아래 설정을 통해, html 태그에 .dark class가 있으면 다크모드로 인식한다.
@@ -134,7 +124,24 @@
   */
 }
 
+/* 
+  다른 css variable이나 테마 변수를 참조하는 경우,
+  @theme 대신, @theme inline을 사용해야 함. (공식문서에서 예상치 못한 값을 참조하는 문제를 방지할 수 있다고 소개)
+  @theme을 쓰면, 테마 변수 이름과 동일한 css variable을 :root에 만들고, 만들어진 css variable을 참조하는 css 클래스가 생성됨.
+  반면 @theme inline을 쓰면, 테마 변수와 동일한 css variable을 만들지만, 만들어진 css variable을 참조하지 않고,
+  테마 변수를 선언할 때 참조했던 변수를 직접 참조하는 css를 생성.
+  그래서 중간에 참조했던 변수의 값이 특정 스코프에서 변경되어도 제대로 추적할 수 있음.
+  그래서 공식문서에서 다른 변수를 참조하는 경우, @theme inline을 사용하라고 함.
+*/
 @theme inline {
+  /* --font-pretendard, --font-jetbrains-mono variable은 next/font가 생성한 것이다. */
+  --font-sans:
+    var(--font-pretendard), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
