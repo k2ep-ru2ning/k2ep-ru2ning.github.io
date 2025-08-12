@@ -4,8 +4,13 @@ import { House, File, FileStack } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/utils";
-import Tooltip from "../../tooltip";
 
 type LinkType = {
   link: string;
@@ -41,18 +46,21 @@ export default function InternalLinks() {
   return (
     <nav className="flex gap-2">
       {links.map(({ link, icon, tooltipText, isActive }, idx) => (
-        <Tooltip
-          key={idx}
-          content={tooltipText}
-          trigger={
-            <Link
-              href={link}
-              className={cn("size-8", isActive && "text-indigo-500")}
+        <Tooltip key={idx}>
+          <TooltipTrigger asChild>
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className={cn(
+                isActive && "text-indigo-500 hover:text-indigo-500",
+              )}
             >
-              {icon}
-            </Link>
-          }
-        />
+              <Link href={link}>{icon}</Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{tooltipText}</TooltipContent>
+        </Tooltip>
       ))}
     </nav>
   );

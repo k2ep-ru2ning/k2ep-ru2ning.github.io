@@ -1,6 +1,11 @@
 import { ExternalLink, Github } from "lucide-react";
 import { type ReactNode } from "react";
-import Tooltip from "../../tooltip";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type LinkType = {
   link: string;
@@ -20,25 +25,19 @@ export default function ExternalLinks() {
   return (
     <div className="flex gap-2">
       {links.map(({ link, icon, tooltipText }, idx) => (
-        <Tooltip
-          key={idx}
-          content={
-            <div className="flex gap-1 items-center">
-              {tooltipText}
-              <ExternalLink className="size-4" />
-            </div>
-          }
-          trigger={
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="size-8"
-            >
-              {icon}
-            </a>
-          }
-        />
+        <Tooltip key={idx}>
+          <TooltipTrigger asChild>
+            <Button asChild size="icon" variant="ghost">
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                {icon}
+              </a>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="flex gap-1 items-center">
+            {tooltipText}
+            <ExternalLink className="size-3" />
+          </TooltipContent>
+        </Tooltip>
       ))}
     </div>
   );
