@@ -17,8 +17,8 @@ import { Dialog, VisuallyHidden } from "radix-ui";
 import { useEffect, useState } from "react";
 import useMediaQuery from "@/hooks/use-media-query";
 import { cn, toggleTheme } from "@/utils";
-import HorizontalSeparator from "../separator/horizontal-separator";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -101,7 +101,7 @@ export default function MobileMenu() {
                 </li>
               ))}
             </ul>
-            <HorizontalSeparator />
+            <Separator />
             <ul>
               <li>
                 <Button
@@ -121,7 +121,7 @@ export default function MobileMenu() {
                 </Button>
               </li>
             </ul>
-            <HorizontalSeparator />
+            <Separator />
             <Button
               type="button"
               onClick={toggleTheme}

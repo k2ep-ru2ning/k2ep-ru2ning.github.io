@@ -5,7 +5,7 @@ import FixedScrollToTopButton from "@/components/post-article/fixed-scroll-to-to
 import PostArticleHeader from "@/components/post-article/post-article-header";
 import PostArticleTOC from "@/components/post-article/toc/post-article-toc";
 import PostArticleTOCSidebar from "@/components/post-article/toc/post-article-toc-sidebar";
-import HorizontalSeparator from "@/components/separator/horizontal-separator";
+import { Separator } from "@/components/ui/separator";
 import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
 
 type Slug = string[];
@@ -33,7 +33,7 @@ export default async function PostPage({ params }: Props) {
         <div className="lg:hidden">
           <PostArticleTOC headings={post.headings} />
         </div>
-        <HorizontalSeparator />
+        <Separator />
         <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
           <PostArticleContent post={post} />
           {/* 

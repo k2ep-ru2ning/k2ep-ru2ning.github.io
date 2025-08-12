@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Separator } from "@/components/ui/separator";
 import { type PostContentHeading } from "@/schema/posts";
 import { cn } from "@/utils";
 import HeadingIcon from "./heading-icon";
-import HorizontalSeparator from "../../separator/horizontal-separator";
 import ScrollToTopButton from "../scroll-to-top-button";
 
 type Props = {
@@ -66,7 +66,7 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
         <h2 className="text-lg">목차</h2>
         <ScrollToTopButton size="base" />
       </div>
-      <HorizontalSeparator />
+      <Separator />
       <nav className="grow overflow-auto">
         <ul className="flex flex-col gap-1">
           {headings.map((item) => {
