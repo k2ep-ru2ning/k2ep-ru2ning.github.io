@@ -12,6 +12,7 @@ import PostListItem from "./post-list-item";
 import Pagination from "../pagination";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 type Props = {
   posts: Post[];
@@ -72,25 +73,28 @@ export default function FilterablePostList({ posts, tags }: Props) {
   return (
     <>
       {tags.length === 0 ? null : (
-        <TagList className="flex-nowrap max-w-full overflow-auto">
-          <li className="shrink-0">
-            <TagLink
-              tag="전체"
-              isActive={tagQueryString.result === "selectAll"}
-            />
-          </li>
-          {tags.map((tag) => (
-            <li key={tag} className="shrink-0">
+        <ScrollArea>
+          <TagList className="flex-nowrap pb-3">
+            <li className="shrink-0">
               <TagLink
-                tag={tag}
-                isActive={
-                  tagQueryString.result === "selectTag" &&
-                  tagQueryString.value === tag
-                }
+                tag="전체"
+                isActive={tagQueryString.result === "selectAll"}
               />
             </li>
-          ))}
-        </TagList>
+            {tags.map((tag) => (
+              <li key={tag} className="shrink-0">
+                <TagLink
+                  tag={tag}
+                  isActive={
+                    tagQueryString.result === "selectTag" &&
+                    tagQueryString.value === tag
+                  }
+                />
+              </li>
+            ))}
+          </TagList>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       )}
       {filteredPostsByTagOnPage.length === 0 ? (
         <p>
