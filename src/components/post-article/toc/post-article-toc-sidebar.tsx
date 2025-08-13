@@ -65,7 +65,7 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
     <section className="sticky top-20 max-h-[calc(100dvh-3rem-var(--header-height)-var(--footer-height))] h-full overflow-hidden">
       <header className="h-[56px] flex justify-between items-center py-3 mx-3 border-b border-b-border">
         <h2 className="text-lg">목차</h2>
-        <ScrollToTopButton size="base" />
+        <ScrollToTopButton />
       </header>
       <ScrollArea className="h-[calc(100%-56px)]">
         <nav className="py-3 mx-3">

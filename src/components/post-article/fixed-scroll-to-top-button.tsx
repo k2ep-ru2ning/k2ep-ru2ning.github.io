@@ -38,11 +38,11 @@ export default function FixedScrollToTopButton() {
       <div ref={targetRef} />
       <div
         className={cn(
-          "fixed bottom-4 right-4",
+          "fixed bottom-4 right-4 bg-background rounded-md",
           showButton ? "block" : "hidden",
         )}
       >
-        <ScrollToTopButton size="large" />
+        <ScrollToTopButton />
       </div>
     </div>
   );

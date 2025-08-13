@@ -1,24 +1,21 @@
 "use client";
 
 import { ArrowUpToLine } from "lucide-react";
-import { cn } from "@/utils";
+import { Button } from "../ui/button";
 
-type Props = {
-  size: "large" | "base";
-};
-
-export default function ScrollToTopButton({ size }: Props) {
+export default function ScrollToTopButton() {
   const handleClickScrollToTopButton = () => {
     window.scrollTo({ top: 0 });
   };
 
   return (
-    <button
+    <Button
       type="button"
       onClick={handleClickScrollToTopButton}
-      className="bg-background rounded-md border border-zinc-300 dark:border-zinc-700 p-1 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+      variant="outline"
+      size="icon"
     >
-      <ArrowUpToLine className={cn("size-5", size === "large" && "size-7")} />
-    </button>
+      <ArrowUpToLine className="size-5" />
+    </Button>
   );
 }
