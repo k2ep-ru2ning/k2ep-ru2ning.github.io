@@ -21,7 +21,7 @@ export default function TagLink({ tag, isActive = false }: Props) {
         className={cn(
           "hover:bg-zinc-300 dark:hover:bg-zinc-600",
           isActive &&
-            "bg-indigo-500 dark:bg-indigo-500 hover:bg-indigo-500 hover:dark:bg-indigo-500 text-zinc-50",
+            "bg-brand dark:bg-brand hover:bg-brand hover:dark:bg-brand text-brand-foreground",
         )}
       />
     </Link>

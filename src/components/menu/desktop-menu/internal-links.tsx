@@ -52,9 +52,7 @@ export default function InternalLinks() {
               asChild
               variant="ghost"
               size="icon"
-              className={cn(
-                isActive && "text-indigo-500 hover:text-indigo-500",
-              )}
+              className={cn(isActive && "text-brand hover:text-brand")}
             >
               <Link href={link}>{icon}</Link>
             </Button>

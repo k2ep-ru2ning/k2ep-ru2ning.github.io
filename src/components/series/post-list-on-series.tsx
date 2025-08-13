@@ -24,7 +24,7 @@ export default function PostListOnSeries({ postsOnSeries }: Props) {
           <div className="p-2 flex flex-col gap-3 rounded-b-md border border-zinc-300 dark:border-zinc-700">
             <Link
               href={post.absoluteUrl}
-              className="flex flex-col gap-3 hover:text-indigo-500 transition-colors"
+              className="flex flex-col gap-3 hover:text-brand transition-colors"
             >
               <Heading as="h3">{post.title}</Heading>
               {post.description.length > 0 ? <p>{post.description}</p> : null}

@@ -42,7 +42,7 @@ export default function Pagination({
               href={generatePageLink(pageNumber)}
               className={cn(
                 "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md px-2",
-                pageNumber === activePageNumber && "font-bold text-indigo-500",
+                pageNumber === activePageNumber && "font-bold text-brand",
               )}
             >
               {pageNumber}

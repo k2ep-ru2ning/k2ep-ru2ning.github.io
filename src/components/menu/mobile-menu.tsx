@@ -97,7 +97,7 @@ export default function MobileMenu() {
                     variant="ghost"
                     className={cn(
                       "flex gap-2 justify-center items-center",
-                      isActive && "text-indigo-500 hover:text-indigo-500",
+                      isActive && "text-brand hover:text-brand",
                     )}
                     asChild
                   >

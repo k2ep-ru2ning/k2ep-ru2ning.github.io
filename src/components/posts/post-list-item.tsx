@@ -18,11 +18,11 @@ export default function PostListItem({
         href={absoluteUrl}
         className="group flex flex-col md:flex-row md:gap-x-8"
       >
-        <time className="text-sm text-zinc-700 dark:text-zinc-300 leading-8 md:shrink-0 group-hover:text-indigo-500 transition-colors">
+        <time className="text-sm text-zinc-700 dark:text-zinc-300 leading-8 md:shrink-0 group-hover:text-brand transition-colors">
           {formatDate(createdAt)}
         </time>
         <div className="flex flex-col gap-3 md:grow">
-          <div className="flex flex-col gap-3 group-hover:text-indigo-500 transition-colors">
+          <div className="flex flex-col gap-3 group-hover:text-brand transition-colors">
             <Heading as="h3" className="leading-8">
               {title}
             </Heading>

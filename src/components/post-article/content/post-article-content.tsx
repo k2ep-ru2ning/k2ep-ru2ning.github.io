@@ -1,6 +1,5 @@
 "use client";
 
-import "@/styles/prose.css";
 import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
 import { type Post } from "@/schema/posts";

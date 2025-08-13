@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /*** code ***/
 
@@ -9,7 +9,7 @@
 
 /* inline code block 스타일링 */
 .prose code:not([data-language]) {
-  @apply inline bg-zinc-100 border border-zinc-300 rounded-md px-1.5 text-indigo-500 before:hidden after:hidden break-all;
+  @apply inline bg-zinc-100 border border-zinc-300 rounded-md px-1.5 text-brand before:hidden after:hidden break-all;
 }
 
 /* rehype-pretty-code의 pre 스타일링 */
