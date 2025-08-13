@@ -22,7 +22,7 @@ export default function FixedScrollToTopButton() {
         }
       },
       {
-        rootMargin: "-64px 0px 0px 0px",
+        rootMargin: "-64px 0px 0px 0px", // sticky header 영역 제외
       },
     );
 

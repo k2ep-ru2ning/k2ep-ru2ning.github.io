@@ -56,7 +56,7 @@ export default function MobileMenu() {
         showCloseButton={false}
         className="duration-0 p-0 inset-0 translate-0 rounded-none max-w-full w-full h-dvh block"
       >
-        <header className="flex items-center justify-between p-3 h-[64px]">
+        <header className="flex items-center justify-between p-3 h-(--header-height)">
           <DialogTitle className="px-2 py-1 font-extrabold text-xl shrink-0">
             메뉴
           </DialogTitle>
@@ -69,7 +69,7 @@ export default function MobileMenu() {
             </Button>
           </DialogClose>
         </header>
-        <ScrollArea className="h-[calc(100%-64px)] overflow-hidden px-4 pb-4">
+        <ScrollArea className="h-[calc(100%-var(--header-height))] overflow-hidden px-4 pb-4">
           <div className="flex flex-col gap-2">
             <ul>
               {[
