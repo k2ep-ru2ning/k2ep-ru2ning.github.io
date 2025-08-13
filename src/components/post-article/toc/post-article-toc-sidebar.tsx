@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { type PostContentHeading } from "@/schema/posts";
 import { cn } from "@/utils";
 import HeadingIcon from "./heading-icon";
@@ -61,40 +61,42 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
   }, []);
 
   return (
-    <section className="max-h-full rounded-md border border-zinc-300 dark:border-zinc-700 p-3 flex flex-col gap-3">
-      <div className="shrink-0 flex justify-between items-center">
+    // main의 상하패딩 총 3rem
+    <section className="sticky top-20 max-h-[calc(100dvh-3rem-var(--header-height)-var(--footer-height))] h-full overflow-hidden">
+      <header className="h-[56px] flex justify-between items-center py-3 mx-3 border-b border-b-border">
         <h2 className="text-lg">목차</h2>
         <ScrollToTopButton size="base" />
-      </div>
-      <Separator />
-      <nav className="grow overflow-auto">
-        <ul className="flex flex-col gap-1">
-          {headings.map((item) => {
-            const isActive = activeHeadingIdSet.has(item.id);
-            return (
-              <li key={item.id}>
-                <Link
-                  href={`#${item.id}`}
-                  className={cn(
-                    "flex items-baseline gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5",
-                    item.type === "h3" && "pl-6",
-                    isActive && "text-indigo-500",
-                  )}
-                >
-                  <HeadingIcon
-                    type={item.type}
+      </header>
+      <ScrollArea className="h-[calc(100%-56px)]">
+        <nav className="py-3 mx-3">
+          <ul className="flex flex-col gap-1">
+            {headings.map((item) => {
+              const isActive = activeHeadingIdSet.has(item.id);
+              return (
+                <li key={item.id}>
+                  <Link
+                    href={`#${item.id}`}
                     className={cn(
-                      "shrink-0",
-                      isActive && "text-indigo-500 dark:text-indigo-500",
+                      "flex items-baseline gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5",
+                      item.type === "h3" && "pl-6",
+                      isActive && "text-indigo-500",
                     )}
-                  />
-                  {item.text}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+                  >
+                    <HeadingIcon
+                      type={item.type}
+                      className={cn(
+                        "shrink-0",
+                        isActive && "text-indigo-500 dark:text-indigo-500",
+                      )}
+                    />
+                    {item.text}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </ScrollArea>
     </section>
   );
 }
