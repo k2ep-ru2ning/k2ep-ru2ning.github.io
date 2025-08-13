@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { type PostContentHeading } from "@/schema/posts";
 import { cn } from "@/utils";
@@ -74,23 +75,26 @@ export default function PostArticleTOCSidebar({ headings }: Props) {
               const isActive = activeHeadingIdSet.has(item.id);
               return (
                 <li key={item.id}>
-                  <Link
-                    href={`#${item.id}`}
+                  <Button
+                    asChild
+                    variant="ghost"
                     className={cn(
-                      "flex items-baseline gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5",
+                      "flex justify-start items-baseline gap-2 whitespace-normal h-fit p-1",
                       item.type === "h3" && "pl-6",
-                      isActive && "text-indigo-500",
+                      isActive && "text-brand hover:text-brand",
                     )}
                   >
-                    <HeadingIcon
-                      type={item.type}
-                      className={cn(
-                        "shrink-0",
-                        isActive && "text-indigo-500 dark:text-indigo-500",
-                      )}
-                    />
-                    {item.text}
-                  </Link>
+                    <Link href={`#${item.id}`}>
+                      <HeadingIcon
+                        type={item.type}
+                        className={cn(
+                          "shrink-0",
+                          isActive && "text-brand dark:text-brand",
+                        )}
+                      />
+                      {item.text}
+                    </Link>
+                  </Button>
                 </li>
               );
             })}
