@@ -18,7 +18,7 @@
 /* rehype-pretty-code의 pre 스타일링 */
 .prose pre {
   background-color: var(--shiki-light-bg);
-  @apply p-0 border border-border rounded-md overflow-hidden;
+  @apply p-0 border border-border rounded-md;
 }
 
 /* rehype-pretty-code의 코드 블럭 제목 스타일링 */
@@ -34,7 +34,7 @@
 /* rehype-pretty-code의 code 스타일링: light 모드의 경우 */
 /* tailwind v3 -> v4로 업데이트하면서 [data-theme*=" "] 셀렉터 사용시 에러 발생. [data-theme] 셀렉터로 대체 */
 .prose code[data-theme] {
-  @apply overflow-x-auto py-2;
+  @apply py-2;
 }
 
 .prose code[data-theme],
