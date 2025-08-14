@@ -7,7 +7,10 @@
   @apply font-mono text-sm sm:text-base;
 }
 
-/* inline code block 스타일링 */
+/* 
+  inline code block 스타일링
+  code인데 data-language 속성이 없다면, rehype-pretty-code와 상관없는 code
+*/
 .prose code:not([data-language]) {
   @apply inline bg-secondary border border-border rounded-sm px-0.5 text-brand before:hidden after:hidden break-all;
 }
