@@ -9,7 +9,7 @@ export default function Tag({ tag, className }: Props) {
   return (
     <div
       className={cn(
-        "before:content-['#'] before:mr-0.5 m-0.5 px-2 py-1 rounded-md bg-zinc-200 dark:bg-zinc-700",
+        "before:content-['#'] before:mr-0.5 m-0.5 px-2 py-1 rounded-md bg-secondary text-secondary-foreground",
         className,
       )}
     >

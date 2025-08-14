@@ -36,7 +36,7 @@ export default function RootLayout({ children }: Props) {
           <main className="px-2 py-6 grow max-w-3xl lg:max-w-5xl w-full mx-auto">
             {children}
           </main>
-          <div className="max-w-3xl lg:max-w-5xl w-full mx-auto border-t-1 border-zinc-300 dark:border-zinc-700">
+          <div className="max-w-3xl lg:max-w-5xl w-full mx-auto border-t border-border">
             <Footer />
           </div>
         </div>

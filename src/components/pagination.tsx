@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/utils";
+import { Button } from "./ui/button";
 
 type Props = {
   activePageNumber: number;
@@ -24,44 +25,48 @@ export default function Pagination({
     <nav>
       <ul className="p-4 flex items-center justify-center gap-2">
         <li>
-          <Link
-            aria-label="Go to previous page"
-            href={generatePageLink(activePageNumber - 1)}
-            className={cn(
-              "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md",
-              (!isActivePageNumberValid || activePageNumber === 1) &&
-                "pointer-events-none text-zinc-300 dark:text-zinc-700",
-            )}
-          >
-            <ChevronLeft className="size-4" />
-          </Link>
+          <Button asChild size="icon" variant="outline">
+            <Link
+              aria-label="Go to previous page"
+              href={generatePageLink(activePageNumber - 1)}
+              className={cn(
+                (!isActivePageNumberValid || activePageNumber === 1) &&
+                  "pointer-events-none text-muted-foreground",
+              )}
+            >
+              <ChevronLeft className="size-4" />
+            </Link>
+          </Button>
         </li>
         {pageNumbers.map((pageNumber) => (
           <li key={pageNumber}>
-            <Link
-              href={generatePageLink(pageNumber)}
-              className={cn(
-                "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md px-2",
-                pageNumber === activePageNumber && "font-bold text-brand",
-              )}
-            >
-              {pageNumber}
-            </Link>
+            <Button asChild size="icon" variant="outline">
+              <Link
+                href={generatePageLink(pageNumber)}
+                className={cn(
+                  pageNumber === activePageNumber &&
+                    "font-bold text-brand hover:text-brand",
+                )}
+              >
+                {pageNumber}
+              </Link>
+            </Button>
           </li>
         ))}
         <li>
-          <Link
-            aria-label="Go to next page"
-            href={generatePageLink(activePageNumber + 1)}
-            className={cn(
-              "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md",
-              (!isActivePageNumberValid ||
-                activePageNumber === numberOfPages) &&
-                "pointer-events-none text-zinc-300 dark:text-zinc-700",
-            )}
-          >
-            <ChevronRight className="size-4" />
-          </Link>
+          <Button asChild size="icon" variant="outline">
+            <Link
+              aria-label="Go to next page"
+              href={generatePageLink(activePageNumber + 1)}
+              className={cn(
+                (!isActivePageNumberValid ||
+                  activePageNumber === numberOfPages) &&
+                  "pointer-events-none text-muted-foreground",
+              )}
+            >
+              <ChevronRight className="size-4" />
+            </Link>
+          </Button>
         </li>
       </ul>
     </nav>

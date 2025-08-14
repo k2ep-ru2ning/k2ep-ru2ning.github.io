@@ -12,6 +12,7 @@ import PostListItem from "./post-list-item";
 import Pagination from "../pagination";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
+import { Button } from "../ui/button";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 type Props = {
@@ -35,14 +36,12 @@ export default function FilterablePostList({ posts, tags }: Props) {
           선택한 <strong>태그</strong> 또는 <strong>페이지 번호</strong>가
           잘못되었습니다.
         </p>
-        <Link
-          href="/posts"
-          replace
-          className="flex items-center gap-1.5 p-1 rounded-md self-start hover:bg-zinc-200 dark:hover:bg-zinc-700"
-        >
-          초기화
-          <RefreshCw className="size-5" />
-        </Link>
+        <Button asChild variant="ghost" className="self-start">
+          <Link href="/posts" replace>
+            초기화
+            <RefreshCw className="size-5" />
+          </Link>
+        </Button>
       </div>
     );
   }

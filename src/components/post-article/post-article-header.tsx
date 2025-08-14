@@ -23,7 +23,7 @@ export default function PostArticleHeader({ post }: Props) {
           ))}
         </TagList>
       ) : null}
-      <time className="text-sm text-zinc-700 dark:text-zinc-300">
+      <time className="text-sm text-secondary-foreground">
         {formatDate(post.createdAt)} 작성
       </time>
     </header>

@@ -13,12 +13,12 @@ export default function PostListItem({
   post: { title, description, createdAt, absoluteUrl, tags },
 }: Props) {
   return (
-    <li className="py-6 sm:py-8 border-b-1 first:border-t-1 border-zinc-300 dark:border-zinc-700">
+    <li className="py-6 sm:py-8 border-b first:border-t border-border">
       <Link
         href={absoluteUrl}
         className="group flex flex-col md:flex-row md:gap-x-8"
       >
-        <time className="text-sm text-zinc-700 dark:text-zinc-300 leading-8 md:shrink-0 group-hover:text-brand transition-colors">
+        <time className="text-sm text-secondary-foreground leading-8 md:shrink-0 group-hover:text-brand transition-colors">
           {formatDate(createdAt)}
         </time>
         <div className="flex flex-col gap-3 md:grow">
@@ -36,7 +36,7 @@ export default function PostListItem({
                 <li key={tag}>
                   <Tag
                     tag={tag}
-                    className="group-hover:bg-zinc-300 dark:group-hover:bg-zinc-600 transition-colors"
+                    className="group-hover:bg-secondary/80 transition-colors"
                   />
                 </li>
               ))}
