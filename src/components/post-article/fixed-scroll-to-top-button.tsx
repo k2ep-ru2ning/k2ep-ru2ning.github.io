@@ -38,7 +38,8 @@ export default function FixedScrollToTopButton() {
       <div ref={targetRef} />
       <div
         className={cn(
-          "fixed bottom-4 right-4 bg-background rounded-md",
+          // 블로그 글 본문 코드블록에 가려지는 문제 해결을 위해 z-index 5로 설정. sticky header에는 가려지도록 헤더의 z-index 10보다는 작게 설정
+          "fixed bottom-4 right-4 bg-background rounded-md z-[5]",
           showButton ? "block" : "hidden",
         )}
       >
