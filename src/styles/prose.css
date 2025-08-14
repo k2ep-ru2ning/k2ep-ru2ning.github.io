@@ -9,18 +9,18 @@
 
 /* inline code block 스타일링 */
 .prose code:not([data-language]) {
-  @apply inline bg-zinc-100 border border-zinc-300 rounded-md px-1.5 text-brand before:hidden after:hidden break-all;
+  @apply inline bg-secondary border border-border rounded-sm px-0.5 text-brand before:hidden after:hidden break-all;
 }
 
 /* rehype-pretty-code의 pre 스타일링 */
 .prose pre {
   background-color: var(--shiki-light-bg);
-  @apply p-0 border border-zinc-300 rounded-md overflow-hidden;
+  @apply p-0 border border-border rounded-md overflow-hidden;
 }
 
 /* rehype-pretty-code의 코드 블럭 제목 스타일링 */
 .prose figcaption[data-rehype-pretty-code-title] {
-  @apply inline-block m-0 p-2 border border-b-0 border-zinc-300 rounded-md rounded-b-none;
+  @apply inline-block m-0 py-1.5 px-2 border border-b-0 border-border rounded-md rounded-b-none;
 }
 
 /* 코드 블럭 제목을 사용한 경우, rehype-pretty-code의 pre 스타일링 */
@@ -33,6 +33,7 @@
 .prose code[data-theme] {
   @apply overflow-x-auto py-2;
 }
+
 .prose code[data-theme],
 .prose code[data-theme] span {
   color: var(--shiki-light);
@@ -45,45 +46,38 @@
 
 .prose code[data-theme] span[data-highlighted-line],
 .prose code[data-theme] span[data-highlighted-line] span {
-  @apply bg-indigo-50;
+  @apply bg-code-highlight-background;
 }
 
 /* line number를 표시하기 위한 스타일링 */
 .prose code[data-line-numbers] {
   counter-reset: line;
 }
+
 .prose code[data-line-numbers] > [data-line]::before {
   counter-increment: line;
   content: counter(line);
 
   @apply inline-block w-3 mr-4 text-right;
 }
+
 .prose code[data-line-numbers-max-digits="2"] > [data-line]::before {
   @apply w-5;
 }
+
 .prose code[data-line-numbers-max-digits="3"] > [data-line]::before {
   @apply w-7;
 }
+
 .prose code[data-line-numbers-max-digits="4"] > [data-line]::before {
   @apply w-9;
 }
 
 /* dark mode style */
 
-/* inline code block 스타일링: dark 모드 */
-.dark .prose code:not([data-language]) {
-  @apply bg-zinc-800 border-zinc-700;
-}
-
 /* rehype-pretty-code의 pre 스타일링: dark 모드 */
 .dark .prose pre {
-  @apply border-zinc-700;
   background-color: var(--shiki-dark-bg);
-}
-
-/* rehype-pretty-code의 코드 블럭 제목 스타일링: dark 모드 */
-.dark .prose figcaption[data-rehype-pretty-code-title] {
-  @apply border-zinc-700;
 }
 
 /* rehype-pretty-code의 code 스타일링: dark 모드의 경우 */
@@ -95,13 +89,13 @@
 
 .dark .prose code[data-theme] span[data-highlighted-line],
 .dark .prose code[data-theme] span[data-highlighted-line] span {
-  @apply bg-indigo-950;
+  @apply bg-code-highlight-background;
 }
 
 /* ================================================================== */
 /*** img ***/
 .prose img {
-  @apply mx-auto max-w-full rounded-md border border-zinc-300 dark:border-zinc-700;
+  @apply mx-auto max-w-full rounded-md border border-border;
 }
 
 /* ================================================================== */
