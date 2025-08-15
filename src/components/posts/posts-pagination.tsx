@@ -29,7 +29,7 @@ export default function PostsPagination({
 
   return (
     <Pagination>
-      <PaginationContent>
+      <PaginationContent className="flex-wrap">
         <PaginationItem>
           <PaginationPrevious
             href={generatePageLink(activePageNumber - 1)}
