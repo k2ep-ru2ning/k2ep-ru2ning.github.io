@@ -20,7 +20,7 @@ type Props = {
   tags: Tag[];
 };
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 6;
 
 export default function FilterablePostList({ posts, tags }: Props) {
   const createQueryString = useCreateQueryString();
