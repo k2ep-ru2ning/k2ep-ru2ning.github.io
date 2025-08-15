@@ -1,8 +1,8 @@
 "use client";
 
-import "@/styles/prose.css";
 import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { type Post } from "@/schema/posts";
 import PostArticleContentHeading from "./post-article-content-heading";
 
@@ -33,13 +33,25 @@ export default function PostArticleContent({ post }: Props) {
               {children}
             </PostArticleContentHeading>
           ),
-          table: ({ children }) => (
-            // table 태그의 display가 table인데, 이걸 block으로 바꾸고 scrollable하게 만드는 것보다는,
-            // scrollable 하게 만들기 위해 div를 한 번더 감싸는 방법을 사용.
-            <div className="max-w-full overflow-x-auto">
-              <table>{children}</table>
-            </div>
+          table: (props) => (
+            <ScrollArea>
+              <table {...props} />
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
           ),
+          code: (props) => {
+            if (props["data-language"]) {
+              // rehype-pretty-code가 적용된 코드 블럭
+              return (
+                <ScrollArea>
+                  <code {...props} />
+                  <ScrollBar orientation="horizontal" />
+                </ScrollArea>
+              );
+            }
+            // 일반 inline 코드
+            return <code {...props} />;
+          },
         }}
       />
     </div>

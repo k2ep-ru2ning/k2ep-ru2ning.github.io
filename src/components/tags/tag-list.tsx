@@ -1,5 +1,5 @@
 import { type ComponentProps } from "react";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 
 export default function TagList({ className, ...props }: ComponentProps<"ul">) {
   return (

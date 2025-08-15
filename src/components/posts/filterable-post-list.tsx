@@ -1,7 +1,7 @@
 "use client";
 
+import { RefreshCw } from "lucide-react";
 import Link from "next/link";
-import { LuRefreshCw } from "react-icons/lu";
 import useCreateQueryString from "@/hooks/use-create-query-string";
 import usePageQueryString from "@/hooks/use-page-query-string";
 import useTagQueryString from "@/hooks/use-tag-query-string";
@@ -9,16 +9,18 @@ import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
 import PostList from "./post-list";
 import PostListItem from "./post-list-item";
-import Pagination from "../pagination";
+import PostsPagination from "./posts-pagination";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
+import { Button } from "../ui/button";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 type Props = {
   posts: Post[];
   tags: Tag[];
 };
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 6;
 
 export default function FilterablePostList({ posts, tags }: Props) {
   const createQueryString = useCreateQueryString();
@@ -31,17 +33,16 @@ export default function FilterablePostList({ posts, tags }: Props) {
     return (
       <div className="flex flex-col gap-y-3">
         <p>
-          선택한 <strong>태그</strong> 또는 <strong>페이지 번호</strong>가
+          선택한 <em className="not-italic font-bold">태그</em> 또는{" "}
+          <em className="not-italic font-bold">페이지 번호</em>가
           잘못되었습니다.
         </p>
-        <Link
-          href="/posts"
-          replace
-          className="flex items-center gap-1.5 p-1 rounded-md self-start hover:bg-zinc-200 dark:hover:bg-zinc-700"
-        >
-          초기화
-          <LuRefreshCw className="size-5" />
-        </Link>
+        <Button asChild variant="ghost" className="self-start">
+          <Link href="/posts" replace>
+            초기화
+            <RefreshCw className="size-5" />
+          </Link>
+        </Button>
       </div>
     );
   }
@@ -72,30 +73,34 @@ export default function FilterablePostList({ posts, tags }: Props) {
   return (
     <>
       {tags.length === 0 ? null : (
-        <TagList className="flex-nowrap max-w-full overflow-auto">
-          <li className="shrink-0">
-            <TagLink
-              tag="전체"
-              isActive={tagQueryString.result === "selectAll"}
-            />
-          </li>
-          {tags.map((tag) => (
-            <li key={tag} className="shrink-0">
+        <ScrollArea>
+          <TagList className="flex-nowrap pb-3">
+            <li className="shrink-0">
               <TagLink
-                tag={tag}
-                isActive={
-                  tagQueryString.result === "selectTag" &&
-                  tagQueryString.value === tag
-                }
+                tag="전체"
+                isActive={tagQueryString.result === "selectAll"}
               />
             </li>
-          ))}
-        </TagList>
+            {tags.map((tag) => (
+              <li key={tag} className="shrink-0">
+                <TagLink
+                  tag={tag}
+                  isActive={
+                    tagQueryString.result === "selectTag" &&
+                    tagQueryString.value === tag
+                  }
+                />
+              </li>
+            ))}
+          </TagList>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       )}
       {filteredPostsByTagOnPage.length === 0 ? (
         <p>
-          선택한 <strong>태그</strong>와 <strong>페이지 번호</strong>에 맞는
-          글이 없습니다.
+          선택한 <em className="not-italic font-bold">태그</em>와{" "}
+          <em className="not-italic font-bold">페이지 번호</em>에 맞는 글이
+          없습니다.
         </p>
       ) : (
         <PostList>
@@ -104,7 +109,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
           ))}
         </PostList>
       )}
-      <Pagination
+      <PostsPagination
         generatePageLink={(pageNumber) =>
           "/posts?" + createQueryString("page", String(pageNumber))
         }

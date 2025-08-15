@@ -1,5 +1,5 @@
 import { createElement, type PropsWithChildren } from "react";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 
 type Props = {
   as: "h1" | "h2" | "h3";

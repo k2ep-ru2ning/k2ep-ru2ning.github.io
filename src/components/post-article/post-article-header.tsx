@@ -1,5 +1,5 @@
 import { type Post } from "@/schema/posts";
-import formatDate from "@/utils/format-date";
+import { formatDate } from "@/utils";
 import Heading from "../heading";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
@@ -23,7 +23,7 @@ export default function PostArticleHeader({ post }: Props) {
           ))}
         </TagList>
       ) : null}
-      <time className="text-sm text-zinc-700 dark:text-zinc-300">
+      <time className="text-sm text-secondary-foreground">
         {formatDate(post.createdAt)} 작성
       </time>
     </header>

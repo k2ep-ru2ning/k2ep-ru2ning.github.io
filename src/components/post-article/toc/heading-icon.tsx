@@ -1,5 +1,5 @@
 import { type PostContentHeadingType } from "@/schema/posts";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 
 type Props = {
   type: PostContentHeadingType;
@@ -9,10 +9,7 @@ type Props = {
 export default function HeadingIcon({ type, className }: Props) {
   return (
     <div
-      className={cn(
-        "p-0.5 text-xs text-zinc-700 dark:text-zinc-300 rounded-md border border-zinc-300 dark:border-zinc-700",
-        className,
-      )}
+      className={cn("p-0.5 text-xs rounded-md border border-border", className)}
     >
       {type === "h2" ? "H2" : "H3"}
     </div>

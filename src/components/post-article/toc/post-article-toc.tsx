@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { type PostContentHeading } from "@/schema/posts";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
 import HeadingIcon from "./heading-icon";
 
 type Props = {
@@ -9,22 +10,25 @@ type Props = {
 
 export default function PostArticleTOC({ headings }: Props) {
   return (
-    <section className="flex flex-col gap-5 p-2 rounded-md border border-zinc-300 dark:border-zinc-700">
+    <section className="flex flex-col gap-5 p-2 rounded-md border border-border">
       <h2 className="text-lg">목차</h2>
       <nav>
         <ul className="flex flex-col gap-2">
           {headings.map((item) => (
             <li key={item.id}>
-              <Link
-                href={`#${item.id}`}
+              <Button
+                asChild
+                variant="ghost"
                 className={cn(
-                  "flex items-baseline gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md p-0.5",
+                  "flex justify-start items-baseline gap-2 whitespace-normal h-fit p-1",
                   item.type === "h3" && "pl-6",
                 )}
               >
-                <HeadingIcon type={item.type} className="shrink-0" />
-                {item.text}
-              </Link>
+                <Link href={`#${item.id}`}>
+                  <HeadingIcon type={item.type} className="shrink-0" />
+                  {item.text}
+                </Link>
+              </Button>
             </li>
           ))}
         </ul>

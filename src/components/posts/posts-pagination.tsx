@@ -1,6 +1,12 @@
-import Link from "next/link";
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
-import cn from "@/utils/cn";
+import { cn } from "@/utils";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../ui/pagination";
 
 type Props = {
   activePageNumber: number;
@@ -8,9 +14,10 @@ type Props = {
   generatePageLink: (pageNumber: number) => string;
 };
 
+// 표시할 최대 pagination item 개수.
 const PAGINATION_SIZE = 5;
 
-export default function Pagination({
+export default function PostsPagination({
   activePageNumber,
   numberOfPages,
   generatePageLink,
@@ -21,50 +28,39 @@ export default function Pagination({
     activePageNumber >= 1 && activePageNumber <= numberOfPages;
 
   return (
-    <nav>
-      <ul className="p-4 flex items-center justify-center gap-2">
-        <li>
-          <Link
-            aria-label="Go to previous page"
+    <Pagination>
+      <PaginationContent className="flex-wrap">
+        <PaginationItem>
+          <PaginationPrevious
             href={generatePageLink(activePageNumber - 1)}
             className={cn(
-              "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md",
               (!isActivePageNumberValid || activePageNumber === 1) &&
-                "pointer-events-none text-zinc-300 dark:text-zinc-700",
+                "pointer-events-none text-muted-foreground",
             )}
-          >
-            <LuChevronLeft className="size-4" />
-          </Link>
-        </li>
+          />
+        </PaginationItem>
         {pageNumbers.map((pageNumber) => (
-          <li key={pageNumber}>
-            <Link
+          <PaginationItem key={pageNumber}>
+            <PaginationLink
               href={generatePageLink(pageNumber)}
-              className={cn(
-                "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md px-2",
-                pageNumber === activePageNumber && "font-bold text-indigo-500",
-              )}
+              isActive={pageNumber === activePageNumber}
             >
               {pageNumber}
-            </Link>
-          </li>
+            </PaginationLink>
+          </PaginationItem>
         ))}
-        <li>
-          <Link
-            aria-label="Go to next page"
+        <PaginationItem>
+          <PaginationNext
             href={generatePageLink(activePageNumber + 1)}
             className={cn(
-              "size-7 flex justify-center items-center border border-zinc-300 dark:border-zinc-700 rounded-md",
               (!isActivePageNumberValid ||
                 activePageNumber === numberOfPages) &&
-                "pointer-events-none text-zinc-300 dark:text-zinc-700",
+                "pointer-events-none text-muted-foreground",
             )}
-          >
-            <LuChevronRight className="size-4" />
-          </Link>
-        </li>
-      </ul>
-    </nav>
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }
 

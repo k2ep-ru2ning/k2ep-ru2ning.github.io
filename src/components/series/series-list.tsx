@@ -17,7 +17,7 @@ export default function SeriesList({ series }: Props) {
         <li key={name}>
           <Link
             href={`/series/${name}`}
-            className="transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-700 h-full p-2 rounded-md border border-zinc-300 dark:border-zinc-700 flex flex-col gap-3"
+            className="hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 transition-colors h-full p-2 rounded-md border border-border flex flex-col gap-3"
           >
             <Heading as="h3">{name}</Heading>
             {description ? <p>{description}</p> : null}

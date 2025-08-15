@@ -40,6 +40,8 @@ const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
     dark: "vitesse-dark",
     light: "vitesse-light",
   },
+  defaultLang: "plaintext", // md 파일의 코드 블럭에 언어 설정을 하지 않으면 plaintext로 설정
+  bypassInlineCode: true, // 인라인 코드 블럭은 pretty code가 하이라이트 하지 않음
 };
 
 const remarkHeadingIdOptions: RemarkHeadingIdOptions = {

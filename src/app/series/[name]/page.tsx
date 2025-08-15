@@ -31,7 +31,7 @@ export default async function SeriesDetailPage({ params }: Props) {
         &quot; 시리즈
       </Heading>
       {series.description ? (
-        <p className="p-2 rounded-md bg-zinc-200 dark:bg-zinc-800">
+        <p className="p-2 rounded-md bg-secondary text-secondary-foreground">
           {series.description}
         </p>
       ) : null}

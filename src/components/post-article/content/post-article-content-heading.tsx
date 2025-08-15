@@ -1,6 +1,6 @@
+import { Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
 import { createElement, type PropsWithChildren } from "react";
-import { LuLink } from "react-icons/lu";
 import { type PostContentHeadingType } from "@/schema/posts";
 
 type Props = {
@@ -23,8 +23,8 @@ export default function PostArticleContentHeading({
       >
         {children}
         {/* :focus-visible은 오직 키보드를 통해서 focus 된 요소를 선택, 즉 마우스 클릭이나 스크린 터치로 요소에 focus를 준 경우는 선택 안함 */}
-        <div className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 ml-1 inline-flex justify-center items-center p-0.5 sm:p-1 rounded-md border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-700">
-          <LuLink className="size-3" />
+        <div className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 ml-1 inline-flex justify-center items-center p-0.5 sm:p-1 rounded-md border border-border hover:bg-secondary">
+          <LinkIcon className="size-3" />
         </div>
       </Link>
     ) : null,

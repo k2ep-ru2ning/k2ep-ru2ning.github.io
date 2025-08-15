@@ -1,24 +1,32 @@
 "use client";
 
+import {
+  AlignJustify,
+  ExternalLink,
+  File,
+  FileStack,
+  House,
+  Moon,
+  Sun,
+  X,
+  Github,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Dialog, VisuallyHidden } from "radix-ui";
 import { useEffect, useState } from "react";
-import { BsGithub } from "react-icons/bs";
-import {
-  LuAlignJustify,
-  LuExternalLink,
-  LuFile,
-  LuFileStack,
-  LuHouse,
-  LuMoon,
-  LuSun,
-  LuX,
-} from "react-icons/lu";
 import useMediaQuery from "@/hooks/use-media-query";
-import cn from "@/utils/cn";
-import toggleTheme from "@/utils/toggle-theme";
-import HorizontalSeparator from "../separator/horizontal-separator";
+import { cn, toggleTheme } from "@/utils";
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { ScrollArea } from "../ui/scroll-area";
+import { Separator } from "../ui/separator";
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -38,94 +46,102 @@ export default function MobileMenu() {
   }, [isMobile]);
 
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger asChild>
-        <button className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex sm:hidden justify-center items-center rounded-md">
-          <LuAlignJustify className="size-6" />
-        </button>
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        {/* sticky header의 z-index가 10이어서 그 위에 정상적으로 표시되려면 z-index가 10어야 함 */}
-        <Dialog.Content className="z-10 bg-zinc-50 dark:bg-zinc-950 fixed inset-0 focus:outline-hidden flex flex-col">
-          <header className="flex items-center justify-between p-3">
-            <Dialog.Title className="px-2 py-1 font-extrabold text-xl shrink-0">
-              메뉴
-            </Dialog.Title>
-            <VisuallyHidden.Root asChild>
-              <Dialog.Description>
-                메뉴 (내부 링크, 외부 링크, 테마 변경 등)
-              </Dialog.Description>
-            </VisuallyHidden.Root>
-            <Dialog.Close asChild>
-              <button className="hover:bg-zinc-200 dark:hover:bg-zinc-700 size-8 flex justify-center items-center rounded-md">
-                <LuX className="size-6" />
-              </button>
-            </Dialog.Close>
-          </header>
-          <div className="px-4 py-6 flex flex-col gap-y-2 overflow-y-auto grow">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild className="sm:hidden">
+        <Button variant="ghost" size="icon">
+          <AlignJustify className="size-6" />
+        </Button>
+      </DialogTrigger>
+      <DialogContent
+        showCloseButton={false}
+        className="duration-0 p-0 inset-0 translate-0 rounded-none max-w-full w-full h-dvh block"
+      >
+        <header className="flex items-center justify-between p-3 h-(--header-height)">
+          <DialogTitle className="px-2 py-1 font-extrabold text-xl shrink-0">
+            메뉴
+          </DialogTitle>
+          <DialogDescription className="sr-only">
+            메뉴 (내부 링크, 외부 링크, 테마 변경 등)
+          </DialogDescription>
+          <DialogClose asChild>
+            <Button variant="ghost" size="icon">
+              <X className="size-6" />
+            </Button>
+          </DialogClose>
+        </header>
+        <ScrollArea className="h-[calc(100%-var(--header-height))] overflow-hidden px-4 pb-4">
+          <div className="flex flex-col gap-2">
             <ul>
               {[
                 {
                   link: "/",
-                  icon: <LuHouse className="size-5" />,
+                  icon: <House className="size-5" />,
                   label: "홈",
                   isActive: pathname === "/",
                 },
                 {
                   link: "/posts",
-                  icon: <LuFile className="size-5" />,
+                  icon: <File className="size-5" />,
                   label: "글",
                   isActive: pathname === "/posts",
                 },
                 {
                   link: "/series",
-                  icon: <LuFileStack className="size-5" />,
+                  icon: <FileStack className="size-5" />,
                   label: "시리즈",
                   isActive: pathname === "/series",
                 },
               ].map(({ link, icon, label, isActive }) => (
                 <li key={link}>
-                  <Link
-                    href={link}
+                  <Button
+                    variant="ghost"
                     className={cn(
-                      "flex gap-2 justify-end items-center p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md",
-                      isActive && "text-indigo-500",
+                      "flex gap-2 justify-center items-center",
+                      isActive && "text-brand hover:text-brand",
                     )}
+                    asChild
                   >
-                    {icon} {label}
-                  </Link>
+                    <Link href={link}>
+                      {icon} {label}
+                    </Link>
+                  </Button>
                 </li>
               ))}
             </ul>
-            <HorizontalSeparator />
+            <Separator />
             <ul>
               <li>
-                <a
-                  href="https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="flex gap-2 justify-center items-center"
                 >
-                  <BsGithub className="size-5" />
-                  Github 저장소
-                  <LuExternalLink className="size-5" />
-                </a>
+                  <a
+                    href="https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="size-5" />
+                    Github 저장소
+                    <ExternalLink className="size-5" />
+                  </a>
+                </Button>
               </li>
             </ul>
-            <HorizontalSeparator />
-            <button
+            <Separator />
+            <Button
               type="button"
               onClick={toggleTheme}
-              className="flex gap-2 items-center justify-end p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-md"
+              variant="ghost"
+              className="flex gap-2 items-center justify-center"
             >
-              <LuSun className="dark:hidden size-5" />
-              <LuMoon className="hidden dark:block size-5" />
+              <Sun className="dark:hidden size-5" />
+              <Moon className="hidden dark:block size-5" />
               테마 변경
-            </button>
+            </Button>
           </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+        </ScrollArea>
+      </DialogContent>
+    </Dialog>
   );
 }
