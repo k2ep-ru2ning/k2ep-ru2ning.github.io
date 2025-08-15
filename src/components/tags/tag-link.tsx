@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/utils";
-import Tag from "./tag";
+import { Button } from "../ui/button";
 
 type Props = {
   tag: string;
@@ -15,14 +15,19 @@ export default function TagLink({ tag, isActive = false }: Props) {
   }
 
   return (
-    <Link href={link}>
-      <Tag
-        tag={tag}
-        className={cn(
-          "hover:bg-secondary/90",
-          isActive && "bg-brand hover:bg-brand text-brand-foreground",
-        )}
-      />
-    </Link>
+    <Button
+      asChild
+      size="sm"
+      variant="outline"
+      className={cn(
+        "before:content-['#'] gap-0.5 px-2.5",
+        isActive && "bg-brand dark:bg-brand hover:bg-brand hover:dark:bg-brand",
+        isActive &&
+          "text-brand-foreground dark:text-brand-foreground hover:text-brand-foreground hover:dark:text-brand-foreground",
+        isActive && "border-brand dark:border-brand",
+      )}
+    >
+      <Link href={link}>{tag}</Link>
+    </Button>
   );
 }

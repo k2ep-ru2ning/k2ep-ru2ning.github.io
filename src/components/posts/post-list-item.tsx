@@ -36,7 +36,7 @@ export default function PostListItem({
                 <li key={tag}>
                   <Tag
                     tag={tag}
-                    className="group-hover:bg-secondary/80 transition-colors"
+                    className="group-hover:text-brand transition-colors"
                   />
                 </li>
               ))}
