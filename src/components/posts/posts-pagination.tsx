@@ -1,7 +1,12 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/utils";
-import { Button } from "./ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "../ui/pagination";
 
 type Props = {
   activePageNumber: number;
@@ -9,9 +14,10 @@ type Props = {
   generatePageLink: (pageNumber: number) => string;
 };
 
+// 표시할 최대 pagination item 개수.
 const PAGINATION_SIZE = 5;
 
-export default function Pagination({
+export default function PostsPagination({
   activePageNumber,
   numberOfPages,
   generatePageLink,
@@ -22,54 +28,39 @@ export default function Pagination({
     activePageNumber >= 1 && activePageNumber <= numberOfPages;
 
   return (
-    <nav>
-      <ul className="p-4 flex items-center justify-center gap-2">
-        <li>
-          <Button asChild size="icon" variant="outline">
-            <Link
-              aria-label="Go to previous page"
-              href={generatePageLink(activePageNumber - 1)}
-              className={cn(
-                (!isActivePageNumberValid || activePageNumber === 1) &&
-                  "pointer-events-none text-muted-foreground",
-              )}
-            >
-              <ChevronLeft className="size-4" />
-            </Link>
-          </Button>
-        </li>
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href={generatePageLink(activePageNumber - 1)}
+            className={cn(
+              (!isActivePageNumberValid || activePageNumber === 1) &&
+                "pointer-events-none text-muted-foreground",
+            )}
+          />
+        </PaginationItem>
         {pageNumbers.map((pageNumber) => (
-          <li key={pageNumber}>
-            <Button asChild size="icon" variant="outline">
-              <Link
-                href={generatePageLink(pageNumber)}
-                className={cn(
-                  pageNumber === activePageNumber &&
-                    "font-bold text-brand hover:text-brand",
-                )}
-              >
-                {pageNumber}
-              </Link>
-            </Button>
-          </li>
-        ))}
-        <li>
-          <Button asChild size="icon" variant="outline">
-            <Link
-              aria-label="Go to next page"
-              href={generatePageLink(activePageNumber + 1)}
-              className={cn(
-                (!isActivePageNumberValid ||
-                  activePageNumber === numberOfPages) &&
-                  "pointer-events-none text-muted-foreground",
-              )}
+          <PaginationItem key={pageNumber}>
+            <PaginationLink
+              href={generatePageLink(pageNumber)}
+              isActive={pageNumber === activePageNumber}
             >
-              <ChevronRight className="size-4" />
-            </Link>
-          </Button>
-        </li>
-      </ul>
-    </nav>
+              {pageNumber}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext
+            href={generatePageLink(activePageNumber + 1)}
+            className={cn(
+              (!isActivePageNumberValid ||
+                activePageNumber === numberOfPages) &&
+                "pointer-events-none text-muted-foreground",
+            )}
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }
 

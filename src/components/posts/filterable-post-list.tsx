@@ -9,7 +9,7 @@ import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
 import PostList from "./post-list";
 import PostListItem from "./post-list-item";
-import Pagination from "../pagination";
+import PostsPagination from "./posts-pagination";
 import TagLink from "../tags/tag-link";
 import TagList from "../tags/tag-list";
 import { Button } from "../ui/button";
@@ -33,7 +33,8 @@ export default function FilterablePostList({ posts, tags }: Props) {
     return (
       <div className="flex flex-col gap-y-3">
         <p>
-          선택한 <strong>태그</strong> 또는 <strong>페이지 번호</strong>가
+          선택한 <em className="not-italic font-bold">태그</em> 또는{" "}
+          <em className="not-italic font-bold">페이지 번호</em>가
           잘못되었습니다.
         </p>
         <Button asChild variant="ghost" className="self-start">
@@ -97,8 +98,9 @@ export default function FilterablePostList({ posts, tags }: Props) {
       )}
       {filteredPostsByTagOnPage.length === 0 ? (
         <p>
-          선택한 <strong>태그</strong>와 <strong>페이지 번호</strong>에 맞는
-          글이 없습니다.
+          선택한 <em className="not-italic font-bold">태그</em>와{" "}
+          <em className="not-italic font-bold">페이지 번호</em>에 맞는 글이
+          없습니다.
         </p>
       ) : (
         <PostList>
@@ -107,7 +109,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
           ))}
         </PostList>
       )}
-      <Pagination
+      <PostsPagination
         generatePageLink={(pageNumber) =>
           "/posts?" + createQueryString("page", String(pageNumber))
         }
