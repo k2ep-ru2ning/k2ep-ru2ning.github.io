@@ -87,10 +87,10 @@ export default function MobileMenu() {
                   isActive: pathname === paths.posts.getHref(),
                 },
                 {
-                  link: "/series",
+                  link: paths.series.getHref(),
                   icon: <FileStack className="size-5" />,
                   label: "시리즈",
-                  isActive: pathname === "/series",
+                  isActive: pathname === paths.series.getHref(),
                 },
               ].map(({ link, icon, label, isActive }) => (
                 <li key={link}>

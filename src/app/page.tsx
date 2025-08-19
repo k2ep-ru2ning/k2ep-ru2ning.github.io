@@ -52,7 +52,7 @@ export default function HomePage() {
           },
           {
             label: "시리즈",
-            link: "/series",
+            link: paths.series.getHref(),
             description: "연관된 글끼리 묶어서 시리즈 형태로 편집",
           },
         ].map(({ label, link, description }, index) => (

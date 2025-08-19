@@ -37,10 +37,10 @@ export default function InternalLinks() {
       isActive: pathname === paths.posts.getHref(),
     },
     {
-      link: "/series",
+      link: paths.series.getHref(),
       icon: <FileStack className="size-6" />,
       tooltipText: "시리즈",
-      isActive: pathname === "/series",
+      isActive: pathname === paths.series.getHref(),
     },
   ];
 

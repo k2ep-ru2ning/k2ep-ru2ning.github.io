@@ -22,4 +22,9 @@ export const paths = {
       return href;
     },
   },
+  series: {
+    getHref() {
+      return "/series";
+    },
+  },
 } as const;
