@@ -81,10 +81,10 @@ export default function MobileMenu() {
                   isActive: pathname === paths.home.getHref(),
                 },
                 {
-                  link: "/posts",
+                  link: paths.posts.getHref(),
                   icon: <File className="size-5" />,
                   label: "글",
-                  isActive: pathname === "/posts",
+                  isActive: pathname === paths.posts.getHref(),
                 },
                 {
                   link: "/series",

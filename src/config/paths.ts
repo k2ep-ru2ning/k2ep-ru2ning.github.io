@@ -5,8 +5,9 @@ export const paths = {
     },
   },
   posts: {
-    getHref({ tag, page }: { tag?: string; page?: string | number }) {
+    getHref({ tag, page }: { tag?: string; page?: number } = {}) {
       let href = "/posts";
+
       const searchParams = new URLSearchParams();
       if (tag) {
         searchParams.set("tag", tag);
@@ -17,6 +18,7 @@ export const paths = {
       if (searchParams.size > 0) {
         href += `?${searchParams.toString()}`;
       }
+
       return href;
     },
   },

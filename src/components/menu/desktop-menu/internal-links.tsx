@@ -31,10 +31,10 @@ export default function InternalLinks() {
       isActive: pathname === paths.home.getHref(),
     },
     {
-      link: "/posts",
+      link: paths.posts.getHref(),
       icon: <File className="size-6" />,
       tooltipText: "글",
-      isActive: pathname === "/posts",
+      isActive: pathname === paths.posts.getHref(),
     },
     {
       link: "/series",

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Heading from "@/components/heading";
 import Section from "@/components/section";
 import { Button } from "@/components/ui/button";
+import { paths } from "@/config/paths";
 import { cn } from "@/utils";
 
 export default function HomePage() {
@@ -46,7 +47,7 @@ export default function HomePage() {
         {[
           {
             label: "글",
-            link: "/posts",
+            link: paths.posts.getHref(),
             description: "프로그래밍 관련 지식과 경험을 기록",
           },
           {
