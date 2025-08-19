@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { paths } from "@/config/paths";
 import { type Series } from "@/schema/series";
 import Heading from "../heading";
 
@@ -16,7 +17,7 @@ export default function SeriesList({ series }: Props) {
       {series.map(({ name, description }) => (
         <li key={name}>
           <Link
-            href={`/series/${name}`}
+            href={paths.seriesDetail.getHref(name)}
             className="hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 transition-colors h-full p-2 rounded-md border border-border flex flex-col gap-3"
           >
             <Heading as="h3">{name}</Heading>

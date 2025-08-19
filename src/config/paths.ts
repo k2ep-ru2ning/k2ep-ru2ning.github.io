@@ -27,4 +27,9 @@ export const paths = {
       return "/series";
     },
   },
+  seriesDetail: {
+    getHref(name: string) {
+      return `/series/${encodeURIComponent(name)}`;
+    },
+  },
 } as const;
