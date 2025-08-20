@@ -49,9 +49,13 @@ const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
   uniqueDefaults: true, // 값이 같더라도 다른 id 값을 생성하도록 설정
 };
 
-function convertPostAbsolutePathToAbsoluteUrl(absolutePath: string) {
+/**
+ * 블로그 글 파일 경로에서 앞쪽의 POSTS_DIRECTORY_PATH와 뒤쪽의 확장자를 제거한 경로를 id로 활용.
+ * 예시 형태: 2025/dijkstra-algorithm
+ */
+function generatePostIdFromPostAbsolutePath(absolutePath: string) {
   const ext = path.extname(absolutePath);
-  return `/posts/${absolutePath.slice(`${cwd()}/src/data/posts/`.length).replace(ext, "")}`;
+  return absolutePath.slice(`${POSTS_DIRECTORY_PATH}/`.length).replace(ext, "");
 }
 
 async function getPostAbsolutePaths() {
@@ -166,7 +170,7 @@ export async function getPosts() {
         title,
         tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
         series,
-        absoluteUrl: convertPostAbsolutePathToAbsoluteUrl(postAbsolutePath),
+        id: generatePostIdFromPostAbsolutePath(postAbsolutePath),
         headings,
       });
     }
@@ -180,9 +184,9 @@ export async function getPosts() {
   );
 }
 
-export async function getPostByAbsoluteUrl(url: string) {
+export async function getPostById(id: string) {
   const posts = await getPosts();
-  return posts.find((post) => post.absoluteUrl === url);
+  return posts.find((post) => post.id === id);
 }
 
 export async function getPostsByTag(tag: Tag) {

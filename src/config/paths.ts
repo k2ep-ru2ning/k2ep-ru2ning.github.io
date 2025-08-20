@@ -22,6 +22,11 @@ export const paths = {
       return href;
     },
   },
+  post: {
+    getHref(id: string) {
+      return `/posts/${id.split("/").map(encodeURIComponent).join("/")}`;
+    },
+  },
   series: {
     getHref() {
       return "/series";

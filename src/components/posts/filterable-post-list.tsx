@@ -106,7 +106,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
       ) : (
         <PostList>
           {filteredPostsByTagOnPage.map((post) => (
-            <PostListItem key={post.absoluteUrl} post={post} />
+            <PostListItem key={post.id} post={post} />
           ))}
         </PostList>
       )}
