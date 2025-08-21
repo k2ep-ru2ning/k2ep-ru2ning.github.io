@@ -25,7 +25,6 @@ import {
   type PostContentHeadingType,
   postMatterSchema,
 } from "@/schema/posts";
-import { type Tag } from "@/schema/tags";
 import { getSeriesIdSet } from "./series";
 import { getTagSet } from "./tags";
 
