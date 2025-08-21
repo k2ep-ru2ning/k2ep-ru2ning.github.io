@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { paths } from "@/config/paths";
 import { cn } from "@/utils";
 import { Button } from "../ui/button";
 
@@ -8,11 +9,8 @@ type Props = {
 };
 
 export default function TagLink({ tag, isActive = false }: Props) {
-  let link = "/posts";
-
-  if (tag !== "전체") {
-    link += `?tag=${encodeURIComponent(tag)}`;
-  }
+  const href =
+    tag === "전체" ? paths.posts.getHref() : paths.posts.getHref({ tag });
 
   return (
     <Button
@@ -27,7 +25,7 @@ export default function TagLink({ tag, isActive = false }: Props) {
         isActive && "border-brand dark:border-brand",
       )}
     >
-      <Link href={link}>{tag}</Link>
+      <Link href={href}>{tag}</Link>
     </Button>
   );
 }

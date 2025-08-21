@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { paths } from "@/config/paths";
 import useMediaQuery from "@/hooks/use-media-query";
 import { cn, toggleTheme } from "@/utils";
 import { Button } from "../ui/button";
@@ -74,22 +75,22 @@ export default function MobileMenu() {
             <ul>
               {[
                 {
-                  link: "/",
+                  link: paths.home.getHref(),
                   icon: <House className="size-5" />,
                   label: "홈",
-                  isActive: pathname === "/",
+                  isActive: pathname === paths.home.getHref(),
                 },
                 {
-                  link: "/posts",
+                  link: paths.posts.getHref(),
                   icon: <File className="size-5" />,
                   label: "글",
-                  isActive: pathname === "/posts",
+                  isActive: pathname === paths.posts.getHref(),
                 },
                 {
-                  link: "/series",
+                  link: paths.series.getHref(),
                   icon: <FileStack className="size-5" />,
                   label: "시리즈",
-                  isActive: pathname === "/series",
+                  isActive: pathname === paths.series.getHref(),
                 },
               ].map(({ link, icon, label, isActive }) => (
                 <li key={link}>

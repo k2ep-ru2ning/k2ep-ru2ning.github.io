@@ -2,6 +2,7 @@
 
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
+import { paths } from "@/config/paths";
 import useCreateQueryString from "@/hooks/use-create-query-string";
 import usePageQueryString from "@/hooks/use-page-query-string";
 import useTagQueryString from "@/hooks/use-tag-query-string";
@@ -38,7 +39,7 @@ export default function FilterablePostList({ posts, tags }: Props) {
           잘못되었습니다.
         </p>
         <Button asChild variant="ghost" className="self-start">
-          <Link href="/posts" replace>
+          <Link href={paths.posts.getHref()} replace>
             초기화
             <RefreshCw className="size-5" />
           </Link>
@@ -105,13 +106,14 @@ export default function FilterablePostList({ posts, tags }: Props) {
       ) : (
         <PostList>
           {filteredPostsByTagOnPage.map((post) => (
-            <PostListItem key={post.absoluteUrl} post={post} />
+            <PostListItem key={post.id} post={post} />
           ))}
         </PostList>
       )}
       <PostsPagination
         generatePageLink={(pageNumber) =>
-          "/posts?" + createQueryString("page", String(pageNumber))
+          `${paths.posts.getHref()}?` +
+          createQueryString("page", String(pageNumber))
         }
         activePageNumber={pageNumber}
         numberOfPages={numberOfPages}

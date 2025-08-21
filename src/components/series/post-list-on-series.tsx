@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { paths } from "@/config/paths";
 import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils";
 import Heading from "../heading";
@@ -17,13 +18,13 @@ export default function PostListOnSeries({ postsOnSeries }: Props) {
   return (
     <ul className="flex flex-col gap-8">
       {postsOnSeries.map((post, idx) => (
-        <li key={post.absoluteUrl}>
+        <li key={post.id}>
           <div className="inline-block min-w-12 rounded-t-md border border-b-0 border-border px-2 py-0.5 font-bold text-2xl after:content-['.']">
             {idx + 1}
           </div>
           <div className="p-2 flex flex-col gap-3 rounded-b-md border border-border">
             <Link
-              href={post.absoluteUrl}
+              href={paths.post.getHref(post.id)}
               className="flex flex-col gap-3 hover:text-brand transition-colors"
             >
               <Heading as="h3">{post.title}</Heading>

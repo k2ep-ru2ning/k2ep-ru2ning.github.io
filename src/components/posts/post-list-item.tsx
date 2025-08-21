@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { paths } from "@/config/paths";
 import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils";
 import Heading from "../heading";
@@ -10,12 +11,12 @@ type Props = {
 };
 
 export default function PostListItem({
-  post: { title, description, createdAt, absoluteUrl, tags },
+  post: { title, description, createdAt, id, tags },
 }: Props) {
   return (
     <li className="py-6 sm:py-8 border-b first:border-t border-border">
       <Link
-        href={absoluteUrl}
+        href={paths.post.getHref(id)}
         className="group flex flex-col md:flex-row md:gap-x-8"
       >
         <time className="text-sm text-secondary-foreground leading-8 md:shrink-0 group-hover:text-brand transition-colors">

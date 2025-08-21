@@ -7,7 +7,7 @@ export const postMatterSchema = z.object({
   description: z.string().trim(),
   createdAt: z.date(),
   tags: tagArraySchema.optional(),
-  series: seriesSchema.shape.name.optional(),
+  series: seriesSchema.shape.id.optional(),
 });
 
 type PostMatter = z.infer<typeof postMatterSchema>;
@@ -21,7 +21,7 @@ export type PostContentHeading = {
 };
 
 export type Post = PostMatter & {
-  absoluteUrl: string;
+  id: string;
   rawContent: string; // 읽어들인 .md, .mdx 파일 내용
   bundledContent: string; // mdx-bundler에 의해 처리된 파일 내용
   headings: PostContentHeading[];

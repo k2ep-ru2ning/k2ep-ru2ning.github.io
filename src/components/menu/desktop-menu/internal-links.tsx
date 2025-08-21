@@ -10,6 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { paths } from "@/config/paths";
 import { cn } from "@/utils";
 
 type LinkType = {
@@ -24,22 +25,22 @@ export default function InternalLinks() {
 
   const links: LinkType[] = [
     {
-      link: "/",
+      link: paths.home.getHref(),
       icon: <House className="size-6" />,
       tooltipText: "홈",
-      isActive: pathname === "/",
+      isActive: pathname === paths.home.getHref(),
     },
     {
-      link: "/posts",
+      link: paths.posts.getHref(),
       icon: <File className="size-6" />,
       tooltipText: "글",
-      isActive: pathname === "/posts",
+      isActive: pathname === paths.posts.getHref(),
     },
     {
-      link: "/series",
+      link: paths.series.getHref(),
       icon: <FileStack className="size-6" />,
       tooltipText: "시리즈",
-      isActive: pathname === "/series",
+      isActive: pathname === paths.series.getHref(),
     },
   ];
 

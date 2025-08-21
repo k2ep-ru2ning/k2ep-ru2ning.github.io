@@ -25,8 +25,7 @@ import {
   type PostContentHeadingType,
   postMatterSchema,
 } from "@/schema/posts";
-import { type Tag } from "@/schema/tags";
-import { getSeriesNameSet } from "./series";
+import { getSeriesIdSet } from "./series";
 import { getTagSet } from "./tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
@@ -49,9 +48,13 @@ const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
   uniqueDefaults: true, // 값이 같더라도 다른 id 값을 생성하도록 설정
 };
 
-function convertPostAbsolutePathToAbsoluteUrl(absolutePath: string) {
+/**
+ * 블로그 글 파일 경로에서 앞쪽의 POSTS_DIRECTORY_PATH와 뒤쪽의 확장자를 제거한 경로를 id로 활용.
+ * 예시 형태: 2025/dijkstra-algorithm
+ */
+function generatePostIdFromPostAbsolutePath(absolutePath: string) {
   const ext = path.extname(absolutePath);
-  return `/posts/${absolutePath.slice(`${cwd()}/src/data/posts/`.length).replace(ext, "")}`;
+  return absolutePath.slice(`${POSTS_DIRECTORY_PATH}/`.length).replace(ext, "");
 }
 
 async function getPostAbsolutePaths() {
@@ -111,8 +114,8 @@ async function extractHeadingsFromMDXString(sourceMDXString: string) {
 }
 
 export async function getPosts() {
-  const [validSeriesNameSet, validTagSet] = await Promise.all([
-    getSeriesNameSet(),
+  const [validSeriesIdSet, validTagSet] = await Promise.all([
+    getSeriesIdSet(),
     getTagSet(),
   ]);
   const posts: Post[] = [];
@@ -124,7 +127,7 @@ export async function getPosts() {
       const { content, data } = matter(file);
       const { createdAt, description, title, tags, series } =
         postMatterSchema.parse(data);
-      if (series && !validSeriesNameSet.has(series)) {
+      if (series && !validSeriesIdSet.has(series)) {
         throw new Error(
           `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${series}"`,
         );
@@ -166,7 +169,7 @@ export async function getPosts() {
         title,
         tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
         series,
-        absoluteUrl: convertPostAbsolutePathToAbsoluteUrl(postAbsolutePath),
+        id: generatePostIdFromPostAbsolutePath(postAbsolutePath),
         headings,
       });
     }
@@ -180,18 +183,14 @@ export async function getPosts() {
   );
 }
 
-export async function getPostByAbsoluteUrl(url: string) {
+export async function getPostById(id: string) {
   const posts = await getPosts();
-  return posts.find((post) => post.absoluteUrl === url);
+  return posts.find((post) => post.id === id);
 }
 
-export async function getPostsByTag(tag: Tag) {
-  return (await getPosts()).filter((post) => post.tags?.includes(tag));
-}
-
-export async function getPostsBySeries(seriesName: string) {
+export async function getPostsBySeries(seriesId: string) {
   const posts = await getPosts();
   return posts
-    .filter((post) => post.series === seriesName)
+    .filter((post) => post.series === seriesId)
     .sort((p1, p2) => p1.createdAt.getTime() - p2.createdAt.getTime());
 }

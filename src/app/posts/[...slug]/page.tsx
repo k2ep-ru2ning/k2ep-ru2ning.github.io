@@ -6,7 +6,7 @@ import PostArticleHeader from "@/components/post-article/post-article-header";
 import PostArticleTOC from "@/components/post-article/toc/post-article-toc";
 import PostArticleTOCSidebar from "@/components/post-article/toc/post-article-toc-sidebar";
 import { Separator } from "@/components/ui/separator";
-import { getPostByAbsoluteUrl, getPosts } from "@/service/posts";
+import { getPostById, getPosts } from "@/service/posts";
 
 type Slug = string[];
 
@@ -54,8 +54,8 @@ export default async function PostPage({ params }: Props) {
 
 export async function generateStaticParams() {
   const posts = await getPosts();
-  return posts.map(({ absoluteUrl }) => ({
-    slug: absoluteUrl.replace("/posts/", "").split("/"),
+  return posts.map((posts) => ({
+    slug: posts.id.split("/"),
   }));
 }
 
@@ -75,6 +75,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 async function getPostBySlug(slug: Slug) {
-  const url = `/posts/${slug.map(decodeURIComponent).join("/")}`;
-  return getPostByAbsoluteUrl(url);
+  // next가 넣어주는 slug params가 디코드 된 상태가 아니기 때문에 직접 url decoding.
+  return getPostById(slug.map(decodeURIComponent).join("/"));
 }

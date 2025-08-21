@@ -4,30 +4,31 @@ import Heading from "@/components/heading";
 import Section from "@/components/section";
 import PostListOnSeries from "@/components/series/post-list-on-series";
 import { getPostsBySeries } from "@/service/posts";
-import { getSeries, getSeriesByName } from "@/service/series";
+import { getSeries, getSeriesById } from "@/service/series";
 
 type Props = {
   params: Promise<{
-    name: string;
+    id: string;
   }>;
 };
 
 export default async function SeriesDetailPage({ params }: Props) {
-  const seriesName = decodeURIComponent((await params).name);
+  // next의 props가 decode 된 상태가 아니라서, 직접 decoding 해주어야 함.
+  const seriesId = decodeURIComponent((await params).id);
 
-  const series = await getSeriesByName(seriesName);
+  const series = await getSeriesById(seriesId);
 
   if (!series) {
     notFound();
   }
 
-  const postsOnSeries = await getPostsBySeries(series.name);
+  const postsOnSeries = await getPostsBySeries(series.id);
 
   return (
     <Section>
       <Heading as="h2">
         &quot;
-        {series.name}
+        {series.id}
         &quot; 시리즈
       </Heading>
       {series.description ? (
@@ -42,20 +43,20 @@ export default async function SeriesDetailPage({ params }: Props) {
 
 export async function generateStaticParams() {
   const series = await getSeries();
-  return series.map(({ name }) => ({ name }));
+  return series.map(({ id }) => ({ id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const seriesName = decodeURIComponent((await params).name);
+  const seriesId = decodeURIComponent((await params).id);
 
-  const series = await getSeriesByName(seriesName);
+  const series = await getSeriesById(seriesId);
 
   if (!series) {
     notFound();
   }
 
   return {
-    title: `"${series.name}" 시리즈`,
+    title: `"${series.id}" 시리즈`,
     description: series.description,
   };
 }

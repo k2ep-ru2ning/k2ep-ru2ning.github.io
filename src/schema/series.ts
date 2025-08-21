@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const seriesSchema = z.object({
-  name: z.string().trim().min(1),
+  id: z.string().trim().min(1), // "업무 회고록", "개인 웹 사이트 개발" 처럼 읽을 수 있는 형태의 id
   description: z.string().trim().min(1).optional(),
 });
 
