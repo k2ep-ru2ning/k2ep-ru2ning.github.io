@@ -14,13 +14,13 @@ export default function SeriesList({ series }: Props) {
 
   return (
     <ul className="grid sm:grid-cols-2 auto-rows-max gap-4">
-      {series.map(({ name, description }) => (
-        <li key={name}>
+      {series.map(({ id, description }) => (
+        <li key={id}>
           <Link
-            href={paths.seriesDetail.getHref(name)}
+            href={paths.seriesDetail.getHref(id)}
             className="hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 transition-colors h-full p-2 rounded-md border border-border flex flex-col gap-3"
           >
-            <Heading as="h3">{name}</Heading>
+            <Heading as="h3">{id}</Heading>
             {description ? <p>{description}</p> : null}
           </Link>
         </li>

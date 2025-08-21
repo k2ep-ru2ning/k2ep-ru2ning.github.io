@@ -7,7 +7,7 @@ export const postMatterSchema = z.object({
   description: z.string().trim(),
   createdAt: z.date(),
   tags: tagArraySchema.optional(),
-  series: seriesSchema.shape.name.optional(),
+  series: seriesSchema.shape.id.optional(),
 });
 
 type PostMatter = z.infer<typeof postMatterSchema>;

@@ -33,8 +33,8 @@ export const paths = {
     },
   },
   seriesDetail: {
-    getHref(name: string) {
-      return `/series/${encodeURIComponent(name)}`;
+    getHref(id: string) {
+      return `/series/${encodeURIComponent(id)}`;
     },
   },
 } as const;

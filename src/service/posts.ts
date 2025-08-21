@@ -26,7 +26,7 @@ import {
   postMatterSchema,
 } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
-import { getSeriesNameSet } from "./series";
+import { getSeriesIdSet } from "./series";
 import { getTagSet } from "./tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
@@ -115,8 +115,8 @@ async function extractHeadingsFromMDXString(sourceMDXString: string) {
 }
 
 export async function getPosts() {
-  const [validSeriesNameSet, validTagSet] = await Promise.all([
-    getSeriesNameSet(),
+  const [validSeriesIdSet, validTagSet] = await Promise.all([
+    getSeriesIdSet(),
     getTagSet(),
   ]);
   const posts: Post[] = [];
@@ -128,7 +128,7 @@ export async function getPosts() {
       const { content, data } = matter(file);
       const { createdAt, description, title, tags, series } =
         postMatterSchema.parse(data);
-      if (series && !validSeriesNameSet.has(series)) {
+      if (series && !validSeriesIdSet.has(series)) {
         throw new Error(
           `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${series}"`,
         );
@@ -189,13 +189,9 @@ export async function getPostById(id: string) {
   return posts.find((post) => post.id === id);
 }
 
-export async function getPostsByTag(tag: Tag) {
-  return (await getPosts()).filter((post) => post.tags?.includes(tag));
-}
-
-export async function getPostsBySeries(seriesName: string) {
+export async function getPostsBySeries(seriesId: string) {
   const posts = await getPosts();
   return posts
-    .filter((post) => post.series === seriesName)
+    .filter((post) => post.series === seriesId)
     .sort((p1, p2) => p1.createdAt.getTime() - p2.createdAt.getTime());
 }
