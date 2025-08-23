@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { paths } from "@/config/paths";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import { Button } from "../ui/button";
 
 type Props = {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { paths } from "@/config/paths";
 import { type Post } from "@/schema/posts";
-import { formatDate } from "@/utils";
+import { formatDate } from "@/utils/format-date";
 import Heading from "../heading";
 import Tag from "../tags/tag";
 import TagList from "../tags/tag-list";

@@ -4,7 +4,7 @@ import Heading from "@/components/heading";
 import Section from "@/components/section";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/config/paths";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 export default function HomePage() {
   return (

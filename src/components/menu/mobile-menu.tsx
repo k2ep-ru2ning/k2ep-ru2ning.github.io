@@ -16,7 +16,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { paths } from "@/config/paths";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { cn, toggleTheme } from "@/utils";
+import { cn } from "@/utils/cn";
+import { toggleTheme } from "@/utils/toggle-theme";
 import { Button } from "../ui/button";
 import {
   Dialog,

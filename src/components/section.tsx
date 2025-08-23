@@ -1,5 +1,5 @@
 import { type ComponentProps } from "react";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 export default function Section({
   className,

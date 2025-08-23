@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { toggleTheme } from "@/utils";
+import { toggleTheme } from "@/utils/toggle-theme";
 
 export default function ThemeSwitchButton() {
   const handleClick = () => {

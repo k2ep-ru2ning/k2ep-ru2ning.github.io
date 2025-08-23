@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { type PostContentHeading } from "@/schema/posts";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import HeadingIcon from "./heading-icon";
 
 type Props = {

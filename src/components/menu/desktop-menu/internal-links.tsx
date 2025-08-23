@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { paths } from "@/config/paths";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 type LinkType = {
   link: string;
