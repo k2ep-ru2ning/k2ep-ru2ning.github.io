@@ -3,8 +3,7 @@ import { type Metadata } from "next";
 import { type ReactNode } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import jetbrainsMono from "@/fonts/jetbrains-mono";
-import pretendard from "@/fonts/pretendard";
+import { jetbrainsMono, pretendard } from "@/config/fonts";
 import initializeThemeFromLocal from "@/scripts/initialize-theme-from-local";
 
 type Props = {
