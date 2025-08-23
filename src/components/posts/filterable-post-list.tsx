@@ -3,9 +3,9 @@
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { paths } from "@/config/paths";
-import useCreateQueryString from "@/hooks/use-create-query-string";
-import usePageQueryString from "@/hooks/use-page-query-string";
-import useTagQueryString from "@/hooks/use-tag-query-string";
+import { useCreateQueryString } from "@/hooks/use-create-query-string";
+import { usePageQueryString } from "@/hooks/use-page-query-string";
+import { useTagQueryString } from "@/hooks/use-tag-query-string";
 import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
 import PostList from "./post-list";

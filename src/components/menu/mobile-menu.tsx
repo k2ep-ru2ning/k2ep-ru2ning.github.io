@@ -15,7 +15,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { paths } from "@/config/paths";
-import useMediaQuery from "@/hooks/use-media-query";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn, toggleTheme } from "@/utils";
 import { Button } from "../ui/button";
 import {

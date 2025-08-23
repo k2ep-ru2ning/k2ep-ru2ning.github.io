@@ -1,7 +1,7 @@
 import { useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
-export default function useCreateQueryString() {
+export function useCreateQueryString() {
   const searchParams = useSearchParams();
 
   const createQueryString = useCallback(

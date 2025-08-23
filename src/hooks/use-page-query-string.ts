@@ -10,7 +10,7 @@ type PageQueryString =
       reason: string;
     };
 
-export default function usePageQueryString(): PageQueryString {
+export function usePageQueryString(): PageQueryString {
   const searchParams = useSearchParams();
 
   const pageQueryStrings = searchParams.getAll("page");

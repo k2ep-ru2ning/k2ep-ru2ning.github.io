@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const IS_SERVER = typeof window === "undefined";
 
-export default function useMediaQuery(query: string) {
+export function useMediaQuery(query: string) {
   const [matches, setMatches] = useState(() => {
     if (IS_SERVER) {
       return false;
