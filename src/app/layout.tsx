@@ -4,7 +4,7 @@ import { type ReactNode } from "react";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { jetbrainsMono, pretendard } from "@/config/fonts";
-import initializeThemeFromLocal from "@/scripts/initialize-theme-from-local";
+import { themeClassInitializationScript } from "@/utils/theme";
 
 type Props = {
   children: ReactNode;
@@ -15,12 +15,15 @@ export default function RootLayout({ children }: Props) {
     <html
       lang="ko"
       className={`${pretendard.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
+      // 서버에서 HTML을 받고나서 script로 html 태그에 dark class를 주입하기 때문에,
+      // 하이드레이션할 때, html의 class 속성이 서버에서 가져온 것과 달라졌다고 에러를 발생시킴.
+      // 이걸 허용하기 위한 옵션.
       suppressHydrationWarning
     >
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(${initializeThemeFromLocal.toString()})();`,
+            __html: `(${themeClassInitializationScript.toString()})();`,
           }}
         />
       </head>
