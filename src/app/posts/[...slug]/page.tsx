@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import PostArticleContent from "@/components/post-article/content/post-article-content";
-import FixedScrollToTopButton from "@/components/post-article/fixed-scroll-to-top-button";
-import PostArticleHeader from "@/components/post-article/post-article-header";
+import { PostArticleContent } from "@/components/post-article/content/post-article-content";
+import { FixedScrollToTopButton } from "@/components/post-article/fixed-scroll-to-top-button";
+import { PostArticleHeader } from "@/components/post-article/post-article-header";
 import PostArticleTOC from "@/components/post-article/toc/post-article-toc";
 import PostArticleTOCSidebar from "@/components/post-article/toc/post-article-toc-sidebar";
 import { Separator } from "@/components/ui/separator";

@@ -2,15 +2,15 @@ import Link from "next/link";
 import { paths } from "@/config/paths";
 import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils/format-date";
-import Heading from "../heading";
-import Tag from "../tags/tag";
-import TagList from "../tags/tag-list";
+import { Heading } from "../heading";
+import { Tag } from "../tags/tag";
+import { TagList } from "../tags/tag-list";
 
 type Props = {
   post: Post;
 };
 
-export default function PostListItem({
+export function PostListItem({
   post: { title, description, createdAt, id, tags },
 }: Props) {
   return (

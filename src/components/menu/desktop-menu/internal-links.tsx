@@ -20,7 +20,7 @@ type LinkType = {
   isActive: boolean;
 };
 
-export default function InternalLinks() {
+export function InternalLinks() {
   const pathname = usePathname();
 
   const links: LinkType[] = [

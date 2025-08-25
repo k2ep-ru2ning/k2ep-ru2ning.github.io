@@ -3,7 +3,7 @@
 import { ArrowUpToLine } from "lucide-react";
 import { Button } from "../ui/button";
 
-export default function ScrollToTopButton() {
+export function ScrollToTopButton() {
   const handleClickScrollToTopButton = () => {
     window.scrollTo({ top: 0 });
   };

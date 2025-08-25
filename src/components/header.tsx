@@ -1,7 +1,7 @@
-import LogoLink from "./logo-link";
-import Menu from "./menu";
+import { LogoLink } from "./logo-link";
+import { Menu } from "./menu";
 
-export default function Header() {
+export function Header() {
   return (
     <header className="h-(--header-height) flex items-center justify-between">
       <div className="shrink-0">

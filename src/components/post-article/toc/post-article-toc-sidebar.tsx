@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { type PostContentHeading } from "@/schema/posts";
 import { cn } from "@/utils/cn";
 import HeadingIcon from "./heading-icon";
-import ScrollToTopButton from "../scroll-to-top-button";
+import { ScrollToTopButton } from "../scroll-to-top-button";
 
 type Props = {
   headings: PostContentHeading[];

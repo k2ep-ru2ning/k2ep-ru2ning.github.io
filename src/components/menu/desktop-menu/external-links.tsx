@@ -13,7 +13,7 @@ type LinkType = {
   tooltipText: string;
 };
 
-export default function ExternalLinks() {
+export function ExternalLinks() {
   const links: LinkType[] = [
     {
       link: "https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io",

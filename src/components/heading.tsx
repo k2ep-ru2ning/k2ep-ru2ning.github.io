@@ -1,16 +1,13 @@
-import { createElement, type PropsWithChildren } from "react";
+import { createElement, type ReactNode } from "react";
 import { cn } from "@/utils/cn";
 
 type Props = {
   as: "h1" | "h2" | "h3";
   className?: string;
+  children: ReactNode;
 };
 
-export default function Heading({
-  as,
-  children,
-  className,
-}: PropsWithChildren<Props>) {
+export function Heading({ as, children, className }: Props) {
   return createElement(
     as,
     {

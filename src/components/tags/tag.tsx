@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-export default function Tag({ tag, className }: Props) {
+export function Tag({ tag, className }: Props) {
   return (
     <div
       className={cn(

@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { setThemeClass } from "@/utils/theme";
-import DesktopMenu from "./desktop-menu";
-import MobileMenu from "./mobile-menu";
+import { DesktopMenu } from "./desktop-menu";
+import { MobileMenu } from "./mobile-menu";
 
-export default function Menu() {
+export function Menu() {
   useEffect(() => {
     const handleChangeLocalStorage = ({ key, newValue }: StorageEvent) => {
       if (key === null || newValue === null) return;

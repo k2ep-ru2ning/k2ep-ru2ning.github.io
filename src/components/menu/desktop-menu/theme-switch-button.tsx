@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { toggleTheme } from "@/utils/theme";
 
-export default function ThemeSwitchButton() {
+export function ThemeSwitchButton() {
   const handleClick = () => {
     toggleTheme();
   };

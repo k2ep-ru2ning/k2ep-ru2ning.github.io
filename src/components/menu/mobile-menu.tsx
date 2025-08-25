@@ -30,7 +30,7 @@ import {
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 
-export default function MobileMenu() {
+export function MobileMenu() {
   const [open, setOpen] = useState(false);
 
   const pathname = usePathname();

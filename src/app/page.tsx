@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import Heading from "@/components/heading";
-import Section from "@/components/section";
+import { Heading } from "@/components/heading";
+import { Section } from "@/components/section";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/config/paths";
 import { cn } from "@/utils/cn";

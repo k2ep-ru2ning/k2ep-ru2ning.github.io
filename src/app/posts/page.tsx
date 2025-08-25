@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { Suspense } from "react";
-import Heading from "@/components/heading";
-import FilterablePostList from "@/components/posts/filterable-post-list";
-import Section from "@/components/section";
+import { Heading } from "@/components/heading";
+import { FilterablePostList } from "@/components/posts/filterable-post-list";
+import { Section } from "@/components/section";
 import { getPosts } from "@/service/posts";
 import { getTags } from "@/service/tags";
 

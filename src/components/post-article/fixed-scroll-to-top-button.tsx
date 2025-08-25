@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/utils/cn";
-import ScrollToTopButton from "./scroll-to-top-button";
+import { ScrollToTopButton } from "./scroll-to-top-button";
 
-export default function FixedScrollToTopButton() {
+export function FixedScrollToTopButton() {
   const targetRef = useRef<HTMLDivElement>(null);
 
   const [showButton, setShowButton] = useState(false);

@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { type ReactNode } from "react";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
 import { jetbrainsMono, pretendard } from "@/config/fonts";
 import { themeClassInitializationScript } from "@/utils/theme";
 

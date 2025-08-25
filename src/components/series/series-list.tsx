@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { paths } from "@/config/paths";
 import { type Series } from "@/schema/series";
-import Heading from "../heading";
+import { Heading } from "../heading";
 
 type Props = {
   series: Series[];
 };
 
-export default function SeriesList({ series }: Props) {
+export function SeriesList({ series }: Props) {
   if (series.length === 0) {
     return <p>시리즈가 존재하지 않습니다.</p>;
   }

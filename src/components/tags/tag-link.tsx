@@ -8,7 +8,7 @@ type Props = {
   isActive?: boolean;
 };
 
-export default function TagLink({ tag, isActive = false }: Props) {
+export function TagLink({ tag, isActive = false }: Props) {
   const href =
     tag === "전체" ? paths.posts.getHref() : paths.posts.getHref({ tag });
 

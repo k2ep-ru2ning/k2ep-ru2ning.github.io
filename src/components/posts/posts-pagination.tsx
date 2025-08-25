@@ -17,7 +17,7 @@ type Props = {
 // 표시할 최대 pagination item 개수.
 const PAGINATION_SIZE = 5;
 
-export default function PostsPagination({
+export function PostsPagination({
   activePageNumber,
   numberOfPages,
   generatePageLink,
