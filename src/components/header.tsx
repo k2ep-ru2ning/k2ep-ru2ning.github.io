@@ -1,5 +1,5 @@
 import { LogoLink } from "./logo-link";
-import { Menu } from "./menu";
+import { Menu } from "./menu/menu";
 
 export function Header() {
   return (
