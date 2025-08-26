@@ -21,6 +21,8 @@ export default function RootLayout({ children }: Props) {
       suppressHydrationWarning
     >
       <head>
+        {/* Next의 Script 컴포넌트를 beforeInteractive strategy로 사용해도 새로고침 시 스크립트가 늦게 적용되어 깜빡이는 문제 발생 */}
+        {/* 그래서 그냥 script 태그 활용 */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(${themeClassInitializationScript.toString()})();`,
