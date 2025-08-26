@@ -6,7 +6,7 @@ type Props = {
   className?: string;
 };
 
-export default function HeadingIcon({ type, className }: Props) {
+export function HeadingIcon({ type, className }: Props) {
   return (
     <div
       className={cn("p-0.5 text-xs rounded-md border border-border", className)}
