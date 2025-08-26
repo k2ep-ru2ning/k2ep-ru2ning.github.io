@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import {
   Pagination,
   PaginationContent,
@@ -6,7 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../ui/pagination";
+} from "../../ui/pagination";
 
 type Props = {
   activePageNumber: number;
@@ -17,7 +17,7 @@ type Props = {
 // 표시할 최대 pagination item 개수.
 const PAGINATION_SIZE = 5;
 
-export default function PostsPagination({
+export function PostsPagination({
   activePageNumber,
   numberOfPages,
   generatePageLink,

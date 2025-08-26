@@ -1,11 +1,11 @@
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 type Props = {
   tag: string;
   className?: string;
 };
 
-export default function Tag({ tag, className }: Props) {
+export function Tag({ tag, className }: Props) {
   return (
     <div
       className={cn(

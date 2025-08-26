@@ -13,7 +13,7 @@ type TagQueryString =
       reason: string;
     };
 
-export default function useTagQueryString(): TagQueryString {
+export function useTagQueryString(): TagQueryString {
   const searchParams = useSearchParams();
 
   const tagQueryStrings = searchParams.getAll("tag");

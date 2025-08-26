@@ -8,7 +8,7 @@ type Props = {
   as: PostContentHeadingType;
 };
 
-export default function PostArticleContentHeading({
+export function PostArticleContentHeading({
   id,
   as,
   children,

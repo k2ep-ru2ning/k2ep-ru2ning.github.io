@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { type PostContentHeading } from "@/schema/posts";
-import { cn } from "@/utils";
-import HeadingIcon from "./heading-icon";
+import { cn } from "@/utils/cn";
+import { HeadingIcon } from "./heading-icon";
 
 type Props = {
   headings: PostContentHeading[];
 };
 
-export default function PostArticleTOC({ headings }: Props) {
+export function PostArticleTOC({ headings }: Props) {
   return (
     <section className="flex flex-col gap-5 p-2 rounded-md border border-border">
       <h2 className="text-lg">목차</h2>

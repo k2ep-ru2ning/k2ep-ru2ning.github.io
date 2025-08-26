@@ -1,12 +1,12 @@
 import { type PostContentHeadingType } from "@/schema/posts";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 
 type Props = {
   type: PostContentHeadingType;
   className?: string;
 };
 
-export default function HeadingIcon({ type, className }: Props) {
+export function HeadingIcon({ type, className }: Props) {
   return (
     <div
       className={cn("p-0.5 text-xs rounded-md border border-border", className)}

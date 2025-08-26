@@ -5,15 +5,15 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { type PostContentHeading } from "@/schema/posts";
-import { cn } from "@/utils";
-import HeadingIcon from "./heading-icon";
-import ScrollToTopButton from "../scroll-to-top-button";
+import { cn } from "@/utils/cn";
+import { HeadingIcon } from "./heading-icon";
+import { ScrollToTopButton } from "../scroll-to-top-button";
 
 type Props = {
   headings: PostContentHeading[];
 };
 
-export default function PostArticleTOCSidebar({ headings }: Props) {
+export function PostArticleTOCSidebar({ headings }: Props) {
   const [activeHeadingIdSet, setActiveHeadingIdSet] = useState<Set<string>>(
     () => new Set(),
   );

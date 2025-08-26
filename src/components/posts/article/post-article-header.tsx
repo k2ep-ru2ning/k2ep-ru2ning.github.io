@@ -1,14 +1,14 @@
+import { TagLink } from "@/components/tags/tag-link";
+import { TagList } from "@/components/tags/tag-list";
+import { Heading } from "@/components/ui/heading";
 import { type Post } from "@/schema/posts";
-import { formatDate } from "@/utils";
-import Heading from "../heading";
-import TagLink from "../tags/tag-link";
-import TagList from "../tags/tag-list";
+import { formatDate } from "@/utils/format-date";
 
 type Props = {
   post: Post;
 };
 
-export default function PostArticleHeader({ post }: Props) {
+export function PostArticleHeader({ post }: Props) {
   return (
     <header className="flex flex-col gap-y-4">
       <Heading as="h1" className="sm:text-4xl">

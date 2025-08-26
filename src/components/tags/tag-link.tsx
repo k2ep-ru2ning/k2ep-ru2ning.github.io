@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { paths } from "@/config/paths";
-import { cn } from "@/utils";
+import { cn } from "@/utils/cn";
 import { Button } from "../ui/button";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   isActive?: boolean;
 };
 
-export default function TagLink({ tag, isActive = false }: Props) {
+export function TagLink({ tag, isActive = false }: Props) {
   const href =
     tag === "전체" ? paths.posts.getHref() : paths.posts.getHref({ tag });
 

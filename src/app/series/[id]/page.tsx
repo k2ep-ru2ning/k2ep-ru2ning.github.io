@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import Heading from "@/components/heading";
-import Section from "@/components/section";
-import PostListOnSeries from "@/components/series/post-list-on-series";
+import { PostListOnSeries } from "@/components/series/post-list-on-series";
+import { Heading } from "@/components/ui/heading";
+import { Section } from "@/components/ui/section";
 import { getPostsBySeries } from "@/service/posts";
 import { getSeries, getSeriesById } from "@/service/series";
 

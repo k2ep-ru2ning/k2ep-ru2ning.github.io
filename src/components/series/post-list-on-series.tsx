@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { paths } from "@/config/paths";
 import { type Post } from "@/schema/posts";
-import { formatDate } from "@/utils";
-import Heading from "../heading";
-import TagLink from "../tags/tag-link";
-import TagList from "../tags/tag-list";
+import { formatDate } from "@/utils/format-date";
+import { TagLink } from "../tags/tag-link";
+import { TagList } from "../tags/tag-list";
+import { Heading } from "../ui/heading";
 
 type Props = {
   postsOnSeries: Post[];
 };
 
-export default function PostListOnSeries({ postsOnSeries }: Props) {
+export function PostListOnSeries({ postsOnSeries }: Props) {
   if (postsOnSeries.length === 0) {
     return <p>시리즈에 속한 글이 없습니다.</p>;
   }
