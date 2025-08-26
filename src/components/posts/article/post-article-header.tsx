@@ -1,8 +1,8 @@
+import { Heading } from "@/components/heading";
+import { TagLink } from "@/components/tags/tag-link";
+import { TagList } from "@/components/tags/tag-list";
 import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils/format-date";
-import { Heading } from "../heading";
-import { TagLink } from "../tags/tag-link";
-import { TagList } from "../tags/tag-list";
 
 type Props = {
   post: Post;

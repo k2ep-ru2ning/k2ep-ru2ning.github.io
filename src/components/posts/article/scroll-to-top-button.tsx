@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpToLine } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 export function ScrollToTopButton() {
   const handleClickScrollToTopButton = () => {
