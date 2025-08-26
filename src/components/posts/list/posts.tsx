@@ -8,13 +8,12 @@ import { usePageQueryString } from "@/hooks/use-page-query-string";
 import { useTagQueryString } from "@/hooks/use-tag-query-string";
 import { type Post } from "@/schema/posts";
 import { type Tag } from "@/schema/tags";
-import { PostList } from "./post-list";
-import { PostListItem } from "./post-list-item";
+import { PostItem } from "./post-item";
 import { PostsPagination } from "./posts-pagination";
-import { TagLink } from "../tags/tag-link";
-import { TagList } from "../tags/tag-list";
-import { Button } from "../ui/button";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { TagLink } from "../../tags/tag-link";
+import { TagList } from "../../tags/tag-list";
+import { Button } from "../../ui/button";
+import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
 
 type Props = {
   posts: Post[];
@@ -23,7 +22,7 @@ type Props = {
 
 const PAGE_SIZE = 6;
 
-export function FilterablePostList({ posts, tags }: Props) {
+export function Posts({ posts, tags }: Props) {
   const createQueryString = useCreateQueryString();
 
   const tagQueryString = useTagQueryString();
@@ -104,11 +103,11 @@ export function FilterablePostList({ posts, tags }: Props) {
           없습니다.
         </p>
       ) : (
-        <PostList>
+        <ul>
           {filteredPostsByTagOnPage.map((post) => (
-            <PostListItem key={post.id} post={post} />
+            <PostItem key={post.id} post={post} />
           ))}
-        </PostList>
+        </ul>
       )}
       <PostsPagination
         generatePageLink={(pageNumber) =>

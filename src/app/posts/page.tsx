@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { Suspense } from "react";
 import { Heading } from "@/components/heading";
-import { FilterablePostList } from "@/components/posts/filterable-post-list";
+import { Posts } from "@/components/posts/list/posts";
 import { Section } from "@/components/section";
 import { getPosts } from "@/service/posts";
 import { getTags } from "@/service/tags";
@@ -12,8 +12,8 @@ export default async function PostsPage() {
   return (
     <Section>
       <Heading as="h2">글</Heading>
-      <Suspense fallback={<p>글을 가져오는 중...</p>}>
-        <FilterablePostList posts={posts} tags={tags} />
+      <Suspense fallback={null}>
+        <Posts posts={posts} tags={tags} />
       </Suspense>
     </Section>
   );
