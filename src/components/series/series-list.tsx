@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { paths } from "@/config/paths";
 import { type Series } from "@/schema/series";
-import { Heading } from "../heading";
+import { Heading } from "../ui/heading";
 
 type Props = {
   series: Series[];

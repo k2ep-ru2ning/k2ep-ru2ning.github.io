@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Heading } from "@/components/heading";
 import { Tag } from "@/components/tags/tag";
 import { TagList } from "@/components/tags/tag-list";
+import { Heading } from "@/components/ui/heading";
 import { paths } from "@/config/paths";
 import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils/format-date";

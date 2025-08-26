@@ -1,6 +1,6 @@
-import { Heading } from "@/components/heading";
 import { TagLink } from "@/components/tags/tag-link";
 import { TagList } from "@/components/tags/tag-list";
+import { Heading } from "@/components/ui/heading";
 import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils/format-date";
 

@@ -2,9 +2,9 @@ import Link from "next/link";
 import { paths } from "@/config/paths";
 import { type Post } from "@/schema/posts";
 import { formatDate } from "@/utils/format-date";
-import { Heading } from "../heading";
 import { TagLink } from "../tags/tag-link";
 import { TagList } from "../tags/tag-list";
+import { Heading } from "../ui/heading";
 
 type Props = {
   postsOnSeries: Post[];

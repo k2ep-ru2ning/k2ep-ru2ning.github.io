@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import { Suspense } from "react";
-import { Heading } from "@/components/heading";
 import { Posts } from "@/components/posts/list/posts";
-import { Section } from "@/components/section";
+import { Heading } from "@/components/ui/heading";
+import { Section } from "@/components/ui/section";
 import { getPosts } from "@/service/posts";
 import { getTags } from "@/service/tags";
 
