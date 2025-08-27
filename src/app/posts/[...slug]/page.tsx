@@ -30,22 +30,22 @@ export default async function PostPage({ params }: Props) {
       <FixedScrollToTopButton />
       <article className="flex flex-col gap-y-6">
         <PostArticleHeader post={post} />
-        <div className="lg:hidden">
+        <aside className="lg:hidden">
           <PostArticleTOC headings={post.headings} />
-        </div>
+        </aside>
         <Separator />
         <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
           <PostArticleContent post={post} />
           {/* 
-            아래 div에 sticky를 주면 안된다. 
-            이 div는 부모 요소 height를 다 차지하고 있어서,
+            아래 aside에 sticky를 주면 안된다. 
+            이 aside는 부모 요소 height를 다 차지하고 있어서,
             가장 가까운 scroll box인 뷰포트에서 스크롤이 일어나도
             sticky하게 움직일 공간이 없다. 
-            그래서 TOC 컴포넌트를 감싸는 div에 sticky를 준다.
+            그래서 TOC 컴포넌트에 sticky를 준다.
           */}
-          <div className="ml-5 border-l border-l-border hidden lg:block">
+          <aside className="ml-5 border-l border-l-border hidden lg:block">
             <PostArticleTOCSidebar headings={post.headings} />
-          </div>
+          </aside>
         </div>
       </article>
     </>

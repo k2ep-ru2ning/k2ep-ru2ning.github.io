@@ -10,29 +10,27 @@ type Props = {
 
 export function PostArticleTOC({ headings }: Props) {
   return (
-    <section className="flex flex-col gap-5 p-2 rounded-md border border-border">
+    <nav className="flex flex-col gap-5 p-2 rounded-md border border-border">
       <h2 className="text-lg">목차</h2>
-      <nav>
-        <ul className="flex flex-col gap-2">
-          {headings.map((item) => (
-            <li key={item.id}>
-              <Button
-                asChild
-                variant="ghost"
-                className={cn(
-                  "flex justify-start items-baseline gap-2 whitespace-normal h-fit p-1",
-                  item.type === "h3" && "pl-6",
-                )}
-              >
-                <Link href={`#${item.id}`}>
-                  <HeadingIcon type={item.type} className="shrink-0" />
-                  {item.text}
-                </Link>
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </section>
+      <ul className="flex flex-col gap-2">
+        {headings.map((item) => (
+          <li key={item.id}>
+            <Button
+              asChild
+              variant="ghost"
+              className={cn(
+                "flex justify-start items-baseline gap-2 whitespace-normal h-fit p-1",
+                item.type === "h3" && "pl-6",
+              )}
+            >
+              <Link href={`#${item.id}`}>
+                <HeadingIcon type={item.type} className="shrink-0" />
+                {item.text}
+              </Link>
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
