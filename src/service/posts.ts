@@ -49,7 +49,7 @@ const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
 };
 
 /**
- * 블로그 글 파일 경로에서 앞쪽의 POSTS_DIRECTORY_PATH와 뒤쪽의 확장자를 제거한 경로를 id로 활용.
+ * 글 파일 경로에서 앞쪽의 POSTS_DIRECTORY_PATH와 뒤쪽의 확장자를 제거한 경로를 id로 활용.
  * 예시 형태: 2025/dijkstra-algorithm
  */
 function generatePostIdFromPostAbsolutePath(absolutePath: string) {

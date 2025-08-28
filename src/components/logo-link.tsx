@@ -4,10 +4,8 @@ import { Button } from "./ui/button";
 
 export function LogoLink() {
   return (
-    <Button asChild variant="ghost" className="px-2">
-      <Link href={paths.home.getHref()}>
-        <h1 className="font-extrabold text-xl">k2ep-ru2ning</h1>
-      </Link>
+    <Button asChild variant="ghost" className="px-2 font-extrabold text-xl">
+      <Link href={paths.home.getHref()}>k2ep-ru2ning</Link>
     </Button>
   );
 }

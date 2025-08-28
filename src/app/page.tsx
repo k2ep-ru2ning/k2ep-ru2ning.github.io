@@ -10,10 +10,10 @@ export default function HomePage() {
   return (
     <Section className="gap-10 sm:gap-12">
       <header className="flex flex-col gap-1">
-        <Heading as="h2">
-          k2ep-ru2ning&apos;s <span className="text-brand">Tech Blog</span>
+        <Heading as="h1" className="text-brand text-2xl">
+          k2ep-ru2ning
         </Heading>
-        <div className="flex flex-col sm:flex-row sm:gap-1 text-sm text-secondary-foreground">
+        <div className="flex flex-col sm:flex-row sm:gap-1 text-sm sm:text-base text-secondary-foreground">
           <span className="before:content-['·'] sm:before:content-none flex gap-1">
             Software Engineer
           </span>

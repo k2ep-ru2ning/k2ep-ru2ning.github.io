@@ -55,6 +55,6 @@ export const metadata: Metadata = {
     default: "k2ep-ru2ning | Software Engineer & Front-end Web Developer",
   },
   description:
-    "k2ep-ru2ning의 개발 블로그. 개발하면서 배우고 경험한 내용을 정리하는 공간.",
+    "개발자 k2ep-ru2ning의 개인 웹사이트이자 기술 블로그. 개발하면서 배우고 경험한 내용을 정리하는 공간입니다.",
   authors: [{ name: "k2ep-ru2ning" }],
 };
