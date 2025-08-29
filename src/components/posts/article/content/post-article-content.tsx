@@ -1,7 +1,4 @@
-"use client";
-
 import { getMDXComponent } from "mdx-bundler/client";
-import { useMemo } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { type Post } from "@/schema/posts";
 import { PostArticleContentHeading } from "./post-article-content-heading";
@@ -11,10 +8,7 @@ type Props = {
 };
 
 export function PostArticleContent({ post }: Props) {
-  const MDXComponent = useMemo(
-    () => getMDXComponent(post.bundledContent),
-    [post.bundledContent],
-  );
+  const MDXComponent = getMDXComponent(post.bundledContent);
 
   return (
     <div
