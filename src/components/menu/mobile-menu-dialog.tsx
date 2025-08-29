@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { repositoryHref } from "@/config/const";
 import { paths } from "@/config/paths";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/utils/cn";
@@ -52,7 +53,7 @@ const INTERNAL_LINKS = [
 
 const EXTERNAL_LINKS = [
   {
-    href: "https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io",
+    href: repositoryHref,
     icon: <Github className={MENU_ICON_SIZE_CLASS_NAME} />,
     label: "Github 저장소",
   },

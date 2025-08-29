@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
+import { owner } from "@/config/const";
 import { paths } from "@/config/paths";
 import { cn } from "@/utils/cn";
 
@@ -11,7 +12,7 @@ export default function HomePage() {
     <Section className="gap-10 sm:gap-12">
       <header className="flex flex-col gap-1">
         <Heading as="h1" className="text-brand text-2xl">
-          k2ep-ru2ning
+          {owner}
         </Heading>
         <div className="flex flex-col sm:flex-row sm:gap-1 text-sm sm:text-base text-secondary-foreground">
           <span className="before:content-['·'] sm:before:content-none flex gap-1">
@@ -24,7 +25,7 @@ export default function HomePage() {
       </header>
       <div className="flex flex-col gap-4 p-2 rounded-md bg-secondary text-secondary-foreground">
         <p>
-          <em className="font-bold not-italic">k2ep-ru2ning</em>
+          <em className="font-bold not-italic">{owner}</em>
           이라는 이름처럼{" "}
           <em className="font-bold not-italic">
             즐겁게 꾸준히 개발하고 싶습니다.

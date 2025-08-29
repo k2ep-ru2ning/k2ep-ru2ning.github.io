@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import { type ReactNode } from "react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { owner } from "@/config/const";
 import { jetbrainsMono, pretendard } from "@/config/fonts";
 import { themeClassInitializationScript } from "@/utils/theme";
 
@@ -51,10 +52,9 @@ export default function RootLayout({ children }: Props) {
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | k2ep-ru2ning",
-    default: "k2ep-ru2ning | Software Engineer & Front-end Web Developer",
+    template: `%s | ${owner}`,
+    default: `${owner} | Software Engineer & Front-end Web Developer`,
   },
-  description:
-    "개발자 k2ep-ru2ning의 개인 웹사이트이자 기술 블로그. 개발하면서 배우고 경험한 내용을 정리하는 공간입니다.",
-  authors: [{ name: "k2ep-ru2ning" }],
+  description: `개발자 ${owner}의 개인 웹사이트이자 기술 블로그. 개발하면서 배우고 경험한 내용을 정리하는 공간입니다.`,
+  authors: [{ name: owner }],
 };

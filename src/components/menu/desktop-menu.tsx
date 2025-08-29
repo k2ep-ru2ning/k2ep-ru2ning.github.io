@@ -19,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { repositoryHref } from "@/config/const";
 import { paths } from "@/config/paths";
 import { cn } from "@/utils/cn";
 import { toggleTheme } from "@/utils/theme";
@@ -45,7 +46,7 @@ const INTERNAL_LINKS = [
 
 const EXTERNAL_LINKS = [
   {
-    href: "https://github.com/k2ep-ru2ning/k2ep-ru2ning.github.io",
+    href: repositoryHref,
     icon: <Github className={MENU_ICON_SIZE_CLASS_NAME} />,
     label: "Github 저장소",
   },
