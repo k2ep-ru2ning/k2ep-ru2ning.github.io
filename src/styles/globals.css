@@ -72,7 +72,7 @@
   --ring: oklch(0.705 0.015 286.067);
   --brand: oklch(58.5% 0.233 277.117);
   --brand-foreground: oklch(0.985 0 0);
-  --code-highlight-background: oklch(0.96 0.02 272);
+  --code-highlight-background: oklch(96.2% 0.018 272.314);
 
   /* 
   --chart-1: oklch(0.646 0.222 41.116);
@@ -112,7 +112,7 @@
   --ring: oklch(0.552 0.016 285.938);
   --brand: oklch(67.3% 0.182 276.935);
   --brand-foreground: oklch(0.985 0 0);
-  --code-highlight-background: oklch(0.21 0.01 286);
+  --code-highlight-background: oklch(25.7% 0.09 281.288);
 
   /* 
   --chart-1: oklch(0.488 0.243 264.376);
