@@ -26,7 +26,7 @@ import {
   postMatterSchema,
 } from "@/schema/posts";
 import { getSeriesIdSet } from "./series";
-import { getTagSet } from "./tags";
+import { isValidTag } from "./tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
 
@@ -114,10 +114,7 @@ async function extractHeadingsFromMDXString(sourceMDXString: string) {
 }
 
 export async function getPosts() {
-  const [validSeriesIdSet, validTagSet] = await Promise.all([
-    getSeriesIdSet(),
-    getTagSet(),
-  ]);
+  const validSeriesIdSet = await getSeriesIdSet();
   const posts: Post[] = [];
   try {
     const postAbsolutePaths = await getPostAbsolutePaths();
@@ -134,7 +131,7 @@ export async function getPosts() {
       }
       if (tags) {
         for (const tag of tags) {
-          if (!validTagSet.has(tag)) {
+          if (!isValidTag(tag)) {
             throw new Error(
               `글의 front matter에 존재하지 않는 tag를 작성했습니다. 작성한 tag: "${tag}"`,
             );
