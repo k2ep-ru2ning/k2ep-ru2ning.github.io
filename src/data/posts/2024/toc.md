@@ -6,7 +6,7 @@ tags:
   - "React"
   - "회고"
   - "Next.js"
-series: "개인 웹 사이트 개발"
+seriesId: "개인 웹 사이트 개발"
 ---
 
 ## 만들고 싶은 것

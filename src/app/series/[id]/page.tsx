@@ -16,7 +16,7 @@ export default async function SeriesDetailPage({ params }: Props) {
   // next의 props가 decode 된 상태가 아니라서, 직접 decoding 해주어야 함.
   const seriesId = decodeURIComponent((await params).id);
 
-  const series = await getSeriesById(seriesId);
+  const series = getSeriesById(seriesId);
 
   if (!series) {
     notFound();
@@ -41,15 +41,15 @@ export default async function SeriesDetailPage({ params }: Props) {
   );
 }
 
-export async function generateStaticParams() {
-  const series = await getSeries();
+export function generateStaticParams() {
+  const series = getSeries();
   return series.map(({ id }) => ({ id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const seriesId = decodeURIComponent((await params).id);
 
-  const series = await getSeriesById(seriesId);
+  const series = getSeriesById(seriesId);
 
   if (!series) {
     notFound();

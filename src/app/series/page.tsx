@@ -4,8 +4,8 @@ import { Heading } from "@/components/ui/heading";
 import { Section } from "@/components/ui/section";
 import { getSeries } from "@/service/series";
 
-export default async function SeriesPage() {
-  const series = await getSeries();
+export default function SeriesPage() {
+  const series = getSeries();
 
   return (
     <Section>

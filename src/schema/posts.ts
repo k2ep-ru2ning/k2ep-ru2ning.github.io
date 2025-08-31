@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { seriesSchema } from "./series";
 
-export const postMatterSchema = z.object({
+// strictObject -> title, description, createdAt, tags, seriesId 이외의 프로퍼티를 허용안함.
+export const postMatterSchema = z.strictObject({
   title: z.string().trim().min(1),
   description: z.string().trim(),
   createdAt: z.date(),
-  tags: z.array(z.string().trim().min(1)).optional(),
-  series: seriesSchema.shape.id.optional(),
+  tags: z.optional(z.array(z.string().trim().min(1))),
+  seriesId: z.optional(z.string().trim().min(1)),
 });
 
 type PostMatter = z.infer<typeof postMatterSchema>;

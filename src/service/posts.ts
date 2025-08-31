@@ -25,7 +25,7 @@ import {
   type PostContentHeadingType,
   postMatterSchema,
 } from "@/schema/posts";
-import { getSeriesIdSet } from "./series";
+import { isValidSeriesId } from "./series";
 import { isValidTag } from "./tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
@@ -114,7 +114,6 @@ async function extractHeadingsFromMDXString(sourceMDXString: string) {
 }
 
 export async function getPosts() {
-  const validSeriesIdSet = await getSeriesIdSet();
   const posts: Post[] = [];
   try {
     const postAbsolutePaths = await getPostAbsolutePaths();
@@ -122,11 +121,11 @@ export async function getPosts() {
       const file = await readFile(postAbsolutePath, { encoding: "utf8" });
       // front matter에 key만 작성한 경우, gray-matter가 명시적으로 null을 할당한다.
       const { content, data } = matter(file);
-      const { createdAt, description, title, tags, series } =
+      const { createdAt, description, title, tags, seriesId } =
         postMatterSchema.parse(data);
-      if (series && !validSeriesIdSet.has(series)) {
+      if (seriesId && !isValidSeriesId(seriesId)) {
         throw new Error(
-          `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${series}"`,
+          `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${seriesId}"`,
         );
       }
       if (tags) {
@@ -165,7 +164,7 @@ export async function getPosts() {
         description,
         title,
         tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
-        series,
+        seriesId,
         id: generatePostIdFromPostAbsolutePath(postAbsolutePath),
         headings,
       });
@@ -188,6 +187,6 @@ export async function getPostById(id: string) {
 export async function getPostsBySeries(seriesId: string) {
   const posts = await getPosts();
   return posts
-    .filter((post) => post.series === seriesId)
+    .filter((post) => post.seriesId === seriesId)
     .sort((p1, p2) => p1.createdAt.getTime() - p2.createdAt.getTime());
 }
