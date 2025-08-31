@@ -20,6 +20,10 @@ tags.sort((tag1, tag2) => tag1.localeCompare(tag2));
 
 const tagSet = new Set(tags);
 
+if (tagSet.size !== tags.length) {
+  throw new Error("tags에 같은 이름의 태그를 작성했어요. 수정해주세요.");
+}
+
 export function getTags() {
   return [...tagSet];
 }
