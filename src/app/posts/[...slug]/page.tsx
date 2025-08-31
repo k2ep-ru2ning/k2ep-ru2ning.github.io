@@ -3,8 +3,6 @@ import { notFound } from "next/navigation";
 import { PostArticleContent } from "@/components/posts/article/content/post-article-content";
 import { FixedScrollToTopButton } from "@/components/posts/article/fixed-scroll-to-top-button";
 import { PostArticleHeader } from "@/components/posts/article/post-article-header";
-import { PostArticleTOC } from "@/components/posts/article/toc/post-article-toc";
-import { PostArticleTOCSidebar } from "@/components/posts/article/toc/post-article-toc-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { getPostById, getPosts } from "@/service/posts";
 
@@ -30,23 +28,8 @@ export default async function PostPage({ params }: Props) {
       <FixedScrollToTopButton />
       <article className="flex flex-col gap-y-6">
         <PostArticleHeader post={post} />
-        <aside className="lg:hidden">
-          <PostArticleTOC headings={post.headings} />
-        </aside>
         <Separator />
-        <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
-          <PostArticleContent post={post} />
-          {/* 
-            아래 aside에 sticky를 주면 안된다. 
-            이 aside는 부모 요소 height를 다 차지하고 있어서,
-            가장 가까운 scroll box인 뷰포트에서 스크롤이 일어나도
-            sticky하게 움직일 공간이 없다. 
-            그래서 TOC 컴포넌트에 sticky를 준다.
-          */}
-          <aside className="ml-5 border-l border-l-border hidden lg:block">
-            <PostArticleTOCSidebar headings={post.headings} />
-          </aside>
-        </div>
+        <PostArticleContent post={post} />
       </article>
     </>
   );

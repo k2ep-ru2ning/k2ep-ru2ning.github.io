@@ -11,9 +11,10 @@ type Props = {
 export function PostArticleHeader({ post }: Props) {
   return (
     <header className="flex flex-col gap-y-4">
-      <Heading as="h1" className="sm:text-4xl">
-        {post.title}
-      </Heading>
+      <Heading as="h1">{post.title}</Heading>
+      <time className="text-sm text-secondary-foreground">
+        {formatDate(post.createdAt)} 작성
+      </time>
       {post.tags && post.tags.length > 0 ? (
         <TagList>
           {post.tags.map((tag) => (
@@ -23,9 +24,6 @@ export function PostArticleHeader({ post }: Props) {
           ))}
         </TagList>
       ) : null}
-      <time className="text-sm text-secondary-foreground">
-        {formatDate(post.createdAt)} 작성
-      </time>
     </header>
   );
 }

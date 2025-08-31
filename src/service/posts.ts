@@ -5,18 +5,10 @@ import remarkHeadings, {
   type Heading as RemarkHeading,
 } from "@vcarl/remark-headings";
 import matter from "gray-matter";
-import { bundleMDX } from "mdx-bundler";
-import {
-  rehypePrettyCode,
-  type Options as RehypePrettyCodeOptions,
-} from "rehype-pretty-code";
-import remarkBreaks from "remark-breaks";
-import remarkGfm from "remark-gfm";
 import remarkHeadingId, {
   type RemarkHeadingIdOptions,
 } from "remark-heading-id";
 import remarkParse from "remark-parse";
-import remarkSectionize from "remark-sectionize";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import {
@@ -33,15 +25,6 @@ const POST_FILE_EXTENSION = [".md", ".mdx"];
 const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "src", "data", "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
-
-const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
-  theme: {
-    dark: "vitesse-dark",
-    light: "vitesse-light",
-  },
-  defaultLang: "plaintext", // md 파일의 코드 블럭에 언어 설정을 하지 않으면 plaintext로 설정
-  bypassInlineCode: true, // 인라인 코드 블럭은 pretty code가 하이라이트 하지 않음
-};
 
 const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
   defaults: true, // 값을 이용해 헤더의 id 값을 자동으로 생성
@@ -137,27 +120,9 @@ export async function getPosts() {
           }
         }
       }
-      const { code: bundledContent } = await bundleMDX({
-        source: content,
-        mdxOptions(options) {
-          options.remarkPlugins = [
-            ...(options.remarkPlugins ?? []),
-            remarkGfm,
-            remarkBreaks,
-            [remarkHeadingId, remarkHeadingIdOptions],
-            remarkSectionize,
-          ];
-          options.rehypePlugins = [
-            ...(options.rehypePlugins ?? []),
-            [rehypePrettyCode, rehypePrettyCodeOptions],
-          ];
-          return options;
-        },
-      });
       const headings = await extractHeadingsFromMDXString(content);
       posts.push({
-        rawContent: content,
-        bundledContent,
+        mdxContent: content,
         createdAt: new Date(
           createdAt.getTime() - DIFF_IN_MS_BETWEEN_UTC_AND_KR,
         ),
