@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PostArticleContent } from "@/components/posts/article/content/post-article-content";
 import { FixedScrollToTopButton } from "@/components/posts/article/fixed-scroll-to-top-button";
+import { PostArticleContent } from "@/components/posts/article/post-article-content";
 import { PostArticleHeader } from "@/components/posts/article/post-article-header";
 import { Separator } from "@/components/ui/separator";
 import { getPostById, getPosts } from "@/service/posts";

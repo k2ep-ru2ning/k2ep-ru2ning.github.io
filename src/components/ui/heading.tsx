@@ -1,16 +1,25 @@
-import { createElement, type ReactNode } from "react";
+import { type ComponentProps, createElement } from "react";
 import { cn } from "@/utils/cn";
 
-type Props = {
-  as: "h1" | "h2" | "h3";
-  className?: string;
-  children: ReactNode;
-};
+type H1Props = {
+  as: "h1";
+} & ComponentProps<"h1">;
 
-export function Heading({ as, children, className }: Props) {
+type H2Props = {
+  as: "h2";
+} & ComponentProps<"h2">;
+
+type H3Props = {
+  as: "h3";
+} & ComponentProps<"h3">;
+
+type Props = H1Props | H2Props | H3Props;
+
+export function Heading({ as, children, className, ...props }: Props) {
   return createElement(
     as,
     {
+      ...props,
       className: cn(
         "font-bold text-3xl",
         as === "h2" && "text-2xl",

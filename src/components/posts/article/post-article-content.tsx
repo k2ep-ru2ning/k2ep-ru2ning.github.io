@@ -1,5 +1,6 @@
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
+import Link from "next/link";
 import {
   rehypePrettyCode,
   type Options as RehypePrettyCodeOptions,
@@ -10,10 +11,10 @@ import remarkHeadingId, {
   type RemarkHeadingIdOptions,
 } from "remark-heading-id";
 import remarkSectionize from "remark-sectionize";
+import { Heading } from "@/components/ui/heading";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { type Post } from "@/schema/posts";
-import { PostArticleContentHeading } from "./post-article-content-heading";
-import { PostArticleTOC } from "../toc/post-article-toc";
+import { PostArticleTOC } from "./toc/post-article-toc";
 
 type Props = {
   post: Post;
@@ -72,15 +73,19 @@ export async function PostArticleContent({ post }: Props) {
       >
         <MDXComponent
           components={{
-            h2: ({ children, id }) => (
-              <PostArticleContentHeading as="h2" id={id}>
-                {children}
-              </PostArticleContentHeading>
+            h2: ({ children, id, ...props }) => (
+              <Heading {...props} as="h2" id={id} className="scroll-mt-20">
+                <Link href={`#${id}`} className="no-underline">
+                  {children}
+                </Link>
+              </Heading>
             ),
-            h3: ({ children, id }) => (
-              <PostArticleContentHeading as="h3" id={id}>
-                {children}
-              </PostArticleContentHeading>
+            h3: ({ children, id, ...props }) => (
+              <Heading {...props} as="h3" id={id} className="scroll-mt-20">
+                <Link href={`#${id}`} className="no-underline">
+                  {children}
+                </Link>
+              </Heading>
             ),
             table: (props) => (
               <ScrollArea>
