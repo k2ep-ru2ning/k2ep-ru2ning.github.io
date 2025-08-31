@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { paths } from "@/config/paths";
-import { type Series } from "@/schema/series";
+import { type Series } from "@/types/series";
 import { Heading } from "../ui/heading";
 
 type Props = {

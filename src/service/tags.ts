@@ -1,4 +1,4 @@
-import { type Tag } from "@/schema/tags";
+import { type Tag } from "@/types/tags";
 
 const tags: Tag[] = [
   "회고",

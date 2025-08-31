@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { type PostContentHeading } from "@/schema/posts";
+import { type PostContentHeading } from "@/types/posts";
 import { cn } from "@/utils/cn";
 import { HeadingIcon } from "./heading-icon";
 

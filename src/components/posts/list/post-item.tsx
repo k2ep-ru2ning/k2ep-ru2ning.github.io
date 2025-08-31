@@ -3,7 +3,7 @@ import { Tag } from "@/components/tags/tag";
 import { TagList } from "@/components/tags/tag-list";
 import { Heading } from "@/components/ui/heading";
 import { paths } from "@/config/paths";
-import { type Post } from "@/schema/posts";
+import { type Post } from "@/types/posts";
 import { formatDate } from "@/utils/format-date";
 
 type Props = {

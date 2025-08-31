@@ -1,4 +1,4 @@
-import { type Series } from "@/schema/series";
+import { type Series } from "@/types/series";
 
 const seriesList: Series[] = [
   {

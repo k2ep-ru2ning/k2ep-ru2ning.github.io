@@ -20,10 +20,10 @@ import { unified } from "unified";
 import { Heading } from "@/components/ui/heading";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
-  PostContentHeading,
-  PostContentHeadingType,
+  type PostContentHeading,
+  type PostContentHeadingType,
   type Post,
-} from "@/schema/posts";
+} from "@/types/posts";
 import { PostArticleTOC } from "./toc/post-article-toc";
 
 type Props = {
