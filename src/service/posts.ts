@@ -1,22 +1,9 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
-import remarkHeadings, {
-  type Heading as RemarkHeading,
-} from "@vcarl/remark-headings";
 import matter from "gray-matter";
-import remarkHeadingId, {
-  type RemarkHeadingIdOptions,
-} from "remark-heading-id";
-import remarkParse from "remark-parse";
-import remarkStringify from "remark-stringify";
-import { unified } from "unified";
-import {
-  type Post,
-  type PostContentHeading,
-  type PostContentHeadingType,
-  postMatterSchema,
-} from "@/schema/posts";
+
+import { type Post, postMatterSchema } from "@/schema/posts";
 import { isValidSeriesId } from "./series";
 import { isValidTag } from "./tags";
 
@@ -25,11 +12,6 @@ const POST_FILE_EXTENSION = [".md", ".mdx"];
 const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "src", "data", "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
-
-const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
-  defaults: true, // 값을 이용해 헤더의 id 값을 자동으로 생성
-  uniqueDefaults: true, // 값이 같더라도 다른 id 값을 생성하도록 설정
-};
 
 /**
  * 글 파일 경로에서 앞쪽의 POSTS_DIRECTORY_PATH와 뒤쪽의 확장자를 제거한 경로를 id로 활용.
@@ -56,46 +38,6 @@ async function getPostAbsolutePaths() {
   );
 }
 
-function convertDepthToHeadingType(depth: number): PostContentHeadingType {
-  switch (depth) {
-    case 2:
-      return "h2";
-    case 3:
-      return "h3";
-    default: {
-      throw new Error(
-        "mdx의 제목의 depth는 2, 3만 가능합니다. (h2, h3만 허용합니다.)",
-      );
-    }
-  }
-}
-
-async function extractHeadingsFromMDXString(sourceMDXString: string) {
-  const processor = unified()
-    .use(remarkParse) // markdown -> syntax tree(mdast)
-    .use(remarkStringify) // syntax tree(mdast) -> markdown
-    .use(remarkHeadingId, remarkHeadingIdOptions) // markdown의 헤더(#, ##, ### ...)에 id attribute 주입(옵션을 이용해 값을 이용해 자동 설정)
-    .use(remarkHeadings); // markdown의 헤더(#, ##, ###) 데이터만 추출
-
-  const headings: PostContentHeading[] = [];
-
-  const headingsByRemarkHeadings = (await processor.process(sourceMDXString))
-    .data.headings as RemarkHeading[];
-
-  for (const headingByRemarkHeading of headingsByRemarkHeadings) {
-    const id = headingByRemarkHeading.data?.id;
-    if (!id || typeof id !== "string") {
-      throw new Error("mdx의 제목에 id 속성이 필요합니다.");
-    }
-
-    const { depth, value } = headingByRemarkHeading;
-
-    headings.push({ id, text: value, type: convertDepthToHeadingType(depth) });
-  }
-
-  return headings;
-}
-
 export async function getPosts() {
   const posts: Post[] = [];
   try {
@@ -120,7 +62,6 @@ export async function getPosts() {
           }
         }
       }
-      const headings = await extractHeadingsFromMDXString(content);
       posts.push({
         mdxContent: content,
         createdAt: new Date(
@@ -131,7 +72,6 @@ export async function getPosts() {
         tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
         seriesId,
         id: generatePostIdFromPostAbsolutePath(postAbsolutePath),
-        headings,
       });
     }
   } catch (e) {

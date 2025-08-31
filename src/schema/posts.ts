@@ -22,5 +22,4 @@ export type PostContentHeading = {
 export type Post = PostMatter & {
   id: string;
   mdxContent: string;
-  headings: PostContentHeading[];
 };
