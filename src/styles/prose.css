@@ -4,7 +4,7 @@
 
 /* code 태그 font-family mono style로 설정 */
 .prose code {
-  @apply font-mono text-sm sm:text-base;
+  @apply font-mono text-sm;
 }
 
 /* 
