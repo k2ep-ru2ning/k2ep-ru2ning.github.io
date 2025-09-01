@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { TagLink } from "@/components/tags/tag-link";
 import { TagList } from "@/components/tags/tag-list";
 import { Heading } from "@/components/ui/heading";
-import { type Post } from "@/schema/posts";
+import { paths } from "@/config/paths";
+import { type Post } from "@/types/posts";
 import { formatDate } from "@/utils/format-date";
 
 type Props = {
@@ -11,9 +13,12 @@ type Props = {
 export function PostArticleHeader({ post }: Props) {
   return (
     <header className="flex flex-col gap-y-4">
-      <Heading as="h1" className="sm:text-4xl">
-        {post.title}
+      <Heading as="h1">
+        <Link href={paths.post.getHref(post.id)}>{post.title}</Link>
       </Heading>
+      <time className="text-sm text-secondary-foreground">
+        {formatDate(post.createdAt)} 작성
+      </time>
       {post.tags && post.tags.length > 0 ? (
         <TagList>
           {post.tags.map((tag) => (
@@ -23,9 +28,6 @@ export function PostArticleHeader({ post }: Props) {
           ))}
         </TagList>
       ) : null}
-      <time className="text-sm text-secondary-foreground">
-        {formatDate(post.createdAt)} 작성
-      </time>
     </header>
   );
 }

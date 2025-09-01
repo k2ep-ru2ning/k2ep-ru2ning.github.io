@@ -6,7 +6,7 @@ tags:
   - "React"
   - "Webpack"
   - "개발 환경 설정"
-series: "React 개발 환경 직접 설정하기"
+seriesId: "React 개발 환경 직접 설정하기"
 ---
 
 ## Webpack Dev Server

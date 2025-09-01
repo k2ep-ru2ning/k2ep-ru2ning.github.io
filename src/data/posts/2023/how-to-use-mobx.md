@@ -6,7 +6,7 @@ tags:
   - "React"
   - "MobX"
   - "상태 관리"
-series: "업무 회고록"
+seriesId: "업무 회고록"
 ---
 
 회사 업무를 하면서 상태 관리 도구로 MobX를 사용하게 되었다. MobX의 핵심 개념, React와 함께 사용하는 방법을 정리했다.

@@ -5,7 +5,7 @@ createdAt: 2022-09-26 17:00:00
 tags:
   - "React"
   - "개발 환경 설정"
-series: "React 개발 환경 직접 설정하기"
+seriesId: "React 개발 환경 직접 설정하기"
 ---
 
 ## eslint 역할
@@ -92,7 +92,6 @@ plugin을 추가할 때, `eslint-plugin-` prefix는 생략할 수 있다.
 `"rules"`에 rule을 명시할 때는 **"`eslint-plugin-` prefix를 제외한 plugin 이름/rule 이름"** 형태로 명시한다.
 
 - `"react-hooks/rules-of-hooks"`
-
   - `eslint-plugin-react-hooks` plugin의 `rules-of-hooks` rule 사용
 
 ### plugin에 정의된 config 사용

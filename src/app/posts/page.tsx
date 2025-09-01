@@ -7,7 +7,9 @@ import { getPosts } from "@/service/posts";
 import { getTags } from "@/service/tags";
 
 export default async function PostsPage() {
-  const [posts, tags] = await Promise.all([getPosts(), getTags()]);
+  const tags = getTags();
+
+  const posts = await getPosts();
 
   return (
     <Section>

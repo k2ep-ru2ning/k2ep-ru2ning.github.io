@@ -7,7 +7,7 @@ tags:
   - "Vite"
   - "React"
   - "개발 환경 설정"
-series: "업무 회고록"
+seriesId: "업무 회고록"
 ---
 
 ## 문제

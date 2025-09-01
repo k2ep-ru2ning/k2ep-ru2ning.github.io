@@ -1,4 +1,4 @@
-import { type PostContentHeadingType } from "@/schema/posts";
+import { type PostContentHeadingType } from "@/types/posts";
 import { cn } from "@/utils/cn";
 
 type Props = {

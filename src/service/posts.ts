@@ -1,52 +1,16 @@
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
-import remarkHeadings, {
-  type Heading as RemarkHeading,
-} from "@vcarl/remark-headings";
 import matter from "gray-matter";
-import { bundleMDX } from "mdx-bundler";
-import {
-  rehypePrettyCode,
-  type Options as RehypePrettyCodeOptions,
-} from "rehype-pretty-code";
-import remarkBreaks from "remark-breaks";
-import remarkGfm from "remark-gfm";
-import remarkHeadingId, {
-  type RemarkHeadingIdOptions,
-} from "remark-heading-id";
-import remarkParse from "remark-parse";
-import remarkSectionize from "remark-sectionize";
-import remarkStringify from "remark-stringify";
-import { unified } from "unified";
-import {
-  type Post,
-  type PostContentHeading,
-  type PostContentHeadingType,
-  postMatterSchema,
-} from "@/schema/posts";
-import { getSeriesIdSet } from "./series";
-import { getTagSet } from "./tags";
+import { type Post, postMatterSchema } from "@/types/posts";
+import { isValidSeriesId } from "./series";
+import { isValidTag } from "./tags";
 
 const POST_FILE_EXTENSION = [".md", ".mdx"];
 
 const POSTS_DIRECTORY_PATH = path.resolve(cwd(), "src", "data", "posts");
 
 const DIFF_IN_MS_BETWEEN_UTC_AND_KR = 9 * 60 * 60 * 1000;
-
-const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
-  theme: {
-    dark: "vitesse-dark",
-    light: "vitesse-light",
-  },
-  defaultLang: "plaintext", // md 파일의 코드 블럭에 언어 설정을 하지 않으면 plaintext로 설정
-  bypassInlineCode: true, // 인라인 코드 블럭은 pretty code가 하이라이트 하지 않음
-};
-
-const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
-  defaults: true, // 값을 이용해 헤더의 id 값을 자동으로 생성
-  uniqueDefaults: true, // 값이 같더라도 다른 id 값을 생성하도록 설정
-};
 
 /**
  * 글 파일 경로에서 앞쪽의 POSTS_DIRECTORY_PATH와 뒤쪽의 확장자를 제거한 경로를 id로 활용.
@@ -73,51 +37,7 @@ async function getPostAbsolutePaths() {
   );
 }
 
-function convertDepthToHeadingType(depth: number): PostContentHeadingType {
-  switch (depth) {
-    case 2:
-      return "h2";
-    case 3:
-      return "h3";
-    default: {
-      throw new Error(
-        "mdx의 제목의 depth는 2, 3만 가능합니다. (h2, h3만 허용합니다.)",
-      );
-    }
-  }
-}
-
-async function extractHeadingsFromMDXString(sourceMDXString: string) {
-  const processor = unified()
-    .use(remarkParse) // markdown -> syntax tree(mdast)
-    .use(remarkStringify) // syntax tree(mdast) -> markdown
-    .use(remarkHeadingId, remarkHeadingIdOptions) // markdown의 헤더(#, ##, ### ...)에 id attribute 주입(옵션을 이용해 값을 이용해 자동 설정)
-    .use(remarkHeadings); // markdown의 헤더(#, ##, ###) 데이터만 추출
-
-  const headings: PostContentHeading[] = [];
-
-  const headingsByRemarkHeadings = (await processor.process(sourceMDXString))
-    .data.headings as RemarkHeading[];
-
-  for (const headingByRemarkHeading of headingsByRemarkHeadings) {
-    const id = headingByRemarkHeading.data?.id;
-    if (!id || typeof id !== "string") {
-      throw new Error("mdx의 제목에 id 속성이 필요합니다.");
-    }
-
-    const { depth, value } = headingByRemarkHeading;
-
-    headings.push({ id, text: value, type: convertDepthToHeadingType(depth) });
-  }
-
-  return headings;
-}
-
 export async function getPosts() {
-  const [validSeriesIdSet, validTagSet] = await Promise.all([
-    getSeriesIdSet(),
-    getTagSet(),
-  ]);
   const posts: Post[] = [];
   try {
     const postAbsolutePaths = await getPostAbsolutePaths();
@@ -125,52 +45,32 @@ export async function getPosts() {
       const file = await readFile(postAbsolutePath, { encoding: "utf8" });
       // front matter에 key만 작성한 경우, gray-matter가 명시적으로 null을 할당한다.
       const { content, data } = matter(file);
-      const { createdAt, description, title, tags, series } =
+      const { createdAt, description, title, tags, seriesId } =
         postMatterSchema.parse(data);
-      if (series && !validSeriesIdSet.has(series)) {
+      if (seriesId && !isValidSeriesId(seriesId)) {
         throw new Error(
-          `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${series}"`,
+          `글의 front matter에 존재하지 않는 series의 이름을 작성했습니다. 작성한 series 이름: "${seriesId}"`,
         );
       }
       if (tags) {
         for (const tag of tags) {
-          if (!validTagSet.has(tag)) {
+          if (!isValidTag(tag)) {
             throw new Error(
               `글의 front matter에 존재하지 않는 tag를 작성했습니다. 작성한 tag: "${tag}"`,
             );
           }
         }
       }
-      const { code: bundledContent } = await bundleMDX({
-        source: content,
-        mdxOptions(options) {
-          options.remarkPlugins = [
-            ...(options.remarkPlugins ?? []),
-            remarkGfm,
-            remarkBreaks,
-            [remarkHeadingId, remarkHeadingIdOptions],
-            remarkSectionize,
-          ];
-          options.rehypePlugins = [
-            ...(options.rehypePlugins ?? []),
-            [rehypePrettyCode, rehypePrettyCodeOptions],
-          ];
-          return options;
-        },
-      });
-      const headings = await extractHeadingsFromMDXString(content);
       posts.push({
-        rawContent: content,
-        bundledContent,
+        mdxContent: content,
         createdAt: new Date(
           createdAt.getTime() - DIFF_IN_MS_BETWEEN_UTC_AND_KR,
         ),
         description,
         title,
         tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
-        series,
+        seriesId,
         id: generatePostIdFromPostAbsolutePath(postAbsolutePath),
-        headings,
       });
     }
   } catch (e) {
@@ -191,6 +91,6 @@ export async function getPostById(id: string) {
 export async function getPostsBySeries(seriesId: string) {
   const posts = await getPosts();
   return posts
-    .filter((post) => post.series === seriesId)
+    .filter((post) => post.seriesId === seriesId)
     .sort((p1, p2) => p1.createdAt.getTime() - p2.createdAt.getTime());
 }
