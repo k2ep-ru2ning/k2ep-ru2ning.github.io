@@ -2,7 +2,6 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { cwd } from "node:process";
 import matter from "gray-matter";
-
 import { type Post, postMatterSchema } from "@/types/posts";
 import { isValidSeriesId } from "./series";
 import { isValidTag } from "./tags";
