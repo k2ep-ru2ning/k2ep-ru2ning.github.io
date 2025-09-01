@@ -1,6 +1,4 @@
-import remarkHeadings, {
-  type Heading as RemarkHeading,
-} from "@vcarl/remark-headings";
+import rehypeExtractToc, { type Toc } from "@stefanprobst/rehype-extract-toc";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 import Link from "next/link";
@@ -8,22 +6,17 @@ import {
   rehypePrettyCode,
   type Options as RehypePrettyCodeOptions,
 } from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import rehypeStringify from "rehype-stringify";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
-import remarkHeadingId, {
-  type RemarkHeadingIdOptions,
-} from "remark-heading-id";
 import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
 import remarkSectionize from "remark-sectionize";
-import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { Heading } from "@/components/ui/heading";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import {
-  type PostContentHeading,
-  type PostContentHeadingType,
-  type Post,
-} from "@/types/posts";
+import { type PostContentHeading, type Post } from "@/types/posts";
 import { PostArticleTOC } from "./toc/post-article-toc";
 
 type Props = {
@@ -39,47 +32,37 @@ const rehypePrettyCodeOptions: RehypePrettyCodeOptions = {
   bypassInlineCode: true, // 인라인 코드 블럭은 pretty code가 하이라이트 하지 않음
 };
 
-const remarkHeadingIdOptions: RemarkHeadingIdOptions = {
-  defaults: true, // 값을 이용해 h2, h3 등의 제목 태그 id 값을 자동으로 생성
-  uniqueDefaults: true, // 값이 같더라도 다른 id 값을 생성하도록 설정
-};
-
-function convertDepthToHeadingType(depth: number): PostContentHeadingType {
-  switch (depth) {
-    case 2:
-      return "h2";
-    case 3:
-      return "h3";
-    default: {
-      throw new Error(
-        "mdx의 제목의 depth는 2, 3만 가능합니다. (h2, h3만 허용합니다.)",
-      );
-    }
-  }
-}
-
-async function extractHeadingsFromMDXString(sourceMDXString: string) {
-  const processor = unified()
+async function extractHeadingsFromMDX(mdxSource: string) {
+  const file = await unified()
     .use(remarkParse) // markdown -> syntax tree(mdast)
-    .use(remarkStringify) // syntax tree(mdast) -> markdown
-    .use(remarkHeadingId, remarkHeadingIdOptions) // markdown의 헤더(#, ##, ### ...)에 id attribute 주입(옵션을 이용해 값을 이용해 자동 설정)
-    .use(remarkHeadings); // markdown의 헤더(#, ##, ###) 데이터만 추출
+    .use(remarkRehype) // syntax tree(mdast) -> syntax tree(hast)
+    .use(rehypeSlug) // 제목 태그에 id 속성이 없다면, 내용 기반으로 id 속성 생성
+    .use(rehypeExtractToc) // 제목 태그 추출
+    .use(rehypeStringify) // syntax tree(hast) -> html 문자열 출력
+    .process(mdxSource);
+
+  const { toc = [] } = file.data;
 
   const headings: PostContentHeading[] = [];
 
-  const headingsByRemarkHeadings = (await processor.process(sourceMDXString))
-    .data.headings as RemarkHeading[];
-
-  for (const headingByRemarkHeading of headingsByRemarkHeadings) {
-    const id = headingByRemarkHeading.data?.id;
-    if (!id || typeof id !== "string") {
-      throw new Error("mdx의 제목에 id 속성이 필요합니다.");
+  function processToc(toc: Toc) {
+    for (const { depth, value, children, id } of toc) {
+      if (id === undefined) {
+        throw new Error(
+          "제목에 id 속성이 없습니다. rehype-slug가 제대로 적용되었는지 확인해주세요.",
+        );
+      }
+      if (depth !== 2 && depth !== 3) {
+        throw new Error("글 본문에는 h2, h3만 허용됩니다.");
+      }
+      headings.push({ id, text: value, type: `h${depth}` });
+      if (children) {
+        processToc(children);
+      }
     }
-
-    const { depth, value } = headingByRemarkHeading;
-
-    headings.push({ id, text: value, type: convertDepthToHeadingType(depth) });
   }
+
+  processToc(toc);
 
   return headings;
 }
@@ -92,18 +75,18 @@ export async function PostArticleContent({ post }: Props) {
         ...(options.remarkPlugins ?? []),
         remarkGfm,
         remarkBreaks,
-        [remarkHeadingId, remarkHeadingIdOptions],
         remarkSectionize,
       ];
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
+        rehypeSlug,
         [rehypePrettyCode, rehypePrettyCodeOptions],
       ];
       return options;
     },
   });
 
-  const headings = await extractHeadingsFromMDXString(post.mdxContent);
+  const headings = await extractHeadingsFromMDX(post.mdxContent);
 
   const MDXComponent = getMDXComponent(code);
 
@@ -127,14 +110,14 @@ export async function PostArticleContent({ post }: Props) {
           components={{
             h2: ({ children, id, ...props }) => (
               <Heading {...props} as="h2" id={id} className="scroll-mt-20">
-                <Link href={`#${id}`} className="no-underline">
+                <Link href={`#${id}`} className="no-underline font-bold">
                   {children}
                 </Link>
               </Heading>
             ),
             h3: ({ children, id, ...props }) => (
               <Heading {...props} as="h3" id={id} className="scroll-mt-20">
-                <Link href={`#${id}`} className="no-underline">
+                <Link href={`#${id}`} className="no-underline font-bold">
                   {children}
                 </Link>
               </Heading>
