@@ -50,6 +50,8 @@
 :root {
   --header-height: 64px;
   --footer-height: 80px;
+  --content-max-width: 640px;
+  --content-horizontal-padding: 8px;
 
   --radius: 0.625rem;
   --background: oklch(1 0 0);

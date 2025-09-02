@@ -1,17 +1,16 @@
 import { type Metadata } from "next";
 import { SeriesList } from "@/components/series/series-list";
 import { Heading } from "@/components/ui/heading";
-import { Section } from "@/components/ui/section";
 import { getSeries } from "@/service/series";
 
 export default function SeriesPage() {
   const series = getSeries();
 
   return (
-    <Section>
+    <main className="max-w-(--content-max-width) mx-auto px-(--content-horizontal-padding) flex flex-col gap-6">
       <Heading as="h2">시리즈</Heading>
       <SeriesList series={series} />
-    </Section>
+    </main>
   );
 }
 

@@ -24,14 +24,14 @@ export default async function PostPage({ params }: Props) {
   }
 
   return (
-    <>
+    <main>
       <FixedScrollToTopButton />
-      <article className="flex flex-col gap-y-6">
+      <article>
         <PostArticleHeader post={post} />
-        <Separator />
+        <Separator className="max-w-(--content-max-width) mx-auto my-6" />
         <PostArticleContent post={post} />
       </article>
-    </>
+    </main>
   );
 }
 

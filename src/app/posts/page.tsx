@@ -2,7 +2,6 @@ import { type Metadata } from "next";
 import { Suspense } from "react";
 import { Posts } from "@/components/posts/list/posts";
 import { Heading } from "@/components/ui/heading";
-import { Section } from "@/components/ui/section";
 import { getPosts } from "@/service/posts";
 import { getTags } from "@/service/tags";
 
@@ -12,12 +11,12 @@ export default async function PostsPage() {
   const posts = await getPosts();
 
   return (
-    <Section>
+    <main className="max-w-(--content-max-width) mx-auto px-(--content-horizontal-padding) flex flex-col gap-6">
       <Heading as="h2">글</Heading>
       <Suspense fallback={null}>
         <Posts posts={posts} tags={tags} />
       </Suspense>
-    </Section>
+    </main>
   );
 }
 

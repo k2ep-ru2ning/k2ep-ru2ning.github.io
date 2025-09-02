@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { type ReactNode } from "react";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { LogoLink } from "@/components/logo-link";
+import { Menu } from "@/components/menu/menu";
 import { owner } from "@/config/const";
 import { jetbrainsMono, pretendard } from "@/config/fonts";
 import { themeClassInitializationScript } from "@/utils/theme";
@@ -12,6 +12,8 @@ type Props = {
 };
 
 export default function RootLayout({ children }: Props) {
+  const year = new Date().getFullYear();
+
   return (
     <html
       lang="ko"
@@ -31,19 +33,23 @@ export default function RootLayout({ children }: Props) {
         />
       </head>
       <body>
-        <div className="px-4 min-h-dvh flex flex-col">
-          {/* mobile에서 scroll to top button이 헤더에 가려질 수 있도록 z-index 설정 */}
-          <div className="z-10 sticky top-0 bg-background">
-            <div className="max-w-3xl lg:max-w-5xl w-full mx-auto">
-              <Header />
-            </div>
-          </div>
-          <main className="px-2 py-6 grow max-w-3xl lg:max-w-5xl w-full mx-auto">
-            {children}
-          </main>
-          <div className="max-w-3xl lg:max-w-5xl w-full mx-auto border-t border-border">
-            <Footer />
-          </div>
+        {/* 
+          grid-template-columns: 1fr minmax(0,var(--content-max-width)) 1fr;
+          3단 컬럼 중, 가운데 컬럼에 max-width: var(--content-max-width); width: 100%; 설정한 것과 같은 효과
+          좌우 컬럼은 동일한 비율로 나눔
+        */}
+        <div className="px-4 min-h-dvh grid gap-y-6 grid-cols-[1fr_minmax(0,var(--content-max-width))_1fr] grid-rows-[var(--header-height)_1fr_var(--footer-height)]">
+          {/* scroll to top button이 헤더에 가려질 수 있도록 z-index 설정 */}
+          <header className="row-start-1 col-start-2 bg-background text-foreground z-10 sticky top-0 flex items-center justify-between">
+            <LogoLink />
+            <Menu />
+          </header>
+          <div className="row-start-2 col-span-full">{children}</div>
+          <footer className="px-(--content-horizontal-padding) row-start-3 col-start-2 border-t border-border flex flex-col justify-center items-center">
+            <small>
+              &copy; {year} {owner}
+            </small>
+          </footer>
         </div>
       </body>
     </html>

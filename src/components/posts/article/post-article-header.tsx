@@ -12,7 +12,7 @@ type Props = {
 
 export function PostArticleHeader({ post }: Props) {
   return (
-    <header className="flex flex-col gap-y-4">
+    <header className="max-w-(--content-max-width) mx-auto px-(--content-horizontal-padding) flex flex-col gap-y-4">
       <Heading as="h1">
         <Link href={paths.post.getHref(post.id)}>{post.title}</Link>
       </Heading>

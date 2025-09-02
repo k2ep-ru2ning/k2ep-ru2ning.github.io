@@ -64,12 +64,12 @@ export function PostArticleTOC({ headings }: Props) {
     // 부모 요소 아래에 뷰포트의 높이에 따라 동적으로 높이가 변경되는 nav를 sticky하게 붙여놓음.
     // 가장 가까운 스크롤 박스인 뷰포트를 기준으로 위치가 top 80px로 고정됨.
     // main의 상하패딩 총 3rem.
-    <nav className="border border-border rounded-md lg:border-0 lg:sticky lg:top-20 lg:h-[calc(100dvh-3rem-var(--header-height)-var(--footer-height))] lg:overflow-hidden">
-      <header className="h-[56px] flex justify-between items-center py-3 mx-3 border-b border-b-border">
+    <nav className="border border-border rounded-md xl:border-0 xl:sticky xl:top-20 xl:w-60 xl:h-[calc(100dvh-3rem-var(--header-height)-var(--footer-height))] xl:overflow-hidden">
+      <header className="h-[56px] flex justify-between items-center mx-3 border-b border-b-border">
         <h2 className="text-lg">목차</h2>
       </header>
-      <ScrollArea className="lg:h-[calc(100%-56px)]">
-        <ul className="py-3 mx-3 flex flex-col gap-1">
+      <ScrollArea className="xl:h-[calc(100%-56px)]">
+        <ul className="xl:w-60 p-3 flex flex-col gap-1">
           {headings.map((item) => {
             const isActive = activeHeadingIdSet.has(item.id);
             return (
@@ -91,7 +91,7 @@ export function PostArticleTOC({ headings }: Props) {
                         isActive && "text-brand dark:text-brand",
                       )}
                     />
-                    {item.text}
+                    <span className="break-all">{item.text}</span>
                   </Link>
                 </Button>
               </li>

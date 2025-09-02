@@ -91,20 +91,20 @@ export async function PostArticleContent({ post }: Props) {
   const MDXComponent = getMDXComponent(code);
 
   return (
-    <div className="lg:grid lg:grid-cols-[calc(100%-320px)_320px]">
-      {/* 
+    <div className="grid grid-cols-[1fr_minmax(0,var(--content-max-width))_1fr] gap-y-8 xl:gap-y-0 xl:gap-x-4">
+      {/*
         (lg 뷰포트에서) 아래 aside에 sticky를 주면 안된다.
         이 aside는 부모 요소 height를 다 차지하고 있어서,
         가장 가까운 scroll box인 뷰포트에서 스크롤이 일어나도
-        sticky하게 움직일 공간이 없다. 
+        sticky하게 움직일 공간이 없다.
         그래서 TOC 컴포넌트에 sticky를 준다.
       */}
-      <aside className="lg:order-1 lg:ml-5 lg:border-l lg:border-l-border">
+      <aside className="row-start-1 col-start-2 xl:col-start-3 px-(--content-horizontal-padding)">
         <PostArticleTOC headings={headings} />
       </aside>
       <div
         id="article-content"
-        className="mt-6 lg:mt-0 max-w-full prose prose-zinc dark:prose-invert"
+        className="row-start-2 col-start-2 xl:row-start-1 px-(--content-horizontal-padding) max-w-full prose prose-zinc dark:prose-invert"
       >
         <MDXComponent
           components={{

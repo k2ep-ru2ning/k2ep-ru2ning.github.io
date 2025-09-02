@@ -2,26 +2,25 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { Section } from "@/components/ui/section";
 import { owner } from "@/config/const";
 import { paths } from "@/config/paths";
 import { cn } from "@/utils/cn";
 
 export default function HomePage() {
   return (
-    <Section className="gap-10 sm:gap-12">
+    <main className="max-w-(--content-max-width) mx-auto px-(--content-horizontal-padding) flex flex-col gap-6">
       <header className="flex flex-col gap-1">
         <Heading as="h1" className="text-brand text-2xl">
           {owner}
         </Heading>
-        <div className="flex flex-col sm:flex-row sm:gap-1 text-sm sm:text-base text-secondary-foreground">
-          <span className="before:content-['·'] sm:before:content-none flex gap-1">
+        <ul className="flex flex-col sm:flex-row sm:gap-1 text-sm sm:text-base text-secondary-foreground">
+          <li className="before:content-['·'] sm:before:content-none flex gap-1">
             Software Engineer
-          </span>
-          <span className="before:content-['·'] flex gap-1">
+          </li>
+          <li className="before:content-['·'] flex gap-1">
             Front-end Web Developer
-          </span>
-        </div>
+          </li>
+        </ul>
       </header>
       <div className="flex flex-col gap-4 p-2 rounded-md bg-secondary text-secondary-foreground">
         <p>
@@ -80,6 +79,6 @@ export default function HomePage() {
           </li>
         ))}
       </ul>
-    </Section>
+    </main>
   );
 }

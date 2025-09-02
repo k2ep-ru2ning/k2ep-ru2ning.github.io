@@ -15,14 +15,11 @@ export function PostItem({
 }: Props) {
   return (
     <li className="border-b first:border-t border-border">
-      <Link
-        href={paths.post.getHref(id)}
-        className="group flex flex-col md:flex-row md:gap-x-8 py-6 sm:py-8"
-      >
-        <time className="text-sm text-secondary-foreground leading-8 md:shrink-0 group-hover:text-brand transition-colors">
+      <Link href={paths.post.getHref(id)} className="group flex flex-col py-6">
+        <time className="text-sm text-secondary-foreground leading-8 group-hover:text-brand transition-colors">
           {formatDate(createdAt)}
         </time>
-        <div className="flex flex-col gap-3 md:grow">
+        <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-3 group-hover:text-brand transition-colors">
             <Heading as="h3" className="leading-8">
               {title}
