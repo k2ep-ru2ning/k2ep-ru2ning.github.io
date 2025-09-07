@@ -16,9 +16,16 @@ export function PostArticleHeader({ post }: Props) {
       <Heading as="h1">
         <Link href={paths.post.getHref(post.id)}>{post.title}</Link>
       </Heading>
-      <time className="text-sm text-secondary-foreground">
-        {formatDate(post.createdAt)} 작성
-      </time>
+      <ul className="text-sm text-secondary-foreground sm:flex sm:items-center">
+        <li>
+          <time>{formatDate(post.createdAt)}</time> 작성
+        </li>
+        {post.updatedAt && (
+          <li className="sm:before:content-['·'] sm:before:mr-1 sm:ml-1">
+            <time>{formatDate(post.updatedAt)}</time> 수정
+          </li>
+        )}
+      </ul>
       {post.tags && post.tags.length > 0 ? (
         <TagList>
           {post.tags.map((tag) => (

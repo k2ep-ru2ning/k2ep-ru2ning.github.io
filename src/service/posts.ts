@@ -45,7 +45,7 @@ export async function getPosts() {
       const file = await readFile(postAbsolutePath, { encoding: "utf8" });
       // front matter에 key만 작성한 경우, gray-matter가 명시적으로 null을 할당한다.
       const { content, data } = matter(file);
-      const { createdAt, description, title, tags, seriesId } =
+      const { createdAt, updatedAt, description, title, tags, seriesId } =
         postMatterSchema.parse(data);
       if (seriesId && !isValidSeriesId(seriesId)) {
         throw new Error(
@@ -64,8 +64,15 @@ export async function getPosts() {
       posts.push({
         mdxContent: content,
         createdAt: new Date(
+          // 글에 "2024-01-16 20:00:00" 라고 작성하면
+          // 2024-01-16T20:00:00.000Z를 갖는 (UTC로 2024년 1월 16일 20시인) createAt을 gray matter가 생성하므로
+          // 한국시간으로 2024년 1월 16일 20시인, UTC로 2024년 1월 16일 11시로
+          // 변경하기 위해서 한국이 9시간 더 빠르기 때문에 9시간을 뺀다.
           createdAt.getTime() - DIFF_IN_MS_BETWEEN_UTC_AND_KR,
         ),
+        updatedAt:
+          updatedAt &&
+          new Date(updatedAt.getTime() - DIFF_IN_MS_BETWEEN_UTC_AND_KR),
         description,
         title,
         tags: tags?.toSorted((tag1, tag2) => tag1.localeCompare(tag2)),
