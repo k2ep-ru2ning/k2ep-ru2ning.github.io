@@ -1,17 +1,14 @@
-import { JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
+import { JetBrains_Mono, Asta_Sans } from "next/font/google";
 
 export const jetbrainsMono = JetBrains_Mono({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jetbrains-mono",
 });
 
-export const pretendard = localFont({
-  src: "./PretendardVariable.woff2",
+export const astaSans = Asta_Sans({
+  subsets: ["latin"],
   display: "swap",
-  weight: "45 920",
-  variable: "--font-pretendard",
+  variable: "--font-asta-sans",
 });

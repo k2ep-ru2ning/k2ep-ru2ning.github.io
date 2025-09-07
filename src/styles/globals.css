@@ -143,13 +143,9 @@
   그래서 공식문서에서 다른 변수를 참조하는 경우, @theme inline을 사용하라고 함.
 */
 @theme inline {
-  /* --font-pretendard, --font-jetbrains-mono variable은 next/font가 생성한 것이다. */
-  --font-sans:
-    var(--font-pretendard), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono:
-    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
+  /* --font-asta-sans, --font-jetbrains-mono variable은 next/font가 생성한 것이다. */
+  --font-sans: var(--font-asta-sans), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <main className="max-w-(--content-max-width) mx-auto px-(--content-horizontal-padding) flex flex-col gap-6">
       <header className="flex flex-col gap-1">
-        <Heading as="h1" className="text-brand text-2xl">
+        <Heading as="h1" className="text-brand text-2xl font-extrabold">
           {owner}
         </Heading>
         <ul className="flex flex-col sm:flex-row sm:gap-1 text-sm sm:text-base text-secondary-foreground">

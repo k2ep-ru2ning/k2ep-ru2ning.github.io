@@ -4,7 +4,7 @@ import { type ReactNode } from "react";
 import { LogoLink } from "@/components/logo-link";
 import { Menu } from "@/components/menu/menu";
 import { owner } from "@/config/const";
-import { jetbrainsMono, pretendard } from "@/config/fonts";
+import { jetbrainsMono, astaSans } from "@/config/fonts";
 import { themeClassInitializationScript } from "@/utils/theme";
 
 type Props = {
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: Props) {
   return (
     <html
       lang="ko"
-      className={`${pretendard.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
+      className={`${astaSans.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
       // 서버에서 HTML을 받고나서 script로 html 태그에 dark class를 주입하기 때문에,
       // 하이드레이션할 때, html의 class 속성이 서버에서 가져온 것과 달라졌다고 에러를 발생시킴.
       // 이걸 허용하기 위한 옵션.
