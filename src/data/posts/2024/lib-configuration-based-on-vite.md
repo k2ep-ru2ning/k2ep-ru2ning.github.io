@@ -20,7 +20,7 @@ seriesId: "업무 회고록"
 
 ![rollup build 속도](/images/posts/2024/lib-configuration-based-on-vite/rollup-build-time.png)
 
-기존에 사용하던 Rollup 버전이 너무 오래 되었고(기존 버전: `2`, 24.06.12 기준 최신 버전: `4`), Rollup 설정 파일도 2년에 퇴사 하신분의 commit을 끝으로 관리되지 않았다.
+기존에 사용하던 Rollup 버전이 너무 오래 되었고(기존 버전: `2`, 24.06.12 기준 최신 버전: `4`), Rollup 설정 파일도 2년 전에 퇴사 하신분의 commit을 끝으로 관리되지 않았다.
 
 그래서 최근 빠른 속도로 각광 받고 있는 Vite를 도입하면서 빌드 속도를 개선하기로 했다.
 
