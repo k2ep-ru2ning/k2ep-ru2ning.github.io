@@ -13,20 +13,17 @@ jobs:
     env:
       TZ: Asia/Seoul
     steps:
-      - name: 'Checkout'
+      - name: Checkout
         uses: actions/checkout@v7
-      - name: 'Setup Node'
+      - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: '24'
-      - name: 'Setup pnpm'
+      - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
           version: 10
-      - name: 'logging'
-        run: |
-          node -v
-          pnpm -v
-          node -e "console.log('TZ:', process.env.TZ)"
-          node -e "console.log('TimeZone:', Intl.DateTimeFormat().resolvedOptions().timeZone)"
-          node -e "console.log('Now:', new Date().toString())"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build then deploy
+        run: pnpm deploy
