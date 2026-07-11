@@ -1,26 +1,15 @@
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { FlatCompat } from "@eslint/eslintrc";
-
-// esm에서 cjs의 __filename, __dirname 변수를 흉내내기 위함.
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 /** @type {import('eslint').Linter.Config[]} */
-const eslintConfig = [
-  // compat.config: ESLintRC-style config를 flag-config-style config로 변환.
-  ...compat.config({
-    extends: [
-      "next/core-web-vitals", // next: next의 기본 config, next/core-web-vitals: 조금 더 엄격한 config.
-      "next/typescript", // 'plugin:@typescript-eslint/recommended'와 동일.
-      "prettier", // eslint-config-prettier, prettier와 충돌할 수 있는 rule들을 off.
-    ],
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  {
+    // eslint-config-next에 eslint-plugin-import가 포함되어 있음.
     rules: {
-      // eslint-config-next에 eslint-plugin-import가 포함되어 있음.
       "import/order": [
         "error",
         {
@@ -41,7 +30,9 @@ const eslintConfig = [
         },
       ],
     },
-  }),
-];
+  },
+  eslintConfigPrettier,
+  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+]);
 
 export default eslintConfig;
