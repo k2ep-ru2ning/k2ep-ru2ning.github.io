@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://k2ep-ru2ning.github.io/",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "lint": "eslint",
     "format": "prettier . --write",
