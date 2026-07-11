@@ -68,12 +68,14 @@ export function MobileMenuDialog() {
 
   useEffect(() => {
     // pathname이 바뀌면, 즉 페이지가 이동하면 다이얼로그 닫기
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 
   useEffect(() => {
     // 너비가 늘어나서 모바일 크기가 아니라면, 다이얼로그 닫기
     if (!isMobile) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpen(false);
     }
   }, [isMobile]);

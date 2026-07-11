@@ -106,6 +106,7 @@ export async function PostArticleContent({ post }: Props) {
         id="article-content"
         className="row-start-2 col-start-2 xl:row-start-1 px-(--content-horizontal-padding) max-w-full prose prose-zinc dark:prose-invert"
       >
+        {/* eslint-disable-next-line react-hooks/static-components */}
         <MDXComponent
           components={{
             h2: ({ children, id, ...props }) => (
