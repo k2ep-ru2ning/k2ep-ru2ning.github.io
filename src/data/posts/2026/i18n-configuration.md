@@ -430,3 +430,116 @@ i18n
 - 비슷한 맥락으로 `i18n.languages`도 `["es", "ko"]`가 아니라 `["ko"]`가 되었다.
 
 즉, i18n은 `supportedLngs` 옵션을 반영해서 `i18n.language`, `i18n.languages` 값을 정하려고 한다.
+
+### 웹 페이지에 다시 방문했을 때, 유저가 마지막으로 선택했던 언어 유지하기 (`i18next-browser-languagedetector` + 로컬 스토리지)
+
+사용자가 서비스에 처음 진입했을 때는 (`htmlTag` 옵션 설정을 통해서) `html` 태그의 `lang` 애트리뷰트에 적힌 언어를 감지해서 언어 리소스를 선택했다고 해도, 이후 방문에는 사용자가 마지막으로 선택한 언어를 선택되게 하고 싶을 수 있다.
+
+로컬 스토리지에 사용자가 선택한 언어를 기록해두고, 언어 감지 플러그인이 로컬 스토리지로부터 언어를 감지하게 만들면 된다.
+
+```ts title="src/i18n/init.ts" showLineNumbers {24}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+
+i18n
+  .use(initReactI18next)
+  .use(HttpApi)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: "en", // 다시 "ko" -> "en"으로 수정.
+    ns: ["common", "signUp"],
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
+    },
+    supportedLngs: ["en", "ko"],
+    detection: {
+      order: ["localStorage", "htmlTag"],
+    },
+  });
+```
+
+`detection.order`에 `"localStorage"`만 추가하면 된다.
+
+![result-language-detector-localstorage](/images/posts/2026/i18n-configuration/result-language-detector-localstorage.gif)
+
+사용자가 영어에서 한국어를 선택하고, 새로고침 했는데 한국어가 유지되었다.
+
+### 접속한 위치(나라) 정보 기반으로 언어 감지하기
+
+회사에서는 CloudFront를 활용해서 프론트엔드를 배포하고 있었고, CloudFront function을 활용해 `KR`, `US` 같은 국가 코드를 쿠키로 내려 주고 있었다. 즉 쿠키 값을 보고 어떤 나라에서 접속했는지 알 수 있는 상황이다.
+
+사용자가 웹 페이지를 열었을 때, 접속 국가를 기반으로 초기 언어를 설정해야하는 요구사항을 구현해야 했다.
+
+이번 글에서는 요구사항을 좀 더 간단하게 만들어서, 한국에서 접속했을 때는 한국어로 표시하고 이외의 국가에서 접근했을 때는 영어로 표시해야하는 요구사항이 있다고 하자.
+
+그럼 국가 코드 쿠키를 파싱하고, `KR`이면 언어 코드 `ko`로, 그외의 국가 코드에 대해서는 언어 코드 `en`으로 매핑하는 로직을 언어 감지 플러그인에 등록하면 된다.
+
+먼저, 국가 코드 쿠키로부터 적절한 언어 코드를 계산하는 함수를 작성한다.
+
+```ts title="src/detect-language-code-from-country-code-cookie.ts" showLineNumbers
+// 쿠키를 다루기 쉽게 도와주는 js-cookie 유틸 라이브러리
+import Cookies from "js-cookie";
+
+export function detectLanguageCodeFromCountryCodeCookie() {
+  const countryCodeCookie = Cookies.get("country-code");
+
+  // 국가 코드에서 언어 코드로 매핑하는 로직을 작성한다.
+  if (countryCodeCookie === "KR") {
+    return "ko";
+  }
+  return "en";
+}
+```
+
+그리고 작성한 함수를 커스텀 detector로 등록하면 된다.
+
+```ts title="src/i18n/init.ts" showLineNumbers {7-11, 30-32}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { detectLanguageCodeFromCountryCodeCookie } from "../detect-language-code-from-country-code-cookie.ts";
+
+const languageDetector = new LanguageDetector();
+languageDetector.addDetector({
+  name: "countryCodeCookie",
+  lookup: () => detectLanguageCodeFromCountryCodeCookie(),
+});
+
+i18n
+  .use(initReactI18next)
+  .use(HttpApi)
+  .use(languageDetector)
+  .init({
+    fallbackLng: "en",
+    ns: ["common", "signUp"],
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
+    },
+    supportedLngs: ["en", "ko"],
+    detection: {
+      order: ["localStorage", "countryCodeCookie", "htmlTag"],
+    },
+  });
+```
+
+- `"countryCodeCookie"`라는 이름의 커스텀 detector를 정의했고, 탐지 순서는 `"localStorage"` → `"countryCodeCookie"` → `"htmlTag"` 순으로 등록했다.
+- 유저가 첫 방문시에는 로컬 스토리지에 저장된 언어 코드가 없을 테니 국가 코드 쿠키 기반으로 언어를 감지할 것이고, 재 방문시에는 로컬 스토리지에 저장된 언어 코드로 초기 언어 리소스를 선택하게 만들었다.
+
+![result-language-detector-custom](/images/posts/2026/i18n-configuration/result-language-detector-custom.gif)
+
+첫방문시 국가 코드가 `KR`이어서 `ko` 리소스가 선택되고, 유저가 `en` 리소스를 선택한 후, 새로고침시에는 로컬 스토리지 디텍터에 의해 `en` 리소스가 선택되는 시나리오를 시뮬레이션 한 것이다.
