@@ -121,7 +121,7 @@ export default function App() {
 
 ![result-basic](/images/posts/2026/i18n-configuration/result-basic.gif)
 
-### 번역 리소스를 json 파일로 분리해 관리하기
+### 번역 리소스를 json 파일로 분리해 관리하기 (i18next-http-backend)
 
 앞에서는 리소스를 자바스크립트 객체로 관리했고, i18n 인스턴스를 초기화할 때 리소스를 등록했다.
 `i18next-http-backend` 플러그인을 활용하면, json 파일 형태로 리소스를 관리할 수 있다. 또 해당 리소스가 필요할 때가 되었을 때, 가져올 수 있다. (지연 로딩)
@@ -178,3 +178,93 @@ i18n 인스턴스를 초기화할 때 설정하는 옵션 중, `react.useSuspens
 렌더링된 컴포넌트 내에서 항상 번역 리소스가 준비되었음이 보장되기 때문에, 렌더링 된 이후에 화면이 깜빡이지 않고, `useTranslation`으로 접근한 `ready` 플래그도 항상 `true`가 된다.
 
 만약 이 옵션을 `false`로 두면, 번역 리소스가 준비되지 않았더라도, 리소스를 사용하는 컴포넌트를 렌더링한다. 그래서 컴포넌트 내에서 `t` 함수를 사용해 번역 리소스를 참조했을 때, 아직 리소스가 없으면 번역 키가 화면에 표시되었다가, 리소스를 가져온 다음에야 번역된 값으로 표시된다. `ready` 플래그의 값도 리소스가 로드 되기 전에는 `false`였다가 로드 된 후에 `true`가 된다.
+
+### 웹 페이지 로드 할 때, 언어 감지하기 (i18next-browser-languagedetector)
+
+현재까지의 i18n 설정에서는 `lng` 옵션을 `en`으로 두었다. 그래서 페이지를 열 때마다 초기에 `en`이 기본 언어로 설정된다.
+
+코드에 정적으로 설정한 언어가 아니라, 페이지가 열릴 때마다 언어를 감지해서 초기 언어를 i18n 인스턴스에 설정해줄 수 있다. `i18next-browser-languagedetector` 플러그인을 활용하면 된다.
+
+이는, 접속한 국가에 따라 초기 언어를 정해주거나, 사용자가 마지막에 선택한 언어로 초기 언어를 정해주는 요구사항을 구현할 때 유용하다.
+
+```ts title="src/i18n/init.ts" showLineNumbers {4, 9, 22-25}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+
+i18n
+  .use(initReactI18next)
+  .use(HttpApi)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: "en",
+    ns: ["common", "signUp"],
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
+    },
+    supportedLngs: ["en", "ko"],
+    detection: {
+      order: ["htmlTag"],
+    },
+  });
+```
+
+- `i18next-browser-languagedetector` 플러그인을 추가했다.
+- `lng` 옵션을 지웠다.
+  - 이 옵션은 `i18next-browser-languagedetector` 플러그인이 감지한 언어를 덮어쓰는 옵션이기에 지웠다.
+  - 어차피 초기 언어 설정을 `i18next-browser-languagedetector` 으로 할 것이므로 지워야 하는 옵션이다.
+- `supportedLngs` 옵션을 추가했다.
+  - `i18next-browser-languagedetector` 문서에서 추가하길 권장하는 옵션이다.
+  - `supportedLngs`은 이 i18n 인스턴스가 지원하는 언어 리소스를 정의하는 옵션이다.
+  - "`changeLanguage` 메서드에 전달한 인자값" 혹은 "언어 감지 플러그인이 감지한 언어"를 이 i18n 인스턴스가 제공하는 언어인지 판단할 때 사용하는 옵션이다. 만약 요청한 언어 리소스를 이 i18n 인스턴스가 제공하지 않으면 fallbackLng 리소스를 사용하게 된다.
+- `detection.order` 옵션에는 언어를 어디서 감지할지 명시할 수 있다. `htmlTag`라고 적었으므로 일단 `html` 태그의 `lang` 애트리뷰트를 참조해 언어를 감지한다.
+
+```tsx title="src/app.tsx" showLineNumbers {17}
+import { useTranslation } from "react-i18next";
+
+export default function App() {
+  const { t, i18n } = useTranslation();
+
+  const handleClickEN = () => {
+    i18n.changeLanguage("en");
+  };
+
+  const handleClickKO = () => {
+    i18n.changeLanguage("ko");
+  };
+
+  return (
+    <div>
+      <div>
+        <div>resolved language: {i18n.resolvedLanguage}</div>
+        <button type="button" onClick={handleClickEN}>
+          영어
+        </button>
+        <button type="button" onClick={handleClickKO}>
+          한국어
+        </button>
+      </div>
+      <div>
+        일반적인 컨텍스트에서 pending의 의미: <span>{t("common:pending")}</span>
+      </div>
+      <div>
+        회원 가입 컨텍스트에서 pending의 의미:{" "}
+        <span>{t("pending", { ns: "signUp" })}</span>
+      </div>
+    </div>
+  );
+}
+```
+
+17번째 줄에 추가한 `i18n.resolvedLanguage`을 통해서 현재 선택된 언어를 알 수 있다.
+
+![result-language-detector-plugin](/images/posts/2026/i18n-configuration/result-language-detector-plugin.gif)
+
+`lng: en` 옵션을 제거했지만, `index.html`에 `<html lang="en">`으로 작성했기 때문에, 언어 감지 플러그인에 의해 페이지를 새로 고침했을 때 `en`으로 선택된다.
