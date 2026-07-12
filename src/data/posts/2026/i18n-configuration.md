@@ -757,3 +757,149 @@ cli에 의해서 두가지의 타입 선언 파일이 생성되었다.
 `pnpm exec i18next-cli status ko` 처럼 언어 리소스를 명시하면, `ko` 리소스에 대한 좀 더 자세한 상태 체크를 진행한다.
 
 ![i18next-cli-status-result-2](/images/posts/2026/i18n-configuration/i18next-cli-status-result-2.png)
+
+### `extract` 명령어의 단점 - 동적 키 추출 불편
+
+- 동적 키를 추출할 수 없다.
+- `i18next-cli`가 소스코드를 정적 분석해서 번역 키를 추출하기 때문이다.
+
+이제 코드로 좀 더 알아보자.
+
+간단하게 위쪽에 회원가입인지, 로그인인지 선택하는 버튼이 있고, 클릭한 버튼에 따라 폼의 제목이 변경되게 다음과 같이 코드를 짰다고 하자.
+
+```tsx title="src/app.tsx"
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
+export default function App() {
+  const { t, i18n } = useTranslation();
+
+  const [mode, setMode] = useState("signUp");
+
+  return (
+    <form>
+      <div>i18n.resolvedLanguage: {i18n.resolvedLanguage}</div>
+      <button type="button" onClick={() => i18n.changeLanguage("en")}>
+        en
+      </button>
+      <button type="button" onClick={() => i18n.changeLanguage("ko")}>
+        ko
+      </button>
+      <button type="button" onClick={() => setMode("signUp")}>
+        signUp mode
+      </button>
+      <button type="button" onClick={() => setMode("signIn")}>
+        signIn mode
+      </button>
+      <h2>{t(`${mode}.title`)}</h2>
+      <div>
+        <label>
+          {t("emailLabel")}
+          <input />
+        </label>
+        <button>{t("emailSubmitButton")}</button>
+      </div>
+    </form>
+  );
+}
+```
+
+컴포넌트 코드에서 사용한 번역키가 기존과 달라졌기 때문에, 없어진 키를 제거하고, 새로운 키는 추출하기 위해서 `pnpm exec i18next-cli extract`를 실행한다.
+
+생성된 리소스 파일은 다음과 같다.
+
+```json title="public/locales/en/translation.json"
+{
+  "emailLabel": "emailLabel",
+  "emailSubmitButton": "emailSubmitButton"
+}
+```
+
+```json title="public/locales/ko/translation.json"
+{
+  "emailLabel": "",
+  "emailSubmitButton": ""
+}
+```
+
+`"signUp.title"`, `"signIn.title"` 키를 추출해줄거라고 기대했는데, 추출하지 않았다.
+
+![i18next-cli-extract-fail-reason](/images/posts/2026/i18n-configuration/i18next-cli-extract-fail-reason.png)
+
+원인은 `i18next-cli`가 코드를 정적 분석하는 시점에 `mode`의 타입이 `string` 타입이기 때문이다. `t` 함수에 전달되는 값 (템플릿 리터럴`${mode}.title`)의 타입이, cli가 키로 추출할 수 있는 구체적인 타입이 아니라 `${string}.title` 타입이기 때문이다.
+
+문제를 해결하기 위해서는 `mode`의 타입을 구체적으로 좁혀주면 된다.
+
+```tsx title="src/app.tsx" {7}
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
+export default function App() {
+  const { t, i18n } = useTranslation();
+
+  const [mode, setMode] = useState<"signUp" | "signIn">("signUp");
+
+  return (
+    <form>
+      <div>i18n.resolvedLanguage: {i18n.resolvedLanguage}</div>
+      <button type="button" onClick={() => i18n.changeLanguage("en")}>
+        en
+      </button>
+      <button type="button" onClick={() => i18n.changeLanguage("ko")}>
+        ko
+      </button>
+      <button type="button" onClick={() => setMode("signUp")}>
+        signUp mode
+      </button>
+      <button type="button" onClick={() => setMode("signIn")}>
+        signIn mode
+      </button>
+      <h2>{t(`${mode}.title`)}</h2>
+      <div>
+        <label>
+          {t("emailLabel")}
+          <input />
+        </label>
+        <button>{t("emailSubmitButton")}</button>
+      </div>
+    </form>
+  );
+}
+```
+
+이제는 런타임이 아니라, `i18next-cli`가 코드를 정적으로 분석하는 시점에도 `mode`의 타입이 `"signUp" | "signIn"` 이 되고, 템플릿 리터럴`${mode}.title`의 타입도 `"signIn.title" | "signUp.title"` 으로 좁혀진다.
+
+다시 `pnpm exec i18next-cli extract`을 수행하면, 다음과 같이 키가 원하는 형태로 잘 추출된다.
+
+```json title="public/locales/en/translation.json"
+{
+  "emailLabel": "emailLabel",
+  "emailSubmitButton": "emailSubmitButton",
+  "signIn": {
+    "title": "signIn.title"
+  },
+  "signUp": {
+    "title": "signUp.title"
+  }
+}
+```
+
+```json title="public/locales/ko/translation.json"
+{
+  "emailLabel": "",
+  "emailSubmitButton": "",
+  "signIn": {
+    "title": ""
+  },
+  "signUp": {
+    "title": ""
+  }
+}
+```
+
+즉, `i18next-cli`가 정적으로 코드를 분석하는 시점에 `string` 같은 넓은 타입이 템플릿 리터럴 형태의 키에 포함되게 되면, 키를 정확하게 뽑아 낼 수 없다.
+
+정리하면
+
+- 템플릿 리터럴 형태의 키를 사용해야 한다면, 내부에서 사용하는 변수의 타입을 `string` 처럼 넓은 타입이 아니라 구체적인 타입으로 좁혀줘야 한다.
+- 추출되길 원하는 키는 템플릿 리터럴처럼 동적인 형태보다, 최대한 정적인 문자열 형태로 작성해주면, cli가 키를 쉽게 추출할 수 있다.
