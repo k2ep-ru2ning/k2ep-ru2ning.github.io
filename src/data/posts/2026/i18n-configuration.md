@@ -13,7 +13,9 @@ seriesId: "업무 회고록"
 
 회사에서 새로운 프로젝트(신생아 대상 유전자 검사 주문 애플리케이션)를 진행하는 과정에서 다국어 처리 설정을 하게 되었다.
 
-React 앱에서 `i18next` 패키지를 활용해 다국어 처리를 할 수 있도록 설정했다. 또 번역 키 자동 완성과 타입 체크를 위해서 `i18next-cli`도 도입했다. 또, `react-hook-form`과 `zod`를 활용해 폼 검증을 하는 환경에서 에러 메시지 다국어 처리할 때, 겪은 문제를 해결했던 과정을 정리했다.
+- React 앱에서 `i18next` 패키지를 활용해 다국어 처리를 할 수 있도록 설정했다.
+- 번역 키 자동 완성과 타입 체크를 위해서 `i18next-cli`도 도입했다.
+- `react-hook-form`과 `zod`를 활용해 폼 검증을 하는 환경에서 에러 메시지 다국어 처리할 때, 겪은 문제를 해결했던 과정을 정리했다.
 
 ## React 앱에서 다국어 처리 설정하기
 
@@ -121,7 +123,7 @@ export default function App() {
 
 ![result-basic](/images/posts/2026/i18n-configuration/result-basic.gif)
 
-### 번역 리소스를 json 파일로 분리해 관리하기 (i18next-http-backend)
+### 번역 리소스를 json 파일로 분리해 관리하기 (`i18next-http-backend`)
 
 앞에서는 리소스를 자바스크립트 객체로 관리했고, i18n 인스턴스를 초기화할 때 리소스를 등록했다.
 `i18next-http-backend` 플러그인을 활용하면, json 파일 형태로 리소스를 관리할 수 있다. 또 해당 리소스가 필요할 때가 되었을 때, 가져올 수 있다. (지연 로딩)
@@ -169,7 +171,7 @@ i18n
 `fallbackLng`의 기본값은 `dev`이다.
 `i18next-http-backend`이 `lng`인 `en` 뿐만 아니라 `fallbackLng`인 `dev` 리소스까지 초기에 요청하기 때문에, 위와 같은 `locales/dev/common.json` 파일도 요청하게 된 것이다. 그래서 이런 `dev` 리소스 관련 요청이 생기는 걸 막고, `en`만 초기에 가져오게 하려면 `fallbackLng`도 명시적으로 `en`으로 설정하면 된다.
 
-### 궁금했던 것: i18n 인스턴스의 useSuspense 옵션은 뭘까?
+### 궁금했던 것: i18n 인스턴스의 `useSuspense` 옵션은 뭘까?
 
 i18n 인스턴스를 초기화할 때 설정하는 옵션 중, `react.useSuspense` 라는 옵션이 있다. 기본값은 `true`이다.
 
@@ -179,7 +181,7 @@ i18n 인스턴스를 초기화할 때 설정하는 옵션 중, `react.useSuspens
 
 만약 이 옵션을 `false`로 두면, 번역 리소스가 준비되지 않았더라도, 리소스를 사용하는 컴포넌트를 렌더링한다. 그래서 컴포넌트 내에서 `t` 함수를 사용해 번역 리소스를 참조했을 때, 아직 리소스가 없으면 번역 키가 화면에 표시되었다가, 리소스를 가져온 다음에야 번역된 값으로 표시된다. `ready` 플래그의 값도 리소스가 로드 되기 전에는 `false`였다가 로드 된 후에 `true`가 된다.
 
-### 웹 페이지 로드 할 때, 언어 감지하기 (i18next-browser-languagedetector)
+### 웹 페이지 로드 할 때, 언어 감지하기 (`i18next-browser-languagedetector`)
 
 현재까지의 i18n 설정에서는 `lng` 옵션을 `en`으로 두었다. 그래서 페이지를 열 때마다 초기에 `en`이 기본 언어로 설정된다.
 
@@ -268,3 +270,114 @@ export default function App() {
 ![result-language-detector-plugin](/images/posts/2026/i18n-configuration/result-language-detector-plugin.gif)
 
 `lng: en` 옵션을 제거했지만, `index.html`에 `<html lang="en">`으로 작성했기 때문에, 언어 감지 플러그인에 의해 페이지를 새로 고침했을 때 `en`으로 선택된다.
+
+### 궁금했던 것: `i18n.language`, `i18n.languages`, `i18n.resolvedLanguage` 차이점은 뭘까?
+
+간단히 정리하면...
+
+- `i18n.language`: "`i18n.changeLanguage`에 전달한 인자" 혹은 "언어 감지 플러그인이 감지한 값". 즉 i18n을 사용하는 쪽에서 **i18n에게 요청한/원하는 언어 리소스**
+- `i18n.languages`: i18n 인스턴스가 키를 찾기 위해 탐색할 언어 리소스를 순서대로 명시한 배열. 만약 `["ko", "en"]`이라면, 키를 찾을 때 언어 리소스를 `ko` -> `en` 순으로 탐색한다는 뜻. 보통 `fallbackLng`이 마지막 요소로 위치함
+- `i18n.resolvedLanguage`: 실제로 i18n이 가지고 있고, 사용할 언어 리소스
+
+헷갈릴 수 있는 부분은 `i18n.resolvedLanguage`가 `ko`이더라도, 모두 한국어로 번역된다는 뜻은 아니라는 것이다.
+
+`i18n.resolvedLanguage`가 `ko`이더라도, `ko` 리소스에 찾으려는 키가 없다면 먼저 `fallbackLng` 언어 리소스에서 키를 찾으려고 할테고, 그 리소스에도 없으면 화면에는 그냥 번역 키가 렌더링될 것이다.
+
+또한 `i18n.language`/`i18n.languages`는 `supportedLngs` 옵션에 영향을 받는다. 일단 `supportedLngs`을 지우고, 테스트를 해보자
+
+```ts title="src/i18n/init.ts" showLineNumbers {22}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+
+i18n
+  .use(initReactI18next)
+  .use(HttpApi)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: "en",
+    ns: ["common", "signUp"],
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
+    },
+    // supportedLngs: ["en", "ko"],
+    detection: {
+      order: ["htmlTag"],
+    },
+  });
+```
+
+```tsx title="src/app.tsx" showLineNumbers
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
+const LANGUAGE_OPTIONS = [
+  {
+    code: "en",
+    label: "영어 (en)",
+  },
+  {
+    code: "en-GB",
+    label: "영국 영어 (en-GB)",
+  },
+  {
+    code: "ko",
+    label: "한국어 (ko)",
+  },
+  {
+    code: "es",
+    label: "스페인어 (es)",
+  },
+];
+
+export default function App() {
+  const { t, i18n } = useTranslation();
+  const [selected, setSelected] = useState(i18n.resolvedLanguage);
+
+  return (
+    <div>
+      <div>
+        <div>language: {i18n.language}</div>
+        <div>languages: {i18n.languages.join(", ")}</div>
+        <div>resolved language: {i18n.resolvedLanguage}</div>
+        {LANGUAGE_OPTIONS.map(({ code, label }) => (
+          <button
+            key={code}
+            style={{
+              backgroundColor: selected === code ? "salmon" : undefined,
+            }}
+            type="button"
+            onClick={() => {
+              i18n.changeLanguage(code);
+              setSelected(code);
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div>
+        일반적인 컨텍스트에서 pending의 의미: <span>{t("common:pending")}</span>
+      </div>
+      <div>
+        회원 가입 컨텍스트에서 pending의 의미:{" "}
+        <span>{t("pending", { ns: "signUp" })}</span>
+      </div>
+    </div>
+  );
+}
+```
+
+![comparison-no-supported-lngs-1](/images/posts/2026/i18n-configuration/comparison-no-supported-lngs-1.png)
+
+- 언어 코드 뒤에 지역을 대문자로 적으면 언어 리소스를 조금 더 구체적으로 명시할 수 있다. `en-GB`는 영국에서 쓰는 영어, `en-US`는 미국에서 쓰는 영어를 의미한다.
+- 영국 영어 버튼을 클릭하면, 사용자가 i18n 인스턴스에게 요청한 리소스는 `en-GB`이다. 그래서 `i18n.language` 값이 `en-GB`이다.
+- `fallbackLng`을 `en`으로 설정했기에 i18n의 번역 키 탐색 순서는 `en-GB` → `en` 순이 된다. 이 값이 `i18n.languages`이다.
+- 실제로 `en-GB` 리소스가 없기 때문에 i18n은 `en`을 처음으로 탐색 시작할 언어 리소스로 선택한다. 이 값이 `i18n.resolvedLangauge`이다.
