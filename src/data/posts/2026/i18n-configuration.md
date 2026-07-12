@@ -543,3 +543,143 @@ i18n
 ![result-language-detector-custom](/images/posts/2026/i18n-configuration/result-language-detector-custom.gif)
 
 첫방문시 국가 코드가 `KR`이어서 `ko` 리소스가 선택되고, 유저가 `en` 리소스를 선택한 후, 새로고침시에는 로컬 스토리지 디텍터에 의해 `en` 리소스가 선택되는 시나리오를 시뮬레이션 한 것이다.
+
+## 번역 키 자동 완성 및 타입 체크 (`i18next-cli` 도입 후기)
+
+IDE에서 번역 키 자동 완성 및 타입 체크가 되면 편할 거 같았다. 여러가지 방법이 있겠지만 i18next 공식문서를 살펴보다가 `i18next-cli`를 알게되었고, 이를 활용해서 번역키 자동 완성 및 타입 체크가 가능하도록 설정했다.
+
+`i18next-cli`는 명령어를 통해서
+
+- UI 코드로 부터 번역 키를 추출해 리소스 파일에 반영하고,
+- 번역 키 타입을 정의하며,
+- 여러 리소스의 상태를 체크해서 누락된 키가 있는지도 알려주는
+
+편리한 도구이다.
+
+### 예시 시나리오
+
+가볍게 이메일 인증 폼을 만들것이다.
+
+- 기존에 `common`, `signUp` 두개의 네임스페이스를 썼는데, 하나의 `translation`이라는 네임스페이스를 쓰도록 수정하자. (예제가 간단해서 굳이 두개의 네임스페이스가 필요 없다.)
+- 기존에 있던 리소스 파일을 모두 제거한다.
+
+i18n 설정 파일을 다음과 같이 수정한다.
+
+```ts title="src/i18n/init.ts" showLineNumbers {19-20}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { detectLanguageCodeFromCountryCodeCookie } from "../detect-language-code-from-country-code-cookie.ts";
+
+const languageDetector = new LanguageDetector();
+languageDetector.addDetector({
+  name: "countryCodeCookie",
+  lookup: () => detectLanguageCodeFromCountryCodeCookie(),
+});
+
+i18n
+  .use(initReactI18next)
+  .use(HttpApi)
+  .use(languageDetector)
+  .init({
+    fallbackLng: "en",
+    ns: "translation",
+    defaultNS: "translation", // 명시적으로 추가. useTranslation hook 호출시 ns 설정하지 않으면 적용될, 기본 ns를 명시하는 옵션.
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
+    },
+    supportedLngs: ["en", "ko"],
+    detection: {
+      order: ["localStorage", "countryCodeCookie", "htmlTag"],
+    },
+  });
+```
+
+### `i18next-cli` 설정하기 (`init` 명령어)
+
+1. `i18next-cli` 패키지를 dev dependencies로 설치한다.
+
+2. `i18next-cli`의 init 명령어를 통해, `i18next-cli`가 애플리케이션 코드를 탐색하고, 자동으로 `i18next-cli` 설정파일을 생성하도록 한다. 다음과 같은 간단한 `i18next-cli` 설정 파일이 프로젝트 루트에 생성된다. (pnpm 기준으로, `pnpm exec i18next-cli init` 실행)
+
+```ts title="i18next.config.ts"
+import { defineConfig } from "i18next-cli";
+
+export default defineConfig({
+  locales: ["en", "ko"],
+  extract: {
+    input: "src/**/*.{js,jsx,ts,tsx}",
+    output: "public/locales/{{language}}/{{namespace}}.json",
+  },
+  types: {
+    // 필요하면 직접 설정 가능. 생성되는 d.ts 파일의 위치를 정하기 위해서 직접 설정.
+    input: "public/locales/en/*.json",
+    output: "src/i18n/generated-types.d.ts",
+  },
+});
+```
+
+### UI(컴포넌트) 코드 작성 후, 번역 키를 추출하고 json 파일에 저장하기 (`extract` 명령어)
+
+```tsx title="src/app.tsx"
+import { useTranslation } from "react-i18next";
+
+export default function App() {
+  const { t, i18n } = useTranslation();
+
+  return (
+    <form>
+      <div>i18n.resolvedLanguage: {i18n.resolvedLanguage}</div>
+      <button type="button" onClick={() => i18n.changeLanguage("en")}>
+        en
+      </button>
+      <button type="button" onClick={() => i18n.changeLanguage("ko")}>
+        ko
+      </button>
+      <div>
+        <label>
+          {t("signIn.emailLabel")}
+          <input />
+        </label>
+        <button>{t("signIn.emailSubmitButton")}</button>
+      </div>
+    </form>
+  );
+}
+```
+
+위 처럼 컴포넌트 코드를 작성한다. 이 때 먼저 `"signIn.emailLabel"`, `"signIn.emailSubmitButton"` 같은 키를 미리 리소스 파일에 정의해둘 필요는 없다. cli을 통해서 추출할 것이다.
+
+`i18next-cli`의 `extract` 명령어를 실행한다. pnpm 기준으로, `pnpm exec i18next-cli extract`를 실행한다. 앞에서 기존에 있던 리소스 파일을 다 지웠는데, 다음과 같은 파일들이 생성되었다.
+
+```json title="public/locales/en/translation.json"
+{
+  "signIn": {
+    "emailLabel": "signIn.emailLabel",
+    "emailSubmitButton": "signIn.emailSubmitButton"
+  }
+}
+```
+
+```json title="public/locales/ko/translation.json"
+{
+  "signIn": {
+    "emailLabel": "",
+    "emailSubmitButton": ""
+  }
+}
+```
+
+개발자는 이제 추출된 키에 대응되는 값만 피그마 등을 참고해 채워 넣으면 된다.
+
+예전에는 프론트엔드 개발자가 다국어 작업을 할 때 리소스 파일에 키를 먼저 정의하고, 그다음에 컴포넌트 코드를 작성하면서 앞서 정의한 키를 가져다 썼다. 리소스 파일의 개수가 많으면 키를 작성할 때 오타를 낼 수도 있고, 각각의 리소스 파일마다 동일한 키를 일일이 설정해줘야 한다. (**번거로운 반복 작업이다.**)
+
+(반면에, `i18next-cli` 활용하면) 컴포넌트 코드를 작성할 때 앱에서 쓸 번역키를 함께 작성해두면, cli가 코드를 정적으로 분석해서 키를 추출해 json 파일에 반영해준다. 개발자는 json 파일에서 값만 적절하게 설정하면 된다.
+
+만약에 작업하다가 키 이름을 변경해야 해서 바꾸고 `extract` 명령어를 다시 사용하면, 기존 키는 제거되고 새로운 키가 생성된다. (즉, 변경사항도 잘 반영해준다.)
