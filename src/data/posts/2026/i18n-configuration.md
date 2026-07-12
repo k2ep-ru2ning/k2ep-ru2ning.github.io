@@ -283,7 +283,7 @@ export default function App() {
 
 `i18n.resolvedLanguage`가 `ko`이더라도, `ko` 리소스에 찾으려는 키가 없다면 먼저 `fallbackLng` 언어 리소스에서 키를 찾으려고 할테고, 그 리소스에도 없으면 화면에는 그냥 번역 키가 렌더링될 것이다.
 
-또한 `i18n.language`/`i18n.languages`는 `supportedLngs` 옵션에 영향을 받는다. 일단 `supportedLngs`을 지우고, 테스트를 해보자
+또한 `i18n.language`/`i18n.languages`는 `supportedLngs` 옵션에 영향을 받는다. 일단 `supportedLngs`을 지우고, 테스트를 해보자 (이전과 동일하게 `en`, `ko` 2개의 언어 리소스가 존재하는 상황이다.)
 
 ```ts title="src/i18n/init.ts" showLineNumbers {22}
 import i18n from "i18next";
@@ -381,3 +381,52 @@ export default function App() {
 - 영국 영어 버튼을 클릭하면, 사용자가 i18n 인스턴스에게 요청한 리소스는 `en-GB`이다. 그래서 `i18n.language` 값이 `en-GB`이다.
 - `fallbackLng`을 `en`으로 설정했기에 i18n의 번역 키 탐색 순서는 `en-GB` → `en` 순이 된다. 이 값이 `i18n.languages`이다.
 - 실제로 `en-GB` 리소스가 없기 때문에 i18n은 `en`을 처음으로 탐색 시작할 언어 리소스로 선택한다. 이 값이 `i18n.resolvedLangauge`이다.
+
+![comparison-no-supported-lngs-2](/images/posts/2026/i18n-configuration/comparison-no-supported-lngs-2.png)
+
+- 스페인어 버튼을 클릭하면, 사용자가 i18n 인스턴스에게 요청한 리소스는 `es`이다. 그래서 `i18n.language` 값이 `es`이다.
+- `fallbackLng`을 `en`으로 설정했기에 i18n의 번역 키 탐색 순서는 `es` → `en` 순이 된다. 이 값이 `i18n.languages`이다.
+- 실제로 `es` 리소스가 없기 때문에 i18n은 `en`을 처음으로 탐색 시작할 언어 리소스를 선택한다. 이 값이 `i18n.resolvedLangauge`이다.
+
+앞서 `supportedLngs` 옵션 값에 따라서 `i18n.language`, `i18n.languages` 값이 영향을 받는다고 했다. 다시 주석을 해제하자. 추가로 `fallbackLng`도 `en`에서 `ko`로 설정해보자.
+
+```ts title="src/i18n/init.ts" showLineNumbers {11, 22}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+
+i18n
+  .use(initReactI18next)
+  .use(HttpApi)
+  .use(LanguageDetector)
+  .init({
+    fallbackLng: "ko",
+    ns: ["common", "signUp"],
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
+    },
+    supportedLngs: ["en", "ko"],
+    detection: {
+      order: ["htmlTag"],
+    },
+  });
+```
+
+![comparison-supported-lngs-1](/images/posts/2026/i18n-configuration/comparison-supported-lngs-1.png)
+
+- 영국 영어 버튼을 클릭하면, 사용자가 i18n 인스턴스에게 요청한 리소스는 `en-GB`이다. 하지만, `supportedLngs`에 `en-GB`가 없어서, 지역 정보를 제외한 `en`으로 `i18n.language`가 변경되었다.
+- 비슷한 맥락으로 `i18n.languages`도 `["en-GB", "ko"]`가 아니라 `["en", "ko"]`가 되었다.
+
+![comparison-supported-lngs-2](/images/posts/2026/i18n-configuration/comparison-supported-lngs-2.png)
+
+- 스페인어 버튼을 클릭하면, 사용자가 i18n 인스턴스에게 요청한 리소스는 `es`이다. 하지만, `supportedLngs`에 `es`가 없어서, `fallbackLng`인 `ko`로 `i18n.language`가 변경되었다.
+- 비슷한 맥락으로 `i18n.languages`도 `["es", "ko"]`가 아니라 `["ko"]`가 되었다.
+
+즉, i18n은 `supportedLngs` 옵션을 반영해서 `i18n.language`, `i18n.languages` 값을 정하려고 한다.
