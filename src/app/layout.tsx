@@ -17,6 +17,7 @@ export default function RootLayout({ children }: Props) {
   return (
     <html
       lang="ko"
+      data-scroll-behavior="smooth"
       className={`${astaSans.variable} ${jetbrainsMono.variable} scroll-smooth antialiased`}
       // 서버에서 HTML을 받고나서 script로 html 태그에 dark class를 주입하기 때문에,
       // 하이드레이션할 때, html의 class 속성이 서버에서 가져온 것과 달라졌다고 에러를 발생시킴.

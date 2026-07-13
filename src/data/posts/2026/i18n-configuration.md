@@ -903,3 +903,288 @@ export default function App() {
 
 - 템플릿 리터럴 형태의 키를 사용해야 한다면, 내부에서 사용하는 변수의 타입을 `string` 처럼 넓은 타입이 아니라 구체적인 타입으로 좁혀줘야 한다.
 - 추출되길 원하는 키는 템플릿 리터럴처럼 동적인 형태보다, 최대한 정적인 문자열 형태로 작성해주면, cli가 키를 쉽게 추출할 수 있다.
+
+## 트러블 슈팅: react hook form, zod resolver, i18n을 함께 사용해 에러 메시지 다국어 처리 할 때, 겪은 문제 해결
+
+간단하게 이메일로 로그인하는 폼을 개발하는 시나리오를 생각하자.
+
+먼저, 애플리케이션 코드 내에서 컴포넌트 내부가 아니더라도 i18n 인스턴스에 접근할 수 있도록 설정 파일에서 i18n 인스턴스를 export 하자.
+
+```ts title="src/i18n/init.ts" showLineNumbers {13, 36}
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { detectLanguageCodeFromCountryCodeCookie } from "../detect-language-code-from-country-code-cookie.ts";
+
+const languageDetector = new LanguageDetector();
+languageDetector.addDetector({
+  name: "countryCodeCookie",
+  lookup: () => detectLanguageCodeFromCountryCodeCookie(),
+});
+
+await i18n
+  .use(initReactI18next)
+  .use(HttpApi)
+  .use(languageDetector)
+  .init({
+    fallbackLng: "en",
+    ns: "translation",
+    defaultNS: "translation",
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
+    },
+    supportedLngs: ["en", "ko"],
+    detection: {
+      order: ["localStorage", "countryCodeCookie", "htmlTag"],
+    },
+  });
+
+export { i18n };
+```
+
+`init`이 비동기 함수여서 초기화가 완료되길 기다렸다가, 완료된 이후에 i18n 인스턴스를 export 했다. 초기화 되기 전의 i18n 인스턴스에 접근하는 걸 방지하기 위함이다.
+
+그리고 react hook form에 등록할 폼 스키마를 zod로 정의한다.
+
+```ts title="src/sign-in-form-schema.ts" showLineNumbers {5}
+import * as z from "zod";
+import { i18n } from "./i18n/init";
+
+export const signInFormSchema = z.object({
+  email: z.email({ error: i18n.t("signInForm.emailField.error") }),
+});
+```
+
+커스텀 에러 메시지를 i18n을 활용해 다국어 처리 했다.
+
+이제 컴포넌트 코드를 작성한다.
+
+```tsx title="src/app.tsx" showLineNumbers {38}
+import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInFormSchema } from "./sign-in-form-schema.ts";
+
+export default function App() {
+  const { t, i18n } = useTranslation();
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: zodResolver(signInFormSchema),
+  });
+
+  const handleSignInFormSubmit = handleSubmit((signInForm) => {
+    console.log("signInForm", signInForm);
+  });
+
+  return (
+    <>
+      <div>
+        <div>i18n.resolvedLanguage: {i18n.resolvedLanguage}</div>
+        <button type="button" onClick={() => i18n.changeLanguage("en")}>
+          en
+        </button>
+        <button type="button" onClick={() => i18n.changeLanguage("ko")}>
+          ko
+        </button>
+      </div>
+      <form onSubmit={handleSignInFormSubmit}>
+        <label>
+          {t("signInForm.emailField.label")}
+          <input {...register("email")} />
+        </label>
+        <button type="submit">{t("signInForm.submitButton")}</button>
+        {errors.email?.message && <p>{errors.email?.message}</p>}
+      </form>
+    </>
+  );
+}
+```
+
+코드를 수정했으니, i18next-cli의 extract 명령어를 실행해 키를 추출한다. 그리고 키에 적절한 값도 적어준다.
+
+```json title="public/locales/en/translation.json"
+{
+  "signInForm": {
+    "emailField": {
+      "error": "invalid email format",
+      "label": "email"
+    },
+    "submitButton": "submit"
+  }
+}
+```
+
+```json title="public/locales/ko/translation.json"
+{
+  "signInForm": {
+    "emailField": {
+      "error": "이메일이 유효하지 않습니다",
+      "label": "이메일"
+    },
+    "submitButton": "제출"
+  }
+}
+```
+
+키 추출도 끝냈으니 마지막으로 i18next-cli의 types 명령어를 호출해, 자동완성과 타입체크를 위한 타입 선언 파일을 생성한다.
+
+실행 결과는 다음과 같다.
+
+![RHF-zod-i18n-trouble](/images/posts/2026/i18n-configuration/RHF-zod-i18n-trouble.gif)
+
+이메일 필드가 유효하지 않은 상황에서 언어를 `en` -> `ko`로 변경했는데, 에러 메시지만 한국어로 변경되지 않는 문제가 생겼다.
+
+```ts title="src/sign-in-form-schema.ts" showLineNumbers {5}
+import * as z from "zod";
+import { i18n } from "./i18n/init";
+
+export const signInFormSchema = z.object({
+  email: z.email({ error: i18n.t("signInForm.emailField.error") }),
+});
+```
+
+코드를 보면, `signInFormSchema` 객체가 생성될 시점의 i18n.t의 호출결과가, 즉 en 리소스로 번역된 에러메시지가, 스키마 객체에 담긴다.
+언어가 `ko`로 변경되어도, 스키마가 가지고 있는 에러 메시지는 변경되지 않는다.
+
+그래서, 스키마에 `t` 함수 호출 결과, 즉 번역 결과를 두지않고 **번역 키만 두면** 문제를 해결할 수 있을것 같았다.
+
+먼저 `signInFormSchema`에서 `t` 함수 호출 결과 대신 번역 키를 에러 메시지로 등록한다.
+
+```ts title="src/sign-in-form-schema.ts" showLineNumbers {4}
+import * as z from "zod";
+
+export const signInFormSchema = z.object({
+  email: z.email({ error: "signInForm.emailField.error" }),
+});
+```
+
+그리고 컴포넌트 내에서 `t` 함수를 호출해 다국어 처리를 한다.
+
+```tsx title="src/app.tsx" showLineNumbers {38}
+import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInFormSchema } from "./sign-in-form-schema.ts";
+
+export default function App() {
+  const { t, i18n } = useTranslation();
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: zodResolver(signInFormSchema),
+  });
+
+  const handleSignInFormSubmit = handleSubmit((signInForm) => {
+    console.log("signInForm", signInForm);
+  });
+
+  return (
+    <>
+      <div>
+        <div>i18n.resolvedLanguage: {i18n.resolvedLanguage}</div>
+        <button type="button" onClick={() => i18n.changeLanguage("en")}>
+          en
+        </button>
+        <button type="button" onClick={() => i18n.changeLanguage("ko")}>
+          ko
+        </button>
+      </div>
+      <form onSubmit={handleSignInFormSubmit}>
+        <label>
+          {t("signInForm.emailField.label")}
+          <input {...register("email")} />
+        </label>
+        <button type="submit">{t("signInForm.submitButton")}</button>
+        {errors.email && <p>{t(errors.email.message)}</p>}
+      </form>
+    </>
+  );
+}
+```
+
+![RHF-zod-i18n-troubleshooting](/images/posts/2026/i18n-configuration/RHF-zod-i18n-troubleshooting.gif)
+
+이제는 언어 변경에 따라 에러 메시지도 잘 변경된다.
+
+잘 해결된 것 같지만 이 방식에도 문제가 있다.
+
+첫 번째 문제는, `i18next-cil` `extract` 명령어로 키를 추출할 수 없다는 것이다. 실제로 `extract` 명령어를 실행시킨 결과는 다음과 같다.
+
+```json title="public/locales/en/translation.json"
+{
+  "signInForm": {
+    "emailField": {
+      "label": "email"
+    },
+    "submitButton": "submit"
+  }
+}
+```
+
+`"signInForm.emailField.error"` 키가 추출되지 않았다.
+
+```ts title="src/sign-in-form-schema.ts" showLineNumbers {4}
+import * as z from "zod";
+
+export const signInFormSchema = z.object({
+  email: z.email({ error: "signInForm.emailField.error" }),
+});
+```
+
+위 코드에서 `"signInForm.emailField.error"`가 `t` 함수의 인자가 아니라서 cli에 의해 추출되지 않았다.
+
+인자로 전달된 문자열이 번역 키임을 마킹하는 identity function를 정의하고, 해당 함수를 `i18next-cli` 설정에 등록해서 문제를 해결할 수 있다.
+
+```ts title="src/i18n/t-key.ts"
+import type { ParseKeys } from "i18next";
+
+// 키를 받아서 키를 반환하는 항등 함수.
+export function tKey(key: ParseKeys) {
+  return key;
+}
+```
+
+```ts title="i18next.config.ts" showLineNumbers {8}
+import { defineConfig } from "i18next-cli";
+
+export default defineConfig({
+  locales: ["en", "ko"],
+  extract: {
+    input: "src/**/*.{js,jsx,ts,tsx}",
+    output: "public/locales/{{language}}/{{namespace}}.json",
+    functions: ["t", "*.t", "tKey"],
+  },
+  types: {
+    input: "public/locales/en/*.json",
+    output: "src/i18n/generated-types.d.ts",
+  },
+});
+```
+
+`extract.functions`에 `"tKey"` 함수를 등록했다. 이제 **`i18next-cli`가 `tKey`라는 함수를 보면, 해당 함수의 인자를 키로 추출**하게 된다. 앞의 `"t"`, `"*.t"`는 `extract.functions`의 기본값이다. 이렇게 첫 번째 문제를 해결했다.
+
+두 번째 문제는 컴포넌트 코드에서 타입 에러가 발생한다는 것이다.
+
+zod 스키마에 등록한 번역 키를, react hook form이 제공하는 `errors` 객체로 접근하면, `string` 타입이 되어 `t` 함수 파라미터 타입 체크에 실패하게 된다.
+
+![RHF-zod-i18n-type-error](/images/posts/2026/i18n-configuration/RHF-zod-i18n-type-error.png)
+
+i18next 패키지에서 제공하는 `ParseKeys` 타입은 번역 키를 의미하므로, `ParseKeys` 타입으로 타입 단언을 해서 문제를 해결할 수 있다.
+
+![RHF-zod-i18n-type-error-solved](/images/posts/2026/i18n-configuration/RHF-zod-i18n-type-error-solved.png)
+
+react hook form, zod resolver, i18n을 함께 쓸 때, 언어가 변경되었음에도 zod 스키마에 등록한 에러 메시지가 변경되지 않는 문제를 이렇게 해결했다.
