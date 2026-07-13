@@ -14,6 +14,7 @@ const tags: Tag[] = [
   "TypeScript",
   "C++",
   "Troubleshooting",
+  "i18n",
 ];
 
 tags.sort((tag1, tag2) => tag1.localeCompare(tag2));
