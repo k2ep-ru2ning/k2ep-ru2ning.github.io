@@ -1175,7 +1175,18 @@ export default defineConfig({
 });
 ```
 
-`extract.functions`에 `"tKey"` 함수를 등록했다. 이제 **`i18next-cli`가 `tKey`라는 함수를 보면, 해당 함수의 인자를 키로 추출**하게 된다. 앞의 `"t"`, `"*.t"`는 `extract.functions`의 기본값이다. 이렇게 첫 번째 문제를 해결했다.
+`extract.functions`에 `"tKey"` 함수를 등록했다. 이제 **`i18next-cli`가 `tKey`라는 함수를 보면, 해당 함수의 인자를 키로 추출**하게 된다. 앞의 `"t"`, `"*.t"`는 `extract.functions`의 기본값이다.
+
+```ts title="src/sign-in-form-schema.ts" showLineNumbers {5}
+import * as z from "zod";
+import { tKey } from "./i18n/t-key.ts";
+
+export const signInFormSchema = z.object({
+  email: z.email({ error: tKey("signInForm.emailField.error") }),
+});
+```
+
+그리고 `i18next-cli` 설정파일에 등록한 `tKey` 함수를 활용해서, `"signInForm.emailField.error"` 문자열이 번역 키 임을 마킹하면된다. 이렇게 첫번째 문제를 해결했다.
 
 두 번째 문제는 컴포넌트 코드에서 타입 에러가 발생한다는 것이다.
 
