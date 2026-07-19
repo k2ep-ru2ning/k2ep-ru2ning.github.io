@@ -5,4 +5,4 @@
 :HL["/images/posts/2023/how-to-use-mobx/pure-chat-room-store-result.webp","image"]
 :HL["/images/posts/2023/how-to-use-mobx/observable-chat-room-store-result.webp","image"]
 :HL["/images/posts/2023/how-to-use-mobx/mobx-chat-room-component.webp","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"posts","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"c","key":"2023/how-to-use-mobx","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"yq_XK3kxTQf-V_Crq_CQT"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"posts","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"c","key":"2023/how-to-use-mobx","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"G5L_mRyA4qvtfECA01Kpu"}
