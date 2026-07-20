@@ -247,7 +247,7 @@ export function transformTestsDtoToTests(testsDto: TestsDto): Test[] {
 
 마지막으로 배럴(barrel) 파일 형태로 외부에서 사용할 Public API들을 export 했다.
 
-```ts title="src/entities/test/index.ts" showLineNumbers {3}
+```ts title="src/entities/test/index.ts" showLineNumbers
 export { createTest } from "./api/test.api";
 export { transformTestDtoToTest } from "./lib/test.transform";
 export { testHandlers } from "./api/test.mocks";
@@ -257,7 +257,7 @@ export type { Test, TestStatus } from "./model/test";
 export { TestCard } from "./ui/test-card";
 ```
 
-이런식으로 원하는 스타일의 entities 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다. 조회 api와 엔티티 관련 작업 시, 앞서 작성한 예제 코드와 비슷한 패턴으로 코드를 생성하기 위한 스킬이 생성되었다.
+이런식으로 원하는 스타일의 entities 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다.
 
 ```md
 ---
@@ -271,6 +271,8 @@ description: >
 
 본문 생략...
 ```
+
+조회 api와 엔티티 관련 작업 시, 앞서 작성한 예제 코드와 비슷한 패턴으로 코드를 생성하기 위한 스킬이 생성되었다. 스킬 본문에는 예제 코드를 짜면서 의도했던 코드 컨벤션이 대체로 잘 작성되어 있었다.
 
 ### features 레이어, 생성 관련 예시 코드 작성
 
@@ -451,7 +453,7 @@ export { useCreateTest } from "./api/use-create-test";
 export { CreateTestForm } from "./ui/create-test-form";
 ```
 
-이런식으로 원하는 스타일의 features 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다. 뮤테이션과 feature 관련 작업 시, 앞서 작성한 예제 코드와 비슷한 패턴으로 코드를 생성하기 위한 스킬이 생성되었다.
+이런식으로 원하는 스타일의 features 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다.
 
 ```md
 ---
@@ -463,7 +465,11 @@ description: >
   useMutation 커스텀 훅·폼 UI, 그리고 invalidateQueries 로 query 캐시를 갱신하기
   까지의 레이어링·파일 구조·명명 규칙을 다룸.
 ---
+
+본문 생략...
 ```
+
+뮤테이션과 feature 관련 작업 시, 앞서 작성한 예제 코드와 비슷한 패턴으로 코드를 생성하기 위한 스킬이 생성되었다. 스킬 본문에는 예제 코드를 짜면서 의도했던 코드 컨벤션이 대체로 잘 작성되어 있었다.
 
 ### 커스텀 스킬 사용 후기
 
@@ -473,7 +479,7 @@ description: >
 
 [상황과 결정]
 
-- 검사 생성 기능은 entities 레이어가 아니라 features 레이어에 구현할려고 했다.
+- 검사 생성 기능은 entities 레이어가 아니라 features 레이어에 구현하려고 했었다.
 - 그러면서도, "검사 관련 API를 호출 하는 함수" 와 "msw 핸들러 코드"처럼 test 엔티티에 대한 CRUD를 다루는 코드는 `entities/test`, 한 곳에 모아 두면 좋겠다고 생각했다.
   - msw 핸들러 코드를 작성할 때, 보통 하나의 리소스에 대한 CRUD 코드를 한 곳에 모아두니까, test 조회도, test 생성도, 모두 `entities/test`에 모아두어야 겠다고 처음에 생각했던 것 같다.
 - 그러다보니, 검사 생성 요청 DTO 정의, 검사 생성 API 호출 함수, 검사 생성 API mocking 핸들러가 entities 레이어에 작성되고, 나머지 코드는 features 레이어에 작성하게 되었다.
@@ -483,13 +489,13 @@ description: >
 - 선택한 방식도, FSD의 규칙을 지키기 때문에 문제가 되지 않는다. (FSD의 레이어간 의존 규칙을 위배하지 않아서 문제가 되지 않는다.)
 - 단지, 검사 생성과 관련된 코드가 entities, features 두 군데에 혼재되어서 아쉬운 선택이었다.
 - 엔티티 관련 CRUD 코드가 한 곳에 모이지 않더라도, entities에는 조회 API 관련 함수, DTO, mocking만 두고, 나머지는 각각의 features에 정의하면 좀 더 좋았을 거 같다.
-- 결과적으로, msw 핸들러를 entities 레이어에 두었던 선택이, 아래에서 다루는 문제를 야기했다.
+- 결과적으로, **msw 핸들러를 entities 레이어에 두었던 선택**이, **아래에서 다루는 문제를 야기**했다.
 
-## 트러블 슈팅: 프로덕션 빌드했을 때, msw 코드가 initial chunk 포함되는 문제 해결
+## 트러블 슈팅: 프로덕션 빌드했을 때, msw 코드가 initial chunk에 포함되는 문제 해결
 
 ### 상황
 
-번들을 분석하다가, dev 전용인 msw 코드가 프로덕션 빌드의 initial chunk(`index.html`에 `modulepreload`로 설정된 chunk)에 포함된 것을 발견했다.
+번들을 분석하다가, 개발 환경에서만 의미있는 msw 코드가 프로덕션 빌드의 initial chunk(`index.html`에 `modulepreload`로 설정된 chunk)에 포함된 것을 발견했다.
 
 ### 분석
 
@@ -572,13 +578,15 @@ export async function enableMocking() {
 }
 ```
 
-이 코드를 봤을 때, 예상되는 번들 결과/동작은 다음과 같다.
+위 코드만 봤을 때, 예상되는 번들링 결과/동작은 다음과 같다.
 
-- 8번째 줄에 **import() 표현식** 이 있으므로, 번들러가 이 지점에서 msw 관련 코드를 별도의 lazy chunk로 분리힌다.
+- 8번째 줄에 **import() 표현식** 이 있으므로, 번들러가 이 지점에서 msw 관련 코드를 별도의 lazy chunk로 분리한다.
   - 즉, msw 관련 lazy chunk는 프로덕션 빌드 결과에도 생성이 된다.
 - 하지만, 프로덕션 빌드를 하면, 런타임에 `env.VITE_MSW_ENABLED` 값은 `false`이기 때문에, 실제로 msw 관련 lazy chunk는 브라우저가 다운로드 하지 않는다.
 
-**하지만, 실제로는 msw 코드가 lazy chunk가 아니라, 초기 다운로드되는 initial chunk에 포함되어 있었다.**
+그리고, 나도 위와 같은 방식으로, msw 관련 코드는 모두 lazy chunk에 잘 모이길 원했다.
+
+**하지만, 실제로는 msw 코드가 lazy chunk뿐만 아니라, 초기 다운로드되는 initial chunk에도 포함되어 있었다.**
 
 앞서, entities 레이어의 배럴 파일에서 다음과 같이 msw handler를 export 했다. 그리고 이것이 문제의 원인이었다.
 
@@ -603,11 +611,11 @@ import {
 } from "@/entities/test";
 ```
 
-`app/mocks/handlers.ts` 말고는 testHandlers(msw handler)를 import 하는 곳이 없다. 그런데 `@/entities/test` 배럴을 import 하는 곳은 많다.
+`app/mocks/handlers.ts` 말고는 testHandlers(msw handler)를 import 하는 곳이 없다. 그런데 **`@/entities/test` 배럴을 import 하는 곳은 많다.** 그리고, **그 배럴을 import 하는 곳에 msw 관련 코드가 딸려 들어간 게 문제**였다.
 
-배럴에서 Test 타입 하나만 가져와도, 배럴이 re-export 하는 핸들러 모듈까지 번들러의 정적 분석 대상에 같이 들어온다. 그리고 핸들러 모듈은 top-level 에서 `http.get()` 을 호출하고 있어서, 번들러가 "어떤 사이드 이펙트가 있을지 몰라서, 지워도 된다"고 판단하지 못한다. 사이드 이펙트가 있을지 모르는 코드는 tree-shaking 으로 제거되지 않는다.
+배럴에서 Test 타입 하나만 가져와도, 배럴이 re-export 하는 핸들러 모듈까지 번들러의 정적 분석 대상에 같이 들어온다. 그리고 핸들러 모듈은 top-level 에서 `http.get()` 을 호출하고 있고, 번들러가 "어떤 사이드 이펙트가 있을지 몰라서, 지워도 된다"고 판단하지 못한다. 사이드 이펙트가 있을지 모르는 코드는 tree-shaking 으로 제거되지 않는다.
 
-그래서 lazy chunk로 분리될 거라고 예상했던 코드들이 사용자가 초기에 다운로드 하는 chunk에 포함되었던 것이다.
+그래서 lazy chunk로 분리될 거라고 예상했던 코드들이 사용자가 초기에 다운로드 하는 chunk에도 포함되었던 것이다.
 
 ### 해결
 
