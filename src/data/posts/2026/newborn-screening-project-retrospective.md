@@ -12,7 +12,7 @@ tags:
 seriesId: "업무 회고록"
 ---
 
-2026년 4 ~ 5월, 회사에서 진행하는 신생아 대상 유전자 검사 주문 포털 개발에 참여했다. 나는 주로, 초기 개발환경 설정을 맡아서 진행했다.
+2026년 4~5월, 회사에서 진행하는 신생아 대상 유전자 검사 주문 포털 개발에 참여했다. 나는 주로, 초기 개발환경 설정을 맡아서 진행했다.
 
 초기 개발환경 설정을 하면서 **신경써서 진행했던 부분**은 **FSD의 도입**과 **다국어 처리** 설정이다.
 
@@ -58,7 +58,7 @@ FSD를 사용해보고 느낀점은 다음과 같았다.
 
 예시 코드는
 
-- Tanstack Query, zod, react hook form, msw 등의 기술 스택을 FSD 내에서 어떻게 활용할 것인지
+- TanStack Query, zod, react hook form, msw 등의 기술 스택을 FSD 내에서 어떻게 활용할 것인지
 - 쿼리와 entities 레이어를 어떻게 구성할 것인지
 - 뮤테이션과 features 레이어를 어떻게 구성할 것인지
 - 파일명은 어떻게 할 것인지
@@ -69,7 +69,7 @@ FSD를 사용해보고 느낀점은 다음과 같았다.
 
 ### entities 레이어, 조회 관련 예시 코드 작성
 
-![entities-layer-structure](/images/posts/2026/newborn-screening-project-retrospective/entities-layer-structure.png)
+![entities-layer-structure](/images/posts/2026/newborn-screening-project-retrospective/entities-layer-structure.webp)
 
 - entities 레이어의 test 슬라이스를 위와 같이 구상했다.
 - 슬라이스 안에 코드의 역할을 표현할 수 있는 api, lib, model, ui 같은 세그먼트를 두었다.
@@ -176,7 +176,7 @@ export function myTestsQueryOptions() {
 }
 ```
 
-- Tanstack Query의 **쿼리 옵션을 생성하는 함수**들을 정의했다.
+- TanStack Query의 **쿼리 옵션을 생성하는 함수**들을 정의했다.
 - `useQuery`나 `useSuspenseQuery`를 감싸는 커스텀 훅을 만드는 것보다 유연한 방식이라고 생각해서, 쿼리 옵션을 활용했다.
 - 쿼리 함수가 **API를 호출하고, DTO를 엔티티로 변환하는 역할**까지 담당하도록 작성했다.
 - Test 관련 뮤테이션은 features 레이어에서 다룰거라 여기서 다루지 않는다.
@@ -257,19 +257,354 @@ export type { Test, TestStatus } from "./model/test";
 export { TestCard } from "./ui/test-card";
 ```
 
-이런식으로 원하는 스타일의 entities 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다.
+이런식으로 원하는 스타일의 entities 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다. 조회 api와 엔티티 관련 작업 시, 앞서 작성한 예제 코드와 비슷한 패턴으로 코드를 생성하기 위한 스킬이 생성되었다.
 
-### 예시 코드 짜면서, 고민했던 부분: 검사 생성 관련 코드가 entities/features 레이어에 분산된 이유
+```md
+---
+name: entity-api-flow
+description: >
+  프로젝트에서 도메인 엔티티의 Read(조회) API 플로우를 구현할 때 사용.
+  MSW mock, Zod DTO 스키마, Axios API 호출, DTO→Domain 변환(.lib),
+  React Query queryOptions, Suspense UI 소비까지의 레이어링·파일 구조·명명 규칙을
+  다룸. 새 엔티티 조회 기능을 추가하거나 기존 도메인을 이 패턴으로 정비할 때 적용.
+---
+
+본문 생략...
+```
+
+### features 레이어, 생성 관련 예시 코드 작성
+
+![features-layer-structure](/images/posts/2026/newborn-screening-project-retrospective/features-layer-structure.webp)
+
+- 이제는 features 레이어의 create-test 슬라이스를 위와 같이 구상했다.
+- 마찬가지로 슬라이스 안에 코드의 역할을 표현할 수 있는 api, lib, model, ui 같은 세그먼트를 두었다.
+- 그리고, 각 파일의 이름을 `{도메인}.{역할}` 형태의 케밥케이스로 작성했다.
+
+여기서도, 각 파일의 내용을 살펴보자.
+
+```ts title="src/features/create-test/model/create-test.schema.ts" showLineNumbers
+import * as z from "zod";
+
+export const createTestFormSchema = z.object({
+  name: z
+    .string()
+    .min(1, "이름을 입력해 주세요.")
+    .max(50, "50자 이하로 입력해 주세요."),
+  code: z
+    .string()
+    .min(1, "코드를 입력해 주세요.")
+    .max(20, "20자 이하로 입력해 주세요."),
+});
+
+export type CreateTestFormValues = z.infer<typeof createTestFormSchema>;
+```
+
+- 검사 생성 폼의 스키마를 zod로 정의했다.
+
+```ts title="src/features/create-test/lib/create-test.transform.ts" showLineNumbers
+import type { CreateTestDto } from "@/entities/test";
+
+import type { CreateTestFormValues } from "../model/create-test.schema";
+
+export function transformCreateTestFormValuesToCreateTestDto(
+  values: CreateTestFormValues,
+): CreateTestDto {
+  return {
+    name: values.name,
+    code: values.code,
+  };
+}
+```
+
+- 검사 생성 폼 데이터 → 검사 생성 API의 요청 DTO로 변환하는 함수이다.
+
+```ts title="src/features/create-test/api/use-create-test.ts" showLineNumbers {30-32,35-42}
+import {
+  useMutation,
+  useQueryClient,
+  type DefaultError,
+  type UseMutationOptions,
+} from "@tanstack/react-query";
+
+import {
+  createTest,
+  testKeys,
+  transformTestDtoToTest,
+  type Test,
+} from "@/entities/test";
+
+import { transformCreateTestFormValuesToCreateTestDto } from "../lib/create-test.transform";
+
+import type { CreateTestFormValues } from "../model/create-test.schema";
+
+type UseCreateTestOptions = Pick<
+  UseMutationOptions<Test, DefaultError, CreateTestFormValues, unknown>,
+  "onMutate" | "onSuccess" | "onError" | "onSettled"
+>;
+
+export function useCreateTest(options: UseCreateTestOptions = {}) {
+  const { onMutate, onSuccess, onError, onSettled } = options;
+  const queryClient = useQueryClient();
+
+  return useMutation<Test, DefaultError, CreateTestFormValues, unknown>({
+    mutationFn: async (formValues) => {
+      const payload = transformCreateTestFormValuesToCreateTestDto(formValues);
+      const { data: testDto } = await createTest(payload);
+      return transformTestDtoToTest(testDto);
+    },
+    onMutate,
+    onSuccess: (data, variables, onMutateResult, context) => {
+      return Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: testKeys.list.queryKey,
+        }),
+        onSuccess?.(data, variables, onMutateResult, context),
+      ]);
+    },
+    onError,
+    onSettled,
+  });
+}
+```
+
+- `useMutation`을 감싸는 검사를 생성하는 커스텀 훅이다.
+  - 뮤테이션도 쿼리와 비슷하게 `mutationOptions`가 있지만, 굳이 많이 쓸거 같지 않아서 그냥 커스텀 훅 형태로 정의했다.
+- 뮤테이션 함수가 API 호출, 폼 데이터 → DTO 변환, DTO → 엔티티 변환을 담당하도록 했다.
+- 뮤테이션 성공 시, 연관된 쿼리를 무효화하도록 했고, 다른 콜백들도 받을 수 있도록 커스텀 훅의 파라미터를 정의했다.
+
+```tsx title="src/features/create-test/ui/create-test-form.tsx" showLineNumbers {23,25-31}
+import type { ReactNode } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { useCreateTest } from "../api/use-create-test";
+import {
+  createTestFormSchema,
+  type CreateTestFormValues,
+} from "../model/create-test.schema";
+
+export function CreateTestForm() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<CreateTestFormValues>({
+    resolver: zodResolver(createTestFormSchema),
+    defaultValues: { name: "", code: "" },
+  });
+
+  const mutation = useCreateTest();
+
+  const onSubmit = handleSubmit((values) => {
+    mutation.mutate(values, {
+      onSuccess: () => {
+        reset();
+      },
+    });
+  });
+
+  return (
+    <form onSubmit={onSubmit}>
+      <Field label="검사 이름" error={errors.name?.message}>
+        <input {...register("name")} disabled={mutation.isPending} />
+      </Field>
+      <Field label="검사 코드" error={errors.code?.message}>
+        <input {...register("code")} disabled={mutation.isPending} />
+      </Field>
+      {mutation.isError && (
+        <p>검사 생성에 실패했습니다. 잠시 후 다시 시도해 주세요.</p>
+      )}
+      <button type="submit" disabled={mutation.isPending}>
+        {mutation.isPending ? "생성 중…" : "검사 생성"}
+      </button>
+    </form>
+  );
+}
+
+function Field({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: ReactNode;
+}) {
+  return (
+    <label>
+      <span>{label}</span>
+      {children}
+      {error && <span>{error}</span>}
+    </label>
+  );
+}
+```
+
+- 뮤테이션 성공 시, 컴포넌트 레벨의 사이드 이펙트(폼 초기화, 토스트 알림 등)는 `useMutation`에 콜백으로 등록하지 않고, `mutation.mutate`를 호출할 때 콜백으로 등록하도록 설정했다.
+
+이런식으로 원하는 스타일의 features 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다. 뮤테이션과 feature 관련 작업 시, 앞서 작성한 예제 코드와 비슷한 패턴으로 코드를 생성하기 위한 스킬이 생성되었다.
+
+```md
+---
+name: feature-mutation-flow
+description: >
+  프로젝트에서 도메인 엔티티의 CUD(생성/수정/삭제) mutation 플로우를
+  구현할 때 사용. entities 레이어의 DTO contracts·API 함수·MSW 핸들러 확장부터,
+  features/{action}-{domain} 슬라이스의 Form 스키마·FormValues→Dto 변환(.lib)·
+  useMutation 커스텀 훅·폼 UI, 그리고 invalidateQueries 로 query 캐시를 갱신하기
+  까지의 레이어링·파일 구조·명명 규칙을 다룸.
+---
+```
+
+### 커스텀 스킬 사용 후기
+
+프로젝트 초반에 레퍼런스 코드가 없는 상황에서도 FSD와 zod, react hook form, TanStack Query를 활용한, 원하는 형태의 코드를 Claude를 통해 쉽게 생성할 수 있었다.
+
+### 예시 코드를 작성하면서 고민했던 부분: 검사 생성 관련 코드가 entities/features 레이어에 분산된 이유
 
 [상황과 결정]
 
-- 검사 생성 기능은 entities 레이어가 아니라 features 레이어에 구현할 예정이었음
-- 그런데, 검사 관련 API를 호출 하는 함수 및 MSW 핸들러 코드는 test 엔티티에 대한 CRUD 코드라 `entities/test`에 모아 두면 좋겠다고 생각했음.
-  - 특히 MSW 핸들러 코드를 작성할 때 하나의 리소스에 대한 CRUD 코드를 한 곳에 모아두니까, test 조회도, test 생성도, 모두 `entities/test`에 모아두어야 겠다고 처음에 생각했음
-- 그러다보니, 검사 생성 요청 DTO 정의, 검사 생성 API 호출 함수, 검사 생성 API mocking 핸들러가 entities 레이어에 작성되고, 나머지 코드는 features 레이어에 작성하게 되었음.
+- 검사 생성 기능은 entities 레이어가 아니라 features 레이어에 구현할려고 했다.
+- 그러면서도, "검사 관련 API를 호출 하는 함수" 와 "MSW 핸들러 코드"처럼 test 엔티티에 대한 CRUD를 다루는 코드는 `entities/test`, 한 곳에 모아 두면 좋겠다고 생각했다.
+  - MSW 핸들러 코드를 작성할 때, 보통 하나의 리소스에 대한 CRUD 코드를 한 곳에 모아두니까, test 조회도, test 생성도, 모두 `entities/test`에 모아두어야 겠다고 처음에 생각했던 것 같다.
+- 그러다보니, 검사 생성 요청 DTO 정의, 검사 생성 API 호출 함수, 검사 생성 API mocking 핸들러가 entities 레이어에 작성되고, 나머지 코드는 features 레이어에 작성하게 되었다.
 
 [회고]
 
-- 선택한 방식도, features는 entities를 의존할 수 있고, entities는 features를 의존할 수 없는 FSD의 규칙을 지키기 때문에 문제가 되지 않는다.
+- 선택한 방식도, FSD의 규칙을 지키기 때문에 문제가 되지 않는다. (FSD의 레이어간 의존 규칙을 위배하지 않아서 문제가 되지 않는다.)
 - 단지, 검사 생성과 관련된 코드가 entities, features 두 군데에 혼재되어서 아쉬운 선택이었다.
-- entities 레이어에 엔티티 관련 CRUD 코드가 모이지 않더라도, 엔티티에는 조회 API 관련 함수, DTO, mocking만 두고, 나머지는 각각의 features에 정의하면 좀 더 좋았을 거 같음.
+- 엔티티 관련 CRUD 코드가 한 곳에 모이지 않더라도, entities에는 조회 API 관련 함수, DTO, mocking만 두고, 나머지는 각각의 features에 정의하면 좀 더 좋았을 거 같다.
+- 결과적으로, MSW 핸들러를 entities 레이어에 두었던 선택이, 아래에서 다루는 문제를 야기했다.
+
+## 트러블 슈팅: 프로덕션 빌드했을 때, MSW 코드가 initial chunk 포함되는 문제 해결
+
+### 상황
+
+번들을 분석하다가, dev 전용인 MSW 코드가 프로덕션 빌드의 initial chunk(`index.html`에 `modulepreload`로 설정된 chunk)에 포함된 것을 발견했다.
+
+### 분석
+
+먼저 MSW 관련 설정을 살펴보자.
+
+```tsx title="src/app/main.tsx" showLineNumbers
+import { StrictMode } from "react";
+
+import { createRoot } from "react-dom/client";
+
+import "@/shared/i18n";
+
+import { App } from "@/app/app";
+import { enableMocking } from "@/app/mocks";
+
+enableMocking().then(() => {
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+});
+```
+
+엔트리 포인트 파일에서 `enableMocking` 함수를 호출한다. `enableMocking` 함수 코드를 살펴보자
+
+```ts title="app/mocks/enable-mocking.ts" showLineNumbers
+import { env } from "@/shared/config";
+
+export async function enableMocking() {
+  if (!env.VITE_MSW_ENABLED) {
+    return;
+  }
+
+  const { worker } = await import("./browser");
+  return worker.start({ onUnhandledRequest: "bypass" });
+}
+```
+
+좀 더 따라보면, "./browser" 파일 내에서
+
+```ts title="app/mocks/browser.ts" showLineNumbers
+import { setupWorker } from "msw/browser";
+
+import { handlers } from "./handlers";
+
+export const worker = setupWorker(...handlers);
+```
+
+"./handers"를 임포트하고, "./handlers" 파일에서
+
+```ts title="app/mocks/handlers.ts" showLineNumbers
+import { authHandlers } from "@/entities/auth";
+// ...
+import { testHandlers } from "@/entities/test";
+
+import type { RequestHandler } from "msw";
+
+export const handlers: RequestHandler[] = [
+  ...authHandlers,
+  // ...
+  ...testHandlers,
+];
+```
+
+entities 레이어에서 msw handler들을 import 하고 있다.
+
+다시, `enableMocking` 함수를 살펴보자.
+
+```ts title="app/mocks/enable-mocking.ts" showLineNumbers {4-6,8}
+import { env } from "@/shared/config";
+
+export async function enableMocking() {
+  if (!env.VITE_MSW_ENABLED) {
+    return;
+  }
+
+  const { worker } = await import("./browser");
+  return worker.start({ onUnhandledRequest: "bypass" });
+}
+```
+
+이 코드를 봤을 때, 예상되는 번들 결과/동작은 다음과 같다.
+
+- 8번째 줄에 **import() 표현식** 이 있으므로, 번들러가 이 지점에서 msw 관련 코드를 별도의 lazy chunk로 분리힌다.
+  - 즉, msw 관련 lazy chunk는 프로덕션 빌드 결과에도 생성이 된다.
+- 하지만, 프로덕션 빌드를 하면, 런타임에 `env.VITE_MSW_ENABLED` 값은 `false`이기 때문에, 실제로 msw 관련 lazy chunk는 브라우저가 다운로드 하지 않는다.
+
+하지만, 실제로는 msw 코드가 lazy chunk가 아니라, 첫 로드에 다운로드되는 initial chunk에 포함되어 있었다.
+
+앞서, entities 레이어의 배럴(barrel) 파일에서 다음과 같이 msw handler를 export 했다. 그리고 이것이 문제의 원인이었다.
+
+```ts title="src/entities/test/index.ts" showLineNumbers {3}
+export { createTest } from "./api/test.api";
+export { transformTestDtoToTest } from "./lib/test.transform";
+export { testHandlers } from "./api/test.mocks";
+export { myTestsQueryOptions, testKeys } from "./api/test.queries";
+export type { CreateTestDto, TestDto } from "./api/test.contracts";
+export type { Test, TestStatus } from "./model/test";
+export { TestCard } from "./ui/test-card";
+```
+
+그리고, FSD의 특성상, 이 배럴 파일로부터 import를 많이 하게 된다. (아래 코드처럼 말이다.)
+
+```ts
+import {
+  createTest,
+  testKeys,
+  transformTestDtoToTest,
+  type Test,
+} from "@/entities/test";
+```
+
+`app/mocks/handlers.ts` 말고는 testHandlers(msw handler)를 import 하는 곳이 없다. 그런데 `@/entities/test` 배럴을 import 하는 곳은 많다.
+
+배럴에서 Test 타입 하나만 가져와도, 배럴이 re-export 하는 핸들러 모듈까지 번들러의 정적 분석 대상에 같이 들어온다. 그리고 핸들러 모듈은 top-level 에서 `http.get()` 을 호출하고 있어서, 번들러가 "어떤 사이드 이펙트가 있을지 몰라서, 지워도 된다"고 판단하지 못한다. 사이드 이펙트가 있을지 모르는 코드는 tree-shaking 으로 제거되지 않는다.
+그래서 lazy chunk로 분리될 거라고 예상했던 코드들이 사용자가 초기에 다운로드 하는 chunk에 포함되었던 것이다.
+
+### 해결
+
+이를 해결 하기 위해서는 msw handler의 위치를 entities 레이어에서 app 레이어로 옮기는 것이다. 사실 msw handler는 msw 설정 코드에서만 사용되고 있으므로, 다른 msw 코드 처럼 app 레이어로 옮기면 된다. 그리고 entities 레이어의 배럴 파일에서 msw 핸들러 re-export를 제거하면 된다.
+
+이렇게 수정하고 빌드했더니 msw 코드는 프로덕션에서 로드되지 않는 lazy chunk에만 남고, 사용자가 다운로드하는 chunk에서는 모두 빠진 걸 확인할 수 있었다.
+
+한 줄로 요약하면, **msw 핸들러를 entities 레이어에 둔 탓**에 **FSD 규칙상 배럴로 export 할 수밖에 없었고**, **그 배럴을 import 하는 모든 곳에 msw 관련 코드가 딸려 들어간** 문제였다.
