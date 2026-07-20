@@ -245,7 +245,7 @@ export function transformTestsDtoToTests(testsDto: TestsDto): Test[] {
 
 그외에 `src/entities/test/ui`에 test 엔티티 관련 컴포넌트를 정의했다.
 
-마지막으로 Barrel 파일 형태로 외부에서 사용할 Public API들을 export 했다.
+마지막으로 배럴(barrel) 파일 형태로 외부에서 사용할 Public API들을 export 했다.
 
 ```ts title="src/entities/test/index.ts" showLineNumbers {3}
 export { createTest } from "./api/test.api";
@@ -444,6 +444,13 @@ function Field({
 
 - 뮤테이션 성공 시, 컴포넌트 레벨의 사이드 이펙트(폼 초기화, 토스트 알림 등)는 `useMutation`에 콜백으로 등록하지 않고, `mutation.mutate`를 호출할 때 콜백으로 등록하도록 설정했다.
 
+마지막으로 배럴 파일 형태로 외부에서 사용할 Public API 들을 export 했다.
+
+```ts title="src/features/create-test/index.ts" showLineNumbers
+export { useCreateTest } from "./api/use-create-test";
+export { CreateTestForm } from "./ui/create-test-form";
+```
+
 이런식으로 원하는 스타일의 features 레이어 코드를 작성한 뒤, Claude에게 코드를 분석 시켜 스킬을 만들어 달라고 했다. 뮤테이션과 feature 관련 작업 시, 앞서 작성한 예제 코드와 비슷한 패턴으로 코드를 생성하기 위한 스킬이 생성되었다.
 
 ```md
@@ -573,7 +580,7 @@ export async function enableMocking() {
 
 **하지만, 실제로는 msw 코드가 lazy chunk가 아니라, 초기 다운로드되는 initial chunk에 포함되어 있었다.**
 
-앞서, entities 레이어의 배럴(barrel) 파일에서 다음과 같이 msw handler를 export 했다. 그리고 이것이 문제의 원인이었다.
+앞서, entities 레이어의 배럴 파일에서 다음과 같이 msw handler를 export 했다. 그리고 이것이 문제의 원인이었다.
 
 ```ts title="src/entities/test/index.ts" showLineNumbers {3}
 export { createTest } from "./api/test.api";
