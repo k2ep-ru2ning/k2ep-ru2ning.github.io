@@ -1,6 +1,6 @@
 ---
-title: "유전체 기반 신생아 선별검사 주문 포털 개발 회고"
-description: "유전체 기반 신생아 선별검사 주문 포털 - 프론트엔드 개발 회고, FSD 도입 및 문제 해결"
+title: "FSD 도입 및 문제 해결 회고"
+description: "FSD 도입, FSD 관련 커스텀 스킬 작성, FSD 배럴 파일 관련 문제 해결 과정을 정리한 글"
 createdAt: 2026-07-19
 tags:
   - "회고"
@@ -16,7 +16,7 @@ seriesId: "업무 회고록"
 
 초기 개발환경 설정을 하면서 **신경써서 진행했던 부분**은 **FSD의 도입**과 **다국어 처리** 설정이다.
 
-회고에 등장하는 코드는 프로덕션 코드가 아니라 예시코드이다.
+다국어 처리 설정 과정은 [이전 글](/posts/2026/i18n-configuration)에서 다루었다.
 
 ## FSD (Feature-Sliced Design) 도입 결정
 
@@ -52,7 +52,7 @@ FSD를 사용해보고 느낀점은 다음과 같았다.
 
 ## FSD 관련 커스텀 스킬 만들기
 
-좀 더 구체적이고, 이번에 진행하는 프로젝트에 맞는 컨벤션과 가이드가 있다면, 개발 초기 단계 부터 Claude가 개발자가 원하는 코드를 생산해줄 거 같았다. 그래서, 이번 프로젝트에 적용할 커스텀 스킬을 만들기로 결정 했다.
+좀 더 구체적이고, **이번에 진행하는 프로젝트에 맞는 컨벤션과 가이드가 있다면, 개발 초기 단계 부터 Claude가 개발자가 원하는 코드를 생산**해줄 거 같았다. 그래서, 이번 프로젝트에 적용할 커스텀 스킬을 만들기로 결정 했다.
 
 스킬 내용을 직접 다 작성하는 것은 오래 걸릴거 같아, **직접 원하는 스타일의 예시 코드를 작성하고, Claude를 활용해 코드를 분석 시켜 스킬을 추출**했다.
 
@@ -69,7 +69,7 @@ FSD를 사용해보고 느낀점은 다음과 같았다.
 
 ### entities 레이어, 조회 관련 예시 코드 작성
 
-![entities-layer-structure](/images/posts/2026/newborn-screening-project-retrospective/entities-layer-structure.webp)
+![entities-layer-structure](/images/posts/2026/fsd-retrospective/entities-layer-structure.webp)
 
 - entities 레이어의 test 슬라이스를 위와 같이 구상했다.
 - 슬라이스 안에 코드의 역할을 표현할 수 있는 api, lib, model, ui 같은 세그먼트를 두었다.
@@ -220,7 +220,7 @@ export const testHandlers = [
 ```
 
 - `test.api.ts` 에서 호출할 서버 응답을 mocking 하는 msw 핸들러
-- `test.api.ts` 와 가깝게 위치시키는게 좋다고 생각해서, `entities/test`에 위치 시킴 (스포일러: 이 선택이 추후, 문제를 발생시킴)
+- `test.api.ts` 와 가깝게 위치시키는게 좋다고 생각해서, `entities/test`에 위치 시킴 (스포일러: 이 선택이 추후, [문제](/posts/2026/fsd-retrospective#트러블-슈팅-프로덕션-빌드했을-때-msw-코드가-initial-chunk-포함되는-문제-해결)를 발생시킴)
 
 ```ts title="src/entities/test/lib/test.transform.ts" showLineNumbers
 import type { TestDto, TestsDto } from "../api/test.contracts";
@@ -274,7 +274,7 @@ description: >
 
 ### features 레이어, 생성 관련 예시 코드 작성
 
-![features-layer-structure](/images/posts/2026/newborn-screening-project-retrospective/features-layer-structure.webp)
+![features-layer-structure](/images/posts/2026/fsd-retrospective/features-layer-structure.webp)
 
 - 이제는 features 레이어의 create-test 슬라이스를 위와 같이 구상했다.
 - 마찬가지로 슬라이스 안에 코드의 역할을 표현할 수 있는 api, lib, model, ui 같은 세그먼트를 두었다.
@@ -460,15 +460,15 @@ description: >
 
 ### 커스텀 스킬 사용 후기
 
-프로젝트 초반에 레퍼런스 코드가 없는 상황에서도 FSD와 zod, react hook form, TanStack Query를 활용한, 원하는 형태의 코드를 Claude를 통해 쉽게 생성할 수 있었다.
+**프로젝트 초반에 레퍼런스 코드가 없는 상황**에서도 FSD와 zod, react hook form, TanStack Query를 활용한, **원하는 형태의 코드를 Claude를 통해 쉽게 생성**할 수 있었다.
 
 ### 예시 코드를 작성하면서 고민했던 부분: 검사 생성 관련 코드가 entities/features 레이어에 분산된 이유
 
 [상황과 결정]
 
 - 검사 생성 기능은 entities 레이어가 아니라 features 레이어에 구현할려고 했다.
-- 그러면서도, "검사 관련 API를 호출 하는 함수" 와 "MSW 핸들러 코드"처럼 test 엔티티에 대한 CRUD를 다루는 코드는 `entities/test`, 한 곳에 모아 두면 좋겠다고 생각했다.
-  - MSW 핸들러 코드를 작성할 때, 보통 하나의 리소스에 대한 CRUD 코드를 한 곳에 모아두니까, test 조회도, test 생성도, 모두 `entities/test`에 모아두어야 겠다고 처음에 생각했던 것 같다.
+- 그러면서도, "검사 관련 API를 호출 하는 함수" 와 "msw 핸들러 코드"처럼 test 엔티티에 대한 CRUD를 다루는 코드는 `entities/test`, 한 곳에 모아 두면 좋겠다고 생각했다.
+  - msw 핸들러 코드를 작성할 때, 보통 하나의 리소스에 대한 CRUD 코드를 한 곳에 모아두니까, test 조회도, test 생성도, 모두 `entities/test`에 모아두어야 겠다고 처음에 생각했던 것 같다.
 - 그러다보니, 검사 생성 요청 DTO 정의, 검사 생성 API 호출 함수, 검사 생성 API mocking 핸들러가 entities 레이어에 작성되고, 나머지 코드는 features 레이어에 작성하게 되었다.
 
 [회고]
@@ -476,17 +476,17 @@ description: >
 - 선택한 방식도, FSD의 규칙을 지키기 때문에 문제가 되지 않는다. (FSD의 레이어간 의존 규칙을 위배하지 않아서 문제가 되지 않는다.)
 - 단지, 검사 생성과 관련된 코드가 entities, features 두 군데에 혼재되어서 아쉬운 선택이었다.
 - 엔티티 관련 CRUD 코드가 한 곳에 모이지 않더라도, entities에는 조회 API 관련 함수, DTO, mocking만 두고, 나머지는 각각의 features에 정의하면 좀 더 좋았을 거 같다.
-- 결과적으로, MSW 핸들러를 entities 레이어에 두었던 선택이, 아래에서 다루는 문제를 야기했다.
+- 결과적으로, msw 핸들러를 entities 레이어에 두었던 선택이, 아래에서 다루는 문제를 야기했다.
 
-## 트러블 슈팅: 프로덕션 빌드했을 때, MSW 코드가 initial chunk 포함되는 문제 해결
+## 트러블 슈팅: 프로덕션 빌드했을 때, msw 코드가 initial chunk 포함되는 문제 해결
 
 ### 상황
 
-번들을 분석하다가, dev 전용인 MSW 코드가 프로덕션 빌드의 initial chunk(`index.html`에 `modulepreload`로 설정된 chunk)에 포함된 것을 발견했다.
+번들을 분석하다가, dev 전용인 msw 코드가 프로덕션 빌드의 initial chunk(`index.html`에 `modulepreload`로 설정된 chunk)에 포함된 것을 발견했다.
 
 ### 분석
 
-먼저 MSW 관련 설정을 살펴보자.
+먼저 msw 관련 설정을 살펴보자.
 
 ```tsx title="src/app/main.tsx" showLineNumbers
 import { StrictMode } from "react";
@@ -509,7 +509,7 @@ enableMocking().then(() => {
 
 엔트리 포인트 파일에서 `enableMocking` 함수를 호출한다. `enableMocking` 함수 코드를 살펴보자
 
-```ts title="app/mocks/enable-mocking.ts" showLineNumbers
+```ts title="app/mocks/enable-mocking.ts" showLineNumbers {8}
 import { env } from "@/shared/config";
 
 export async function enableMocking() {
@@ -524,7 +524,7 @@ export async function enableMocking() {
 
 좀 더 따라보면, "./browser" 파일 내에서
 
-```ts title="app/mocks/browser.ts" showLineNumbers
+```ts title="app/mocks/browser.ts" showLineNumbers {3}
 import { setupWorker } from "msw/browser";
 
 import { handlers } from "./handlers";
@@ -571,7 +571,7 @@ export async function enableMocking() {
   - 즉, msw 관련 lazy chunk는 프로덕션 빌드 결과에도 생성이 된다.
 - 하지만, 프로덕션 빌드를 하면, 런타임에 `env.VITE_MSW_ENABLED` 값은 `false`이기 때문에, 실제로 msw 관련 lazy chunk는 브라우저가 다운로드 하지 않는다.
 
-하지만, 실제로는 msw 코드가 lazy chunk가 아니라, 첫 로드에 다운로드되는 initial chunk에 포함되어 있었다.
+**하지만, 실제로는 msw 코드가 lazy chunk가 아니라, 초기 다운로드되는 initial chunk에 포함되어 있었다.**
 
 앞서, entities 레이어의 배럴(barrel) 파일에서 다음과 같이 msw handler를 export 했다. 그리고 이것이 문제의 원인이었다.
 
@@ -599,12 +599,13 @@ import {
 `app/mocks/handlers.ts` 말고는 testHandlers(msw handler)를 import 하는 곳이 없다. 그런데 `@/entities/test` 배럴을 import 하는 곳은 많다.
 
 배럴에서 Test 타입 하나만 가져와도, 배럴이 re-export 하는 핸들러 모듈까지 번들러의 정적 분석 대상에 같이 들어온다. 그리고 핸들러 모듈은 top-level 에서 `http.get()` 을 호출하고 있어서, 번들러가 "어떤 사이드 이펙트가 있을지 몰라서, 지워도 된다"고 판단하지 못한다. 사이드 이펙트가 있을지 모르는 코드는 tree-shaking 으로 제거되지 않는다.
+
 그래서 lazy chunk로 분리될 거라고 예상했던 코드들이 사용자가 초기에 다운로드 하는 chunk에 포함되었던 것이다.
 
 ### 해결
 
-이를 해결 하기 위해서는 msw handler의 위치를 entities 레이어에서 app 레이어로 옮기는 것이다. 사실 msw handler는 msw 설정 코드에서만 사용되고 있으므로, 다른 msw 코드 처럼 app 레이어로 옮기면 된다. 그리고 entities 레이어의 배럴 파일에서 msw 핸들러 re-export를 제거하면 된다.
+이를 해결 하기 위해서는 **msw handler의 위치를 entities 레이어에서 app 레이어로 옮기는 것**이다. 사실 msw handler는 msw 설정 코드에서만 사용되고 있으므로, 다른 msw 코드 처럼 app 레이어로 옮기면 된다. 그리고 **entities 레이어의 배럴 파일에서 msw 핸들러 re-export를 제거**하면 된다.
 
-이렇게 수정하고 빌드했더니 msw 코드는 프로덕션에서 로드되지 않는 lazy chunk에만 남고, 사용자가 다운로드하는 chunk에서는 모두 빠진 걸 확인할 수 있었다.
+이렇게 수정하고 빌드했더니 **msw 코드는 프로덕션에서 로드되지 않는 lazy chunk에만 남고, 사용자가 다운로드하는 chunk에서는 모두 빠진 걸** 확인할 수 있었다.
 
 한 줄로 요약하면, **msw 핸들러를 entities 레이어에 둔 탓**에 **FSD 규칙상 배럴로 export 할 수밖에 없었고**, **그 배럴을 import 하는 모든 곳에 msw 관련 코드가 딸려 들어간** 문제였다.
